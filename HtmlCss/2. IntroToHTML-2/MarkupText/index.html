@@ -1,4 +1,9 @@
 ﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Блог компании Яндекс</title>
+</head>
 <!--
 	При разметке использовано 36 уникальных элемента:
 		html, head, meta, title, body, header, footer, address, section, article, 
@@ -20,11 +25,6 @@
 			...
 		<footer> Копирайт, контактная информация Яндекса
 -->
-<html lang="ru">
-<head>
-<title>Блог компании Яндекс</title>
-<meta charset="utf-8">
-</head>
 <body>
 <header>
 	<h1>Блог компании Яндекс.</h1>
@@ -37,7 +37,7 @@
 		тормозит. Мы регулярно добавляем в Яндекс.Почту новую функциональность,
 		иногда — исправляем ошибки, а это значит, у нас постоянно появляются новый код
 		и новая логика. Всё это напрямую влияет на скорость работы интерфейса.</p>
-		</p>
+		
 		<h2>Что мы измеряем</h2>
 
 		<h3>Этапы первой загрузки:</h3>
@@ -56,7 +56,7 @@
 		<li>шаблонизация;</li>
 		<li>обновление <abbr title="Document Object Model">DOM</abbr>.</li>
 		</ul>
-		</p>
+		
 		<p>
 		— <q>Ок, теперь у нас есть метрики, мы можем отправить их на сервер</q> — говорим мы<br>
 		— <q>Что же дальше?</q> — вопрошаете вы<br>
@@ -79,17 +79,17 @@
 		<p>
 		<math xmlns="http://www.w3.org/1998/Math/MathML">
 			<mrow>
-				<mi><abbr title="Application Performance Index">APDEX</abbr></mi>
+				<mi>APDEX</mi>
 				<mo>=</mo>
 				<mfrac>
 					<mrow>
 						<mrow>
-							<mi><abbr title="количество счастливых (happy) пользователей">H</abbr></mi>
+							<mi>H</mi>
 							<mo>-</mo>
 						</mrow>
 						<mfrac>
 							<mrow>
-								<mi><abbr title="количество счастливых (satisfied) пользователей">S</abbr></mi>
+								<mi>S</mi>
 							</mrow>
 							<mrow>
 								<mn>2</mn>
@@ -97,7 +97,7 @@
 						</mfrac>
 					</mrow>
 					<mrow>
-						<mi><abbr title="общее (total) количество пользователей">T</abbr></mi>
+						<mi>T</mi>
 					</mrow>
 				</mfrac>
 			</mrow>
@@ -150,7 +150,7 @@
 		<li>google-diff-patch-match</li>
 		</ul>
 		<p>Для окончательного выбора библиотеки нам нужно сравнить:</p>
-		<table border="1" cellpadding="8">
+		<table>
 			<thead>
 				<tr>
 					<th>Библиотека</th>
@@ -232,7 +232,7 @@
 		<h2>Итог</h2>
 
 		<p>Фактически мы экономим 80-90% трафика. Размер загружаемой статитки в байтах:</p>
-		<table border="1" cellpadding="8">
+		<table>
 			<thead>
 				<tr>
 					<th>Релиз</th>
@@ -261,14 +261,12 @@
 
 	</article>
 	<footer> <!--Контактная информация автора статьи-->
-		<p>
-			Автор: @doochik
-			<address>
-				С++ разработик<br>
-				Электронная почта: <a href="mailto:doochik@yandex-team.ru"></a>doochik@yandex-team.ru
-				Компания: Яндекс
-			</address>
-		</p>
+		Автор: @doochik
+		<address>
+			С++ разработик<br>
+			Электронная почта: <a href="mailto:doochik@yandex-team.ru">doochik@yandex-team.ru</a>
+			Компания: Яндекс
+		</address>
 	</footer>
 </section>
 <section> <!-- Секция комментариев -->
@@ -302,7 +300,7 @@
 	</article>
 </section>
 <footer> <!--Копирайт, контактная информация Яндекса-->
-	&copy Яндекс, <address><a href="mailto:help@yandex.ru">help@yandex.ru</a>, Хохрякова, 10</address>
+	&copy; Яндекс, <address><a href="mailto:help@yandex.ru">help@yandex.ru</a>, Хохрякова, 10</address>
 </footer>
 </body>
 </html>

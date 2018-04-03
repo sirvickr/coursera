@@ -204,10 +204,10 @@ var totalTime = this.timings['look-ma-finish'] - this.timings['look-ma-im-start'
 		</dl>
 
 <pre><code>
-Дано &#949;, x<sub>0</sub>
+Дано &epsilon;, x<sub>0</sub>
 инициализировать H<sub>0</sub>
 k = 0
-while ||&nabla;f<sub>k</sub>|| > &#949;
+while ||&nabla;f<sub>k</sub>|| &gt; &epsilon;
 	найти направление p<sub>k</sub> = -C<sub>k</sub>&nabla;f<sub>k</sub>
 	вычислить x<sub>k+1</sub> = x<sub>k</sub> + &#945;<sub>k</sub>&#961;<sub>k</sub>, &#945;<sub>k</sub> удовлетворяет условиям Вольфе
 	обозначить s<sub>k</sub> = x<sub>k+1</sub> - x<sub>k</sub> и y<sub>k</sub> = &nabla;f<sub>k+1</sub> - &nabla;f<sub>k</sub>

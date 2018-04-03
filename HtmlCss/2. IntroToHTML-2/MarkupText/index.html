@@ -112,16 +112,16 @@
 		<p>Сейчас модуль обновления сам логирует все свои стадии, и можно легко понять
 		причину замедления: медленнее стал отвечать сервер либо слишком долго
 		выполняется JavaScript. Выглядит это примерно так:</p>
-		<pre><code>
-		this.timings['look-ma-im-start'] = Date.now();
-		this.timings['look-ma-finish'] = Date.now();
-		</code></pre>
+<pre><code>
+this.timings['look-ma-im-start'] = Date.now();
+this.timings['look-ma-finish'] = Date.now();
+</code></pre>
 		<p>C помощью Date.now() мы получаем текущее время. Все тайминги собираются и при
 		отправке рассчитываются. На этапах разница между “end” и “start” не считается,
 		а все вычисления производятся в конце:</p>
-		<pre><code>
-		var totalTime = this.timings['look-ma-finish'] - this.timings['look-ma-im-start'];
-		</code></pre>
+<pre><code>
+var totalTime = this.timings['look-ma-finish'] - this.timings['look-ma-im-start'];
+</code></pre>
 		<p>И на сервер прилетают подобные записи: <samp>serverResponse=50&domUpdate=60</samp></p>
 
 		<h2>Как мы ускоряем</h2>
@@ -176,20 +176,20 @@
 		где и как хранить статику на клиенте.</p>
 		<p>
 		Формат файла с патчами для проекта выглядит так:</p>
-		<pre><code>
-		[
-		    {
-		        "k": "jane.css",
-		        "p": [patch],
-		        "s": 4554
-		    },
-		    {
-		        "k": "jane.css",
-		        "p": [patch],
-		        "s": 4554
-		    }
-		]
-		</code></pre>
+<pre><code>
+[
+    {
+        "k": "jane.css",
+        "p": [patch],
+        "s": 4554
+    },
+    {
+        "k": "jane.css",
+        "p": [patch],
+        "s": 4554
+    }
+]
+</code></pre>
 		<p>То есть это обычный массив из объектов. Каждый объект — отдельный ресурс.<br>У
 		каждого объекта есть три свойства:</p>
 		<ul>
@@ -203,18 +203,18 @@
 			<dd>— итерационный метод численной оптимизации, предназначенный для нахождения локального максимума/минимума нелинейного функционала без ограничений</dd>
 		</dl>
 
-		<pre><code>
-		Дано &#949;, x<sub>0</sub>
-		инициализировать H<sub>0</sub>
-		k = 0
-		while ||&nabla;f<sub>k</sub>|| > &#949;
-			найти направление p<sub>k</sub> = -C<sub>k</sub>&nabla;f<sub>k</sub>
-			вычислить x<sub>k+1</sub> = x<sub>k</sub> + &#945;<sub>k</sub>&#961;<sub>k</sub>, &#945;<sub>k</sub> удовлетворяет условиям Вольфе
-			обозначить s<sub>k</sub> = x<sub>k+1</sub> - x<sub>k</sub> и y<sub>k</sub> = &nabla;f<sub>k+1</sub> - &nabla;f<sub>k</sub>
-			вычислить C<sub>k+1</sub>
-			k = k + 1<br>
-		end
-		</code></pre>
+<pre><code>
+Дано &#949;, x<sub>0</sub>
+инициализировать H<sub>0</sub>
+k = 0
+while ||&nabla;f<sub>k</sub>|| > &#949;
+	найти направление p<sub>k</sub> = -C<sub>k</sub>&nabla;f<sub>k</sub>
+	вычислить x<sub>k+1</sub> = x<sub>k</sub> + &#945;<sub>k</sub>&#961;<sub>k</sub>, &#945;<sub>k</sub> удовлетворяет условиям Вольфе
+	обозначить s<sub>k</sub> = x<sub>k+1</sub> - x<sub>k</sub> и y<sub>k</sub> = &nabla;f<sub>k+1</sub> - &nabla;f<sub>k</sub>
+	вычислить C<sub>k+1</sub>
+	k = k + 1<br>
+end
+</code></pre>
 
 		<p>Почему именно алгоритм Флетчера, а не другие популярные алгоритмы вроде:</p>
 		<ul>

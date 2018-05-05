@@ -193,7 +193,7 @@ p /* этого не указано в задании явно, но чисто 
     font-size: 80%;
     font-weight: bold;
     text-align: center;
-    column-span: all;
+    column-span: all; /* не работает в Firefox */
 }
 
 .article__content

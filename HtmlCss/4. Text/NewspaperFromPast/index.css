@@ -1,4 +1,115 @@
 /*Ссылка на шрифты кроме основного 'https://fonts.googleapis.com/css?family=Farsan|Hind+Siliguri|Racing+Sans+One|Six+Caps|Space+Mono:700'*/
+
+/* gujarati */
+@font-face {
+  font-family: 'Farsan';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Farsan Regular'), local('Farsan-Regular'), url(https://fonts.gstatic.com/s/farsan/v3/VEMwRoJ0vY_zsyzKxqWo9DU.woff2) format('woff2');
+  unicode-range: U+0964-0965, U+0A80-0AFF, U+200C-200D, U+20B9, U+25CC, U+A830-A839;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Farsan';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Farsan Regular'), local('Farsan-Regular'), url(https://fonts.gstatic.com/s/farsan/v3/VEMwRoJ0vY_zsyzK0qWo9DU.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Farsan';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Farsan Regular'), local('Farsan-Regular'), url(https://fonts.gstatic.com/s/farsan/v3/VEMwRoJ0vY_zsyzK06Wo9DU.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Farsan';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Farsan Regular'), local('Farsan-Regular'), url(https://fonts.gstatic.com/s/farsan/v3/VEMwRoJ0vY_zsyzK3aWo.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* bengali */
+@font-face {
+  font-family: 'Hind Siliguri';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Hind Siliguri Regular'), local('HindSiliguri-Regular'), url(https://fonts.gstatic.com/s/hindsiliguri/v4/ijwTs5juQtsyLLR5jN4cxBEoTI7ax9k0.woff2) format('woff2');
+  unicode-range: U+0964-0965, U+0981-09FB, U+200C-200D, U+20B9, U+25CC;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Hind Siliguri';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Hind Siliguri Regular'), local('HindSiliguri-Regular'), url(https://fonts.gstatic.com/s/hindsiliguri/v4/ijwTs5juQtsyLLR5jN4cxBEoTJLax9k0.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Hind Siliguri';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Hind Siliguri Regular'), local('HindSiliguri-Regular'), url(https://fonts.gstatic.com/s/hindsiliguri/v4/ijwTs5juQtsyLLR5jN4cxBEoTJzaxw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Racing Sans One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Racing Sans One'), local('RacingSansOne-Regular'), url(https://fonts.gstatic.com/s/racingsansone/v5/sykr-yRtm7EvTrXNxkv5jfKKyDCAJnDnapI.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Racing Sans One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Racing Sans One'), local('RacingSansOne-Regular'), url(https://fonts.gstatic.com/s/racingsansone/v5/sykr-yRtm7EvTrXNxkv5jfKKyDCAKHDn.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin */
+@font-face {
+  font-family: 'Six Caps';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Six Caps'), local('SixCaps'), url(https://fonts.gstatic.com/s/sixcaps/v8/6ae_4KGrU7VR7bNmaYcV_3Q.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Space Mono Bold'), local('SpaceMono-Bold'), url(https://fonts.gstatic.com/s/spacemono/v2/i7dMIFZifjKcF5UAWdDRaPpZUFqaHjyV.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Space Mono Bold'), local('SpaceMono-Bold'), url(https://fonts.gstatic.com/s/spacemono/v2/i7dMIFZifjKcF5UAWdDRaPpZUFuaHjyV.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Space Mono Bold'), local('SpaceMono-Bold'), url(https://fonts.gstatic.com/s/spacemono/v2/i7dMIFZifjKcF5UAWdDRaPpZUFWaHg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Old English Text MT */
+@font-face {
+  font-family: 'Old Endlish';
+  src: url(oldeng.ttf) format('truetype');
+}
+
 body
 {
     width: 1200px;
@@ -11,6 +122,12 @@ body
     clear: both;
 
     content: '';
+}
+
+p /* этого не указано в задании явно, но чисто визуально в образце абзацы не отделены друг от друга */
+{
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /*––––––––––––––––––Шапка газеты––––––––––––––––––––*/
@@ -28,6 +145,10 @@ body
     padding: 25px 10px;
 
     border: 1px solid;
+
+    /* Размер шрифта стандартный и выровнен по центру */
+    font-size: 100%;
+    text-align: center;
 }
 
 .header__weather
@@ -40,18 +161,34 @@ body
 .header__weather-title
 {
     margin: 0;
+
+    /* Моноширинный шрифт "SpaceMono". Жирный и размер 117% от родительского. По центру. */
+    font-family: 'Space Mono', monospace;
+    font-size: 117%;
+    font-weight: bold;
+    text-align: center;
 }
 
 .header__weather-text
 {
     margin: 0;
+
+    /* Текст выровнен по всей ширине. Размер 80% от родительского. Интерлиньяж 110% от размера шрифта. */
+    font-size: 80%;
+    text-align: justify;
+    line-height: 110%;
 }
 
 .header__title
 {
     overflow: visible;
-
     margin: 0;
+
+    /* Заголовок газеты, шрифт "Old English Text MT" скачан с https://www.fonts-online.ru/font/Old-English-Text-MT */
+    font-family: 'Old Endlish', fantasy;
+    font-size: 500%;
+    font-weight: bold;
+    text-align: center;
 }
 
 
@@ -69,6 +206,9 @@ body
     display: inline-block;
 
     margin: 0 30px;
+
+    /* Размер шрифта 60% от родителя */
+    font-size: 60%;
 }
 
 .sub-header__price
@@ -88,6 +228,11 @@ body
 {
     margin-top: 0;
     margin-bottom: 10px;
+
+    /* Шрифт "SixCaps" без засечек. Размер 320% от родительского шрифта. Жирный. */
+    font-family: 'Six Caps', sans-serif;
+    font-size: 320%;
+    font-weight: bold;
 }
 
 .article__help
@@ -101,6 +246,13 @@ body
 {
     margin-top: 10px;
     margin-bottom: 4px;
+
+    /* Выравнивание по ширине. Отсуп красной строки 2 символа. Размер шрифта 80% от родителя. Наклонный. Имена жирные. */
+    font-size: 80%; /*в задании указан размер 80%, на тогда получается не похоже на образец; 
+                      для того, чтобы было в точности как в образце, надо убрать или закомментировать свойство font-size, либо поменять 80% на 100%*/
+    font-style: oblique;
+    text-align: justify;
+    text-indent: 7%;
 }
 
 .article__author
@@ -108,11 +260,38 @@ body
     display: block;
 
     margin-top: 10px;
+
+    /* Жирный. Размер 80% от родителя. Выравнивание по центру. */
+    font-size: 80%;
+    font-weight: bold;
+    text-align: center;
+    column-span: all;
+}
+
+.article__content
+{
+    /* Параграф имеет красную строку в 2 символа. Размер шрифта 80% от родительского. Выравнивание по ширине колонки. */
+    font-size: 80%;
+    text-align: justify;
+    text-indent: 7%;
+}
+
+.two_columns
+{
+    /* Дополнительный класс для разбиения текста центральных статей на 2 колонки с расстоянием между ними 15px. */
+    column-count: 2;
+    column-gap: 15px;
 }
 
 .article__continue
 {
     display: block;
+
+    /* Шрифт размером 80% от родительского. Наклонный. Выровнен по центру. */
+    font-size: 80%;
+    font-style: oblique;
+    text-align: center;
+    column-span: all; /* не работает в Firefox */
 }
 
 .article__image
@@ -128,9 +307,22 @@ body
     margin: 10px 0 5px 10px;
 }
 
+.article__image-caption
+{
+    /* Размер 80% от корневого. Подчеркнутый. */
+    font-size: .8rem;
+    text-decoration: underline;
+}
+
 .article__subtitle
 {
     margin: 10px 0;
+
+    /* Шрифт "TimesNewRoman". Выравнивание по центру. Размер 117% от родительского блока. Жирный. */
+    font-family: 'Times New Roman', serif;
+    font-size: 117%;
+    font-weight: bold;
+    text-align: center;
 }
 
 /*––––––––––––––––––Блок главной фотографии–––––––––*/
@@ -147,11 +339,27 @@ body
 .main-photo__title
 {
     margin: 0;
+
+    /* Day After a Deadly Blast
+    это не прописано в задании, но визуально подпись к фото выделена крупным жирным шрифтом */
+    font-size: 120%;
+    font-weight: bold;
 }
 
 .main-photo__desc
 {
     margin-bottom: 20px;
+
+    /* Размер шрифта 80% от родительского */
+    font-size: 80%;
+}
+
+.main-photo__caption
+{
+    /* Размер шрифта 70% от корневого. Все буквы заглавные. По правому краю. */
+    font-size: 0.7rem;
+    text-align: right;
+    text-transform: uppercase;
 }
 
 /*––––––––––––––––––Линия разделения––––––––––––––––*/
@@ -212,6 +420,20 @@ body
 .multicolumn .article__title
 {
     margin: 10px 0 0 0;
+}
+
+.multicolumn .article__title_font_racing
+{
+    /* Шрифт "Racing Sans One" курсивный. Размер 200% от родительского. Жирный. */
+    font-family: 'Racing Sans One', sans-serif;
+    font-size: 200%;
+}
+
+.multicolumn .article__title_font_farsan
+{
+    /* Шрифт "Farsan" курсивный. Размер 230% от родительского. Жирный. */
+    font-family: 'Farsan', sans-serif;
+    font-size: 230%;
 }
 
 .center-column

@@ -20,22 +20,27 @@
     
     background: skyblue;
     box-shadow: 0 -400px 300px -300px steelblue inset;
+
+    animation: illumination 100s linear infinite;
 }
 
-/*TODO
-Цвета неба задаются следующими свойствами:
-    День:
+@keyframes illumination {
+    0%, 25%, 100% {
+        /* День: */
         background: skyblue;
         box-shadow: 0 -400px 300px -300px steelblue inset;
-    Вечер:
+    }
+    50% {
+        /* Вечер: */
         background: darkslateblue;
         box-shadow: 0 -400px 300px -300px orangered inset;
-    Ночь:
+    }
+    75% {
+        /* Ночь: */
         background: darkslateblue;
         box-shadow: 0 -400px 300px -300px transparent inset;
-        
-Нужно реализовать плавный переход между ними и зациклить его.
-*/
+    }
+}
 
 .ship::after {
     position: absolute;
@@ -67,11 +72,19 @@
 
 .ship {
     position: absolute;
-    right: 0;
+    right: -150px;
     bottom: 30px;
     
     width: 100px;
     height: 36px;
+
+    animation: swimming 50s linear infinite;
+}
+
+@keyframes swimming {
+    to {
+        transform: translateX(-800px);
+    }
 }
 
 .ship_smokestack {
@@ -106,21 +119,36 @@
     
     border-radius: 50%;
     background: #fff;
+
+    opacity: 0;
 }
 
 .smoke-1 {
     top: -25px;
     right: 44px;
+    animation: smoking 2.25s linear infinite normal 1.5s;
 }
 
 .smoke-2 {
     top: -25px;
     right: 42px;
+    animation: smoking 2.25s linear infinite normal 0.75s;
 }
 
 .smoke-3 {
     top: -25px;
     right: 49px;
+    animation: smoking 2.25s linear infinite normal 0s;
+}
+
+@keyframes smoking {
+    from {
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-25px) scale(2.0);
+        opacity: 0;
+    }
 }
 
 .sun {
@@ -134,6 +162,7 @@
     border-radius: 50%;
     background: #ffcf11;
     box-shadow: 0 0 100px #ffdf05;
+    animation: sunshine 15s linear infinite;
 }
 
 .sun-wrapper {
@@ -143,6 +172,17 @@
     height: 100%;
     
     transform-origin: bottom center;
+
+    animation: sunshine 100s linear infinite;
+}
+
+@keyframes sunshine {
+    from {
+        transform: rotate(-0.25turn);
+    }
+    to {
+        transform: rotate(0.75turn);
+    }
 }
 
 .sun div {
@@ -196,7 +236,7 @@
 
 .cloud {
     position: absolute;
-    left: -180px;
+    left: -220px;
     
     width: 200px;
     height: 60px;
@@ -231,19 +271,52 @@
 }
 
 .cloud-1 {
+    
+    transform: scale(0.2);
+    animation: cloud1 70s linear infinite normal 0s;
     top: 10px;
 }
 
 .cloud-2 {
+    transform: scale(0.3) rotateY(0.5turn);
+    animation: cloud2 40s linear infinite normal 1s;
     top: 50px;
 }
 
 .cloud-3 {
+    transform: scale(0.4);
+    animation: cloud3 30s linear infinite normal 7s;
     top: 100px;
 }
 
 .cloud-4 {
+    transform: scale(0.7) rotateY(0.5turn);
+    animation: cloud4 20s linear infinite normal 0s;
     top: 170px;
+}
+
+@keyframes cloud1 {
+    to {
+        transform: scale(0.3) translateX(2500px);
+    }
+}
+
+@keyframes cloud2 {
+    to {
+        transform: scale(0.5) rotateY(0.5turn) translateX(-1400px);
+    }
+}
+
+@keyframes cloud3 {
+    to {
+        transform: scale(0.6) translateX(1200px);
+    }
+}
+
+@keyframes cloud4 {
+    to {
+        transform: scale(0.8) rotateY(0.5turn) translateX(-900px);
+    }
 }
 
 .sea {

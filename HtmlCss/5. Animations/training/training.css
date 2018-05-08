@@ -1,0 +1,51 @@
+.animation { 
+	width: 150px;
+	height: 150px;
+	background-color: #f00; 
+	/*
+	1я часть
+	animation: movie 4s ease-in 1 normal 100ms forwards;
+	2я часть
+	animation: movie 3s ease-in infinite alternate 100ms forwards;
+	*/
+	animation: movie 3s ease-in infinite alternate 100ms forwards;
+	transition: background-color 500ms linear
+}
+
+.animation:hover {
+	background-color: #ff0;
+}
+
+@keyframes movie {
+	/*
+	1я часть
+	40% {
+		transform: translateX(100px);
+	}
+	70% {
+		transform: translate(100px, 100%);
+	}
+	100% {
+		transform: translate(100px, 100%) scale(2.0) rotate(145deg);
+	}
+	2я часть
+	30% {
+		transform: translateX(100px);
+	}
+	50% {
+		transform: translate(100px, 100%);
+	}
+	75%, 100% {
+		transform: translate(100px, 100%) scale(2.0) rotate(145deg);
+	}
+	*/
+	30% {
+		transform: translateX(100px);
+	}
+	50% {
+		transform: translate(100px, 100%);
+	}
+	75%, 100% {
+		transform: translate(100px, 100%) scale(2.0) rotate(145deg);
+	}
+}

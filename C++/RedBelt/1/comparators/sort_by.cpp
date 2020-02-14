@@ -6,7 +6,7 @@
 using namespace std;
 
 bool operator ==(const Date& a, const Date& b) {
-  return a.year == b.year && a.month == b.month && a.day == b.day;
+  return tie(a.year, a.month, a.day) == tie(b.year, b.month, b.day);
 }
 
 bool operator <(const Date& a, const Date& b) {
@@ -14,7 +14,7 @@ bool operator <(const Date& a, const Date& b) {
 }
 
 bool operator ==(const Time& a, const Time& b) {
-  return a.hours == b.hours && a.minutes == b.minutes;
+  return tie(a.hours, a.minutes) == tie(b.hours, b.minutes);
 }
 
 bool operator <(const Time& a, const Time& b) {

@@ -11,7 +11,24 @@ public:
   void SetLogLine(bool value) { log_line = value; }
   void SetLogFile(bool value) { log_file= value; }
 
-  void Log(const string& message);
+  void Log(const string& message, const string& file = "", int line = 0) {
+    string prefix = "";
+    if(log_file) {
+      prefix += file;
+      if(log_line) {
+        prefix += ":";
+      } else {
+        prefix += " ";
+      }
+    }
+    if(log_line) {
+      if(!log_file)
+        prefix += "Line ";
+      prefix += to_string(line);
+      prefix += " ";
+    }
+    os << prefix << message << '\n'; 
+  }
 
 private:
   ostream& os;
@@ -19,7 +36,8 @@ private:
   bool log_file = false;
 };
 
-#define LOG(logger, message) ...
+#define LOG(logger, message) \
+  logger.Log(message, __FILE__, __LINE__);
 
 void TestLog() {
 /* Для написания юнит-тестов в этой задаче нам нужно фиксировать конкретные

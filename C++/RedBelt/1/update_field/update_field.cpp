@@ -3,7 +3,48 @@
 
 using namespace std;
 
-#define UPDATE_FIELD(ticket, field, values)  // Реализуйте этот макрос, а также необходимые операторы для классов Date и Time
+#define UPDATE_FIELD(ticket, field, values) \
+{ \
+  auto it = values.find(#field); \
+    if (it != values.end()) { \
+      istringstream is(it->second); \
+      is >> ticket.field; \
+    } \
+}
+
+bool operator ==(const Date& a, const Date& b) {
+  return tie(a.year, a.month, a.day) == tie(b.year, b.month, b.day);
+}
+
+istream& operator >>(istream& stream, Date& date) {
+  stream >> date.year;
+  stream.ignore(1);
+  stream >> date.month; 
+  stream.ignore(1);
+  stream >> date.day; 
+  return stream;
+}
+
+ostream& operator<<(ostream& stream, const Date& date) {
+  stream << date.year << "-" << date.month << "-" << date.day;
+  return stream;
+}
+
+bool operator ==(const Time& a, const Time& b) {
+  return tie(a.hours, a.minutes) == tie(b.hours, b.minutes);
+}
+
+istream& operator >>(istream& stream, Time& time) {
+  stream >> time.hours; 
+  stream.ignore(1);
+  stream >> time.minutes; 
+  return stream;
+}
+
+ostream& operator<<(ostream& stream, const Time& time) {
+  stream << time.hours << ":" << time.minutes;
+  return stream;
+}
 
 void TestUpdate() {
   AirlineTicket t;

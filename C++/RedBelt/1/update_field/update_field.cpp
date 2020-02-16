@@ -4,46 +4,44 @@
 using namespace std;
 
 #define UPDATE_FIELD(ticket, field, values) \
-{ \
-  auto it = values.find(#field); \
-    if (it != values.end()) { \
-      istringstream is(it->second); \
-      is >> ticket.field; \
-    } \
+  {                                         \
+    auto it = values.find(#field);          \
+    if (it != values.end()) {               \
+      istringstream is(it->second);         \
+      is >> ticket.field;                   \
+    }                                       \
+  }
+
+bool operator ==(const Date& lhs, const Date& rhs) {
+  return tie(lhs.year, lhs.month, lhs.day) == tie(rhs.year, rhs.month, rhs.day);
 }
 
-bool operator ==(const Date& a, const Date& b) {
-  return tie(a.year, a.month, a.day) == tie(b.year, b.month, b.day);
+istream& operator>>(istream& is, Date& d) {
+  is >> d.year;
+  is.ignore(1);
+  is >> d.month;
+  is.ignore(1);
+  is >> d.day;
+  return is;
 }
 
-istream& operator >>(istream& stream, Date& date) {
-  stream >> date.year;
-  stream.ignore(1);
-  stream >> date.month; 
-  stream.ignore(1);
-  stream >> date.day; 
-  return stream;
+ostream& operator<<(ostream& os, const Date& d) {
+  return os << d.year << '-' << d.month << '-' << d.day;
 }
 
-ostream& operator<<(ostream& stream, const Date& date) {
-  stream << date.year << "-" << date.month << "-" << date.day;
-  return stream;
+bool operator == (const Time& lhs, const Time& rhs) {
+  return tie(lhs.hours, lhs.minutes) == tie(rhs.hours, rhs.minutes);
 }
 
-bool operator ==(const Time& a, const Time& b) {
-  return tie(a.hours, a.minutes) == tie(b.hours, b.minutes);
+istream& operator>>(istream& is, Time& t) {
+  is >> t.hours;
+  is.ignore(1);
+  is >> t.minutes;
+  return is;
 }
 
-istream& operator >>(istream& stream, Time& time) {
-  stream >> time.hours; 
-  stream.ignore(1);
-  stream >> time.minutes; 
-  return stream;
-}
-
-ostream& operator<<(ostream& stream, const Time& time) {
-  stream << time.hours << ":" << time.minutes;
-  return stream;
+ostream& operator<<(ostream& os, const Time& t) {
+  return os << t.hours << ':' << t.minutes;
 }
 
 void TestUpdate() {

@@ -1,76 +1,75 @@
-#include <vector>
-#include <sstream>
+#include <cstddef>
 #include <stdexcept>
+#include <utility>
+#include <vector>
 
 using namespace std;
 
-template<typename T>
+template <typename T>
 class Deque {
 public:
-	explicit Deque() {
-	}
+	Deque() = default;
 
 	bool Empty() const {
-		return vFront.empty() && vBack.empty();
+		return head.empty() && tail.empty();
 	}
-	
+
 	size_t Size() const {
-		return vFront.size() + vBack.size();
+		return head.size() + tail.size();
 	}
 
-	const T& At(size_t index) const {
-		CheckIndex(index);
-		if(index < vFront.size())
-			return vFront[vFront.size() - index - 1];
-		return vBack[index - vFront.size()];
+	const T& At(size_t i) const {
+		CheckIndex(i);
+		return (*this)[i];
 	}
 
-	T& At(size_t index) {
-		CheckIndex(index);
-		if(index < vFront.size())
-			return vFront[vFront.size() - index - 1];
-		return vBack[index - vFront.size()];
+	T& At(size_t i) {
+		CheckIndex(i);
+		return (*this)[i];
 	}
 
-	const T& operator[](size_t index) const {
-		return At(index);
+	const T& operator [] (size_t i) const {
+		return i < head.size() ? head[head.size() - i - 1] : tail[i - head.size()];
 	}
 
-	T& operator[](size_t index) {
-		return At(index);
+	T& operator [] (size_t i) {
+		return i < head.size() ? head[head.size() - i - 1] : tail[i - head.size()];
 	}
 
 	T& Front() {
-		return At(0);
+		return head.empty() ? tail.front() : head.back();
 	}
 
 	const T& Front() const {
-		return At(0);
+		return head.empty() ? tail.front() : head.back();
 	}
 
 	T& Back() {
-		return At(Size() - 1);
+		return tail.empty() ? head.front() : tail.back();
 	}
 
 	const T& Back() const {
-		return At(Size() - 1);
+		return tail.empty() ? head.front() : tail.back();
 	}
 
-	void PushFront(const T& item) {
-		vFront.push_back(item);
+	void PushFront(const T& elem) {
+		head.push_back(elem);
 	}
 
-	void PushBack(const T& item) {
-		vBack.push_back(item);
+	void PushBack(const T& elem) {
+		tail.push_back(elem);
+	}
+
+	void Clear() {
+		head.clear();
+		tail.clear();
 	}
 
 private:
-	vector<T> vFront, vBack;
-	void CheckIndex(size_t index) const {
-		if(index >= Size()) {
-			ostringstream os;
-			os << "index = " << index << " is out of range";
-			throw out_of_range(os.str());
-		}
+	vector<T> head, tail;
+
+	void CheckIndex(size_t i) const {
+	if (i >= Size())
+	  throw out_of_range("Index is out of range");
 	}
 };

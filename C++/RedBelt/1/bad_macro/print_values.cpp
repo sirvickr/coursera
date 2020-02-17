@@ -3,7 +3,7 @@
 #include <ostream>
 using namespace std;
 
-#define PRINT_VALUES(out, x, y) out << (x) << endl; out << (y) << endl
+#define PRINT_VALUES(out, x, y) out << (x) << '\n' << (y) << endl
 
 int main() {
   TestRunner tr;

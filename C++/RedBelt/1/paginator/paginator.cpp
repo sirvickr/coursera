@@ -34,17 +34,13 @@ public:
   };
 
   Paginator(Iterator b, Iterator e, size_t page_size) {
-    size_t count = distance(b, e);
-    if(count) {
-      size_t page_count = (count - 1) / page_size + 1;
-      auto it = b;
-      size_t remainder = count;
-      for(size_t i = 0; i < page_count; ++i) {
-        size_t size = min(page_size, remainder);
-        pages_.emplace_back(Page{it, it + size});
-        it += size;
-        remainder -= size;
-      }
+    for (size_t left = distance(b, e); left > 0; ) {
+      size_t current_page_size = min(page_size, left);
+      Iterator current_page_end = next(b, current_page_size);
+      pages_.push_back({b, current_page_end});
+
+      left -= current_page_size;
+      b = current_page_end;
     }
   }
 

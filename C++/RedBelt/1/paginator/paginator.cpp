@@ -12,10 +12,8 @@ class Paginator {
 public:
   class Page {
   public:
-    Page(Paginator& owner, size_t num, Iterator b, Iterator e)
-    : owner_(owner)
-    , num_(num)
-    , begin_(b)
+    Page(Iterator b, Iterator e)
+    : begin_(b)
     , end_(e) {
     }
 
@@ -32,9 +30,7 @@ public:
     }
 
   private:
-    Paginator& owner_;
     Iterator begin_, end_;
-    size_t num_;
   };
 
   Paginator(Iterator b, Iterator e, size_t page_size) {
@@ -46,11 +42,12 @@ public:
       size_t remainder = count;
       for(size_t i = 0; i < page_count; ++i) {
         size_t size = min(page_size, remainder);
-        pages_.emplace_back(Page{*this, i, it, it + size});
+        //cout << "\nitem " << *it << size << " size " << size;
+        pages_.emplace_back(Page{it, it + size});
         it += size;
         remainder -= size;
       }
-      //cout << " page_size = " << pages_.size() << endl;
+      //cout << " \npage_size = " << pages_.size() << endl;
     }
     page_ = pages_.begin();
   }

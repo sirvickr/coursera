@@ -4,21 +4,83 @@
 #include <iostream>
 #include <vector>
 #include <string>
-using namespace std;
 
-// Реализуйте шаблон класса Paginator
+using namespace std;
 
 template <typename Iterator>
 class Paginator {
+public:
+  class Page {
+  public:
+    Page(Paginator& owner, size_t num, Iterator b, Iterator e)
+    : owner_(owner)
+    , num_(num)
+    , begin_(b)
+    , end_(e) {
+    }
+
+    size_t size() const {
+      return distance(begin_, end_);
+    }
+
+    Iterator begin() const {
+      return begin_;
+    }
+
+    Iterator end() const {
+      return end_;
+    }
+
+  private:
+    Paginator& owner_;
+    Iterator begin_, end_;
+    size_t num_;
+  };
+
+  Paginator(Iterator b, Iterator e, size_t page_size) {
+    size_t count = distance(b, e);
+    if(count) {
+      size_t page_count = (count - 1) / page_size + 1;
+      //cout << "item count " << count << " page_size " << page_size << " page_count " << page_count << ": ";
+      auto it = b;
+      size_t remainder = count;
+      for(size_t i = 0; i < page_count; ++i) {
+        size_t size = min(page_size, remainder);
+        pages_.emplace_back(Page{*this, i, it, it + size});
+        it += size;
+        remainder -= size;
+      }
+      //cout << " page_size = " << pages_.size() << endl;
+    }
+    page_ = pages_.begin();
+  }
+
+  size_t size() const {
+    return pages_.size();
+  }
+
+  auto begin() {
+    return pages_.begin();
+  }
+
+  auto end() {
+    return pages_.end();
+  }
+
+private:
+  vector<Page> pages_;
+  typename vector<Page>::iterator page_;
+  size_t currPage_ = 0;
 };
 
 template <typename C>
-??? Paginate(C& c, size_t page_size) {
-  // Реализуйте этот шаблон функции
+auto Paginate(C& c, size_t page_size) {
+  return Paginator{ begin(c), end(c), page_size };
 }
 
 void TestPageCounts() {
   vector<int> v(15);
+  iota(begin(v), end(v), 1);
 
   ASSERT_EQUAL(Paginate(v, 1).size(), v.size());
   ASSERT_EQUAL(Paginate(v, 3).size(), 5u);

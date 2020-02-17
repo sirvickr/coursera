@@ -37,19 +37,15 @@ public:
     size_t count = distance(b, e);
     if(count) {
       size_t page_count = (count - 1) / page_size + 1;
-      //cout << "item count " << count << " page_size " << page_size << " page_count " << page_count << ": ";
       auto it = b;
       size_t remainder = count;
       for(size_t i = 0; i < page_count; ++i) {
         size_t size = min(page_size, remainder);
-        //cout << "\nitem " << *it << size << " size " << size;
         pages_.emplace_back(Page{it, it + size});
         it += size;
         remainder -= size;
       }
-      //cout << " \npage_size = " << pages_.size() << endl;
     }
-    page_ = pages_.begin();
   }
 
   size_t size() const {
@@ -66,8 +62,6 @@ public:
 
 private:
   vector<Page> pages_;
-  typename vector<Page>::iterator page_;
-  size_t currPage_ = 0;
 };
 
 template <typename C>
@@ -77,7 +71,6 @@ auto Paginate(C& c, size_t page_size) {
 
 void TestPageCounts() {
   vector<int> v(15);
-  iota(begin(v), end(v), 1);
 
   ASSERT_EQUAL(Paginate(v, 1).size(), v.size());
   ASSERT_EQUAL(Paginate(v, 3).size(), 5u);

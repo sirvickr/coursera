@@ -5,7 +5,7 @@
 
 using namespace std;
 
-bool Compare(Student first, Student second) {
+bool Compare(const Student& first, const Student& second) {
   return first.Less(second);
 }
 

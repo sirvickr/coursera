@@ -1,7 +1,6 @@
-#include <algorithm>
+#include <set>
 #include <string>
 #include <vector>
-#include <set>
 
 using namespace std;
 
@@ -21,7 +20,7 @@ class Learner {
     return newWords;
   }
 
-  vector<string> KnownWords() {
-    return { dict.begin(), dict.end() };
+  vector<string> KnownWords() const {
+    return {dict.begin(), dict.end()};
   }
 };

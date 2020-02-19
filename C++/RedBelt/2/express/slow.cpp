@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <iterator>
 #include <map>
-#include <string>
 #include <set>
 
 using namespace std;
@@ -19,13 +19,12 @@ public:
       return result;
     }
     const set<int>& reachable_stations = reachable_lists_.at(start);
-    if (!reachable_stations.empty()) {
-      auto range = reachable_stations.equal_range(finish);
-      if(range.first == range.second && range.first != reachable_stations.begin())
-        --range.first;
-      if(range.second == reachable_stations.end())
-        range.second = range.first;
-      result = min(result, min(abs(*range.first - finish), abs(*range.second - finish)));
+    const auto finish_pos = reachable_stations.lower_bound(finish);
+    if (finish_pos != end(reachable_stations)) {
+      result = min(result, abs(finish - *finish_pos));
+    }
+    if (finish_pos != begin(reachable_stations)) {
+      result = min(result, abs(finish - *prev(finish_pos)));
     }
     return result;
   }

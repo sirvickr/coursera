@@ -1,0 +1,537 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fi",
+				"first"
+			],
+			[
+				"be",
+				"begin_"
+			],
+			[
+				"page",
+				"page_size"
+			],
+			[
+				"pages",
+				"pages_"
+			],
+			[
+				"De",
+				"TestDequeue"
+			],
+			[
+				"lo",
+				"log_file"
+			],
+			[
+				"ex",
+				"extend_list"
+			],
+			[
+				"this",
+				"this_path"
+			],
+			[
+				"wo",
+				"words"
+			],
+			[
+				"deli",
+				"delimeters"
+			],
+			[
+				"delime",
+				"delimeter_count"
+			],
+			[
+				"len",
+				"length"
+			],
+			[
+				"inp",
+				"input_buffer"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "C++/YellowBelt/1/average_temperature_2/readme.txt",
+			"settings":
+			{
+				"buffer_size": 1100,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 150.0,
+		"history":
+		[
+			"cd",
+			"pwd"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/express/slow1.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/learner/learner.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/learner/main.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/paginator/paginator.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/paginator/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/paginator/Makefile",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/dequeue/main.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/uniq_id/uniq_id.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/dequeue/dequeue2.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/dequeue/dequeue2.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/CodeChunks/strutils.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/bad_macro/print_values.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/test_runner.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/update_field/Makefile",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/bad_macro/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/comparators/sort_by.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/update_field/airline_ticket.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/update_field/update_field.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/comparators/Makefile",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/comparators/airline_ticket.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/comparators/test_runner.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/test_runner.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/sort_by.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/CodeChunks/test_runner.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/log.cpp",
+		"/home/vickr/Work/QMainSDR/Base/Common/logduration.h",
+		"/home/vickr/Work/QMainSDR/BaseDfBank/test/config/conf.cmake",
+		"/home/vickr/Work/QMainSDR/phantom/test/data/conf.cmake",
+		"/home/vickr/Work/QMainSDR/phantom/test/data/data.cmake",
+		"/home/vickr/Work/QMainSDR/phantom/test/data.cmake1",
+		"/home/vickr/Work/bak/src/CdmaFreqChan.cs",
+		"/home/vickr/Work/QMainSDR/Base/Common/prioqueue.h",
+		"/home/vickr/Work/QMainSDR/phantom/pqueue.h",
+		"/home/vickr/Work/Build/UhfSignal-Desktop_Qt_5_12_5-Release/UhfSignal/binaries/mainconfigtaskmanager.ini",
+		"/home/vickr/Work/Build/UhfSignal-Desktop_Qt_5_12_5-Release/UhfSignal/binaries/taskConfig/signaltask.ini",
+		"/home/vickr/Work/QMainSDR/phantom/SigProcThread.h",
+		"/home/vickr/Work/QMainSDR/phantom/SigProcThread.cpp",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/TaskFactory.cpp",
+		"/home/vickr/Work/QMainSDR/Base/temp/temp.h",
+		"/home/vickr/Work/QMainSDR/Base/temp/temp.cpp",
+		"/home/vickr/Work/QMainSDR/Base/Common/TaskFactory.h",
+		"/home/vickr/Work/Build/UhfSignal-Desktop_Qt_5_12_5-Release/UhfSignal/binaries/mainconfigrd.ini",
+		"/home/vickr/Work/QMainSDR/phantom/Target.cpp",
+		"/home/vickr/Work/bak/bin/farvater/vickr.dumper/mainconfigrd.ini",
+		"/home/vickr/Work/QMainSDR/Base/xmlmessage/xmlmessages.cpp",
+		"/home/vickr/Work/bak/bin/farvater/vickr.dumper/mainconfig.ini",
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/settings/timecomplex.xml",
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/settings/wbdf.xml",
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/settings/spectrum.xml",
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/sdr.debug/mainconfig_dfbankcl.ini",
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/mainconfigrd.ini",
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/mainconfigwr.ini",
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr/mainconfigsky.ini",
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/mainconfigsky.ini",
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr/mainconfig.ini",
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/settings/switch.xml",
+		"/home/vickr/Work/QMainSDR/phantom/msgstream.cpp",
+		"/home/vickr/Work/QMainSDR/phantom/msgstream.h",
+		"/home/vickr/Work/QMainSDR/BaseTasks/taskplugin.h",
+		"/run/user/1000/gvfs/sftp:host=farvater4,user=at/home/at/vickr/mainconfigsky.ini",
+		"/run/user/1000/gvfs/ftp:host=farvater4,user=at/home/at/vickr/mainconfigsky.ini",
+		"/run/user/1000/gvfs/ftp:host=farvater4,user=at/home/at/sdr/mainconfigsky.ini",
+		"/home/vickr/Work/QMainSDR/skysensorproto/SkySensor.proto",
+		"/home/vickr/Work/QMainSDR/phantom/test/PhantomTest.cpp",
+		"/home/vickr/Work/QMainSDR/datadumper/test/datadumpertest.cpp",
+		"/home/vickr/Work/QMainSDR/datadumper/CMakeLists.txt",
+		"/home/vickr/Work/QMainSDR/phantom/CMakeLists.txt",
+		"/home/vickr/Work/QMainSDR/datadumper/test/main.cpp",
+		"/home/vickr/Work/QMainSDR/phantom/test/main.cpp",
+		"/run/user/1000/gvfs/ftp:host=ph,user=at/home/at/Test/mainconfigsky.ini",
+		"/home/vickr/Work/QMainSDR/phantom/LogLevels.h",
+		"/home/vickr/Work/QMainSDR/phantom/Targets.h",
+		"/home/vickr/Work/QMainSDR/phantom/Targets.cpp",
+		"/home/vickr/Work/QMainSDR/processLibraries/Level3NativeLibSo/CommonHostLib/cpp11patch.h",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logutils.cpp",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logutils.h",
+		"/home/vickr/Work/QMainSDR/BaseTasks/taskinterfaces.h",
+		"/run/user/1000/gvfs/sftp:host=ph,user=at/home/at/sdr.vickr/mainconfigsky.ini",
+		"/home/vickr/Work/Build/SkySensor-Desktop_Qt_5_12_5-Release/SkySensor/binaries/mainconfig.ini",
+		"/run/user/1000/gvfs/sftp:host=ph,user=at/home/at/sdr.bak/mainconfigsky.ini",
+		"/run/user/1000/gvfs/sftp:host=ph,user=at/home/at/sdr/mainconfigsky.ini",
+		"/home/vickr/Downloads/Distrib/Src/poco-master/README",
+		"/home/vickr/temp.txt",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/log.h",
+		"/home/vickr/Work/QMainSDR/BaseTasks/taskplugin.cpp",
+		"/home/vickr/Work/QMainSDR/Base/StcXmlParsing/test/testxmldatareader.cpp",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/test/main.cpp",
+		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/DroneDetectDemodulator-app.pro",
+		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/CMakeLists.txt",
+		"/home/vickr/Work/Phantom/DroneDetectDemodulator7_app/main.cpp",
+		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/ctimer.h",
+		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/main.h",
+		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/sig_finde2.h",
+		"/home/vickr/Work/Phantom/DroneDetectDemodulator7_app/sig_finde2.h",
+		"/run/user/1000/gvfs/sftp:host=ph,user=at/home/at/sdr/mainconfig.ini",
+		"/home/vickr/Work/Build/SkySensor-Desktop_Qt_5_12_0_GCC_64bit-Release/SkySensor/binaries/mainconfig.ini",
+		"/home/vickr/Work/QMainSDR/pluginmanager/baseplugin.cpp",
+		"/home/vickr/Work/QMainSDR/pluginmanager/logplugin.h",
+		"/home/vickr/Work/QMainSDR/pluginmanager/baseplugin.h",
+		"/home/vickr/Work/QMainSDR/Base/Common/tupleutils.h",
+		"/home/vickr/Work/src/log-refact/2/log.h",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logdestram.cpp",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logdestram.h",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logtypes.h",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/threadingstrategy.cpp",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/asyncstrategy.cpp",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/asyncstrategy.h",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/syncstrategy.cpp",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/syncstrategy.h",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/threadingstrategy.h",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logdeststring.h",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logdeststring.cpp",
+		"/home/vickr/Work/src/log-refact/2/test/LoggerTest.cpp",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/personalloglevel.h",
+		"/home/vickr/Work/QMainSDR/Base/StcXmlParsing/test/testxmldatawriter.cpp",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/test/LoggerTest.h",
+		"/home/vickr/Work/QMainSDR/Base/StcXmlParsing/CMakeLists.txt",
+		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/CMakeLists.txt",
+		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/main.cpp",
+		"/home/vickr/Work/QMainSDR/Base/Common/sfinaehelper.h",
+		"/home/vickr/Work/QMainSDR/pluginmanager/plugin.cpp",
+		"/home/vickr/Work/project/signal/out/main-ts101-cc.dir/4/log.txt",
+		"/home/vickr/Documents/E2L",
+		"/home/vickr/Lang/x/xx.txt",
+		"/home/vickr/Work/dataReceive.bak.cpp",
+		"/home/vickr/Work/Build/SkySensor-box_stc-Release/SkySensor/binaries/mainconfig.ini.3",
+		"/home/vickr/Work/log/trackers",
+		"/home/vickr/Work/xml/configurations.xml"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"myset",
+			"ret",
+			"return",
+			"std::",
+			"vector",
+			"os1",
+			"page_",
+			"owner_",
+			"i",
+			"it",
+			"num_",
+			"size",
+			"size_",
+			"page_size",
+			"Paginate",
+			"size",
+			"vBask",
+			"rhs",
+			"lhs",
+			"\\n",
+			"endl",
+			"sig",
+			"add_dependencies",
+			"_tconf",
+			"tconffiles",
+			"config",
+			"Mutable",
+			"Use",
+			"Adaptive",
+			"constexpr auto ",
+			"SupportedTypes",
+			"taskmanager",
+			"signaltask",
+			"signalCommonConfig",
+			"datadumper",
+			"TgtFlow",
+			"settings",
+			"-rw-r--r-- 1 vickr vickr 17920000 Dec  9 12:54 ",
+			"-rw-r--r-- 1 vickr vickr 17920000 Dec  6 15:41 ",
+			"-rw-r--r-- 1 vickr vickr 17920000 Dec  6 15:33 ",
+			"-rw-r--r-- 1 vickr vickr 17920000 Dec  6 12:10 ",
+			"delete ",
+			"-rw-r--r-- 1 vickr vickr 17920000 Dec  6 10:56 ",
+			"-rw-r--r-- 1 vickr vickr 17920000 Dec  6 10:19 ",
+			"-rw-r--r-- 1 vickr vickr 17920000 Dec  6 10:17 ",
+			"HEAP_ITEM",
+			"count",
+			"Prio_T",
+			"Data_T",
+			"count",
+			"GRAPH_HEAP_DECREASE_KEY",
+			"count",
+			"index",
+			"pair",
+			"specprocessor",
+			"LoggerTest",
+			"LogFields",
+			"C0DE000A",
+			"BandClassGridNode",
+			"0(00000000) 0(00000000) 456475(0006F71B) 0(00000000)",
+			"456475(0006F71B) 11(0000000B) 0(00000000) 0(00000000)",
+			"456475(0006F71B) 0(00000000) 328(00000148) 1(00000001)",
+			"float_file",
+			"fout",
+			"buff_input",
+			"mainxmlinterface",
+			"json",
+			"fout",
+			"fopen",
+			"LogInstant",
+			"TaskPlugin",
+			"WARN",
+			"ERROR",
+			"FATAL",
+			"TRACE",
+			"INFO",
+			"ASSERT",
+			"dataReader",
+			"XmlReaderTest",
+			"ASSERT",
+			"pluginmanager.cpp",
+			"-rw-r--r-- 1 vickr vickr 17920000 Aug 19  2019 ",
+			"-rw-r--r-- 1 vickr vickr 17920000 Aug 16 19:35 ",
+			"_fs_22400KHz_fc_2416.500000.pcm",
+			"e2l",
+			"fout",
+			"buff_input",
+			"buff_input_float",
+			"WorkMode",
+			"6FC62E0F-3625-4518-8438-79E2E5DBF062",
+			"F8A41CBD-FC8B-4C75-92E9-24DD737F7FA5",
+			"traceMsg",
+			"project.git",
+			"Inside",
+			"PointInPolygon",
+			"gos",
+			"pint_words",
+			"signalToskysensorproto",
+			"->p",
+			"words",
+			"word_list",
+			"pp",
+			"lines",
+			"input_buffer",
+			"nInteger",
+			"item",
+			"pItem",
+			"nInteger",
+			"pOldCurrent",
+			"nInteger",
+			"pOldCurrent",
+			"temp",
+			"pPrev",
+			"pNext",
+			"pTail",
+			"pHead",
+			"pLeft",
+			"pRight",
+			"pCurrent",
+			"pStart",
+			"QuickSortList",
+			"PrintList",
+			"RemoveAllItems",
+			"AddListItem",
+			"g_pLastItem",
+			"g_pFirstItem",
+			"word_list_t",
+			"g_pFirstItem"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"project"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "C++/YellowBelt/1/average_temperature_2/readme.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1100,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 185.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/C++/C++ Single File.sublime-build",
+	"project": "coursera.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/default.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

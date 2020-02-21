@@ -92,6 +92,29 @@ void TestSample() {
   ASSERT_EQUAL(manager.Cheer(1), 0.5);
 }
 
+void task(istream& is, ostream& os) {
+  ReadingManager manager;
+
+  int query_count;
+  is >> query_count;
+
+  LOG_DURATION("total")
+  for (int query_id = 0; query_id < query_count; ++query_id) {
+    string query_type;
+    is >> query_type;
+    int user_id;
+    is >> user_id;
+
+    if (query_type == "READ") {
+      int page_count;
+      is >> page_count;
+      manager.Read(user_id, page_count);
+    } else if (query_type == "CHEER") {
+      os << setprecision(6) << manager.Cheer(user_id) << "\n";
+    }
+  }
+}
+
 int main() {
   TestRunner tr;
   RUN_TEST(tr, TestSample);
@@ -101,26 +124,7 @@ int main() {
   ios::sync_with_stdio(false);
   cin.tie(nullptr);
 
-  ReadingManager manager;
-
-  int query_count;
-  cin >> query_count;
-
-  LOG_DURATION("total")
-  for (int query_id = 0; query_id < query_count; ++query_id) {
-    string query_type;
-    cin >> query_type;
-    int user_id;
-    cin >> user_id;
-
-    if (query_type == "READ") {
-      int page_count;
-      cin >> page_count;
-      manager.Read(user_id, page_count);
-    } else if (query_type == "CHEER") {
-      cout << setprecision(6) << manager.Cheer(user_id) << "\n";
-    }
-  }
+  task(cin, cout);
 
   return 0;
 }

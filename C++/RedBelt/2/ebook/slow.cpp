@@ -3,6 +3,9 @@
 #include <vector>
 #include <utility>
 
+#include "test_runner.h"
+#include "profile.h"
+
 using namespace std;
 
 class ReadingManager {
@@ -73,8 +76,25 @@ private:
   }
 };
 
+void TestSample() {
+  ReadingManager manager;
+  ASSERT_EQUAL(manager.Cheer(5), 0.0);
+  manager.Read(1, 10);
+  ASSERT_EQUAL(manager.Cheer(1), 1.0);
+  manager.Read(2, 5);
+  manager.Read(3, 7);
+  ASSERT_EQUAL(manager.Cheer(2), 0.0);
+  ASSERT_EQUAL(manager.Cheer(3), 0.5);
+  manager.Read(3, 10);
+  ASSERT_EQUAL(manager.Cheer(3), 0.5);
+  manager.Read(3, 11);
+  ASSERT_EQUAL(manager.Cheer(3), 1.0);
+  ASSERT_EQUAL(manager.Cheer(1), 0.5);
+}
 
 int main() {
+  TestRunner tr;
+  RUN_TEST(tr, TestSample);
   // Для ускорения чтения данных отключается синхронизация
   // cin и cout с stdio,
   // а также выполняется отвязка cin от cout
@@ -86,6 +106,7 @@ int main() {
   int query_count;
   cin >> query_count;
 
+  LOG_DURATION("total")
   for (int query_id = 0; query_id < query_count; ++query_id) {
     string query_type;
     cin >> query_type;

@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
@@ -93,14 +94,29 @@ private:
   int fail_count = 0;
 };
 
-int GetDistinctRealRootCount(double a, double b, double c) {
-  // Вы можете вставлять сюда различные реализации функции,
-  // чтобы проверить, что ваши тесты пропускают корректный код
-  // и ловят некорректный
+void TestLinear() {
+  AssertEqual(GetDistinctRealRootCount(0, 1, 1), 1);
+  AssertEqual(GetDistinctRealRootCount(0, 0, 1), 0);
+}
+
+void TestZeroD() {
+  AssertEqual(GetDistinctRealRootCount(2, 4, 2), 1);
+}
+
+void TestPositiveD() {
+  AssertEqual(GetDistinctRealRootCount(2, 5, 2), 2);
+}
+
+void TestNegativeD() {
+  AssertEqual(GetDistinctRealRootCount(2, 5, 6), 0);
 }
 
 int main() {
   TestRunner runner;
   // добавьте сюда свои тесты
+  runner.RunTest(TestLinear, "TestLinear");
+  runner.RunTest(TestZeroD, "TestZeroD");
+  runner.RunTest(TestPositiveD, "TestPositiveD");
+  runner.RunTest(TestNegativeD, "TestNegativeD");
   return 0;
 }

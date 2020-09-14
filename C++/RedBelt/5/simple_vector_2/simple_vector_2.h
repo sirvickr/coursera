@@ -10,6 +10,8 @@ public:
   explicit SimpleVector(size_t size);
   SimpleVector(const SimpleVector& other);
   SimpleVector& operator=(const SimpleVector& other);
+  SimpleVector(SimpleVector&& other);
+  SimpleVector& operator=(SimpleVector&& other);
   ~SimpleVector();
 
   T& operator[](size_t index);
@@ -35,6 +37,7 @@ public:
     return capacity_;
   }
   void PushBack(const T& value);
+  void PushBack(T&& value);
 
 private:
   void Allocate(size_t size, size_t capacity);
@@ -65,10 +68,30 @@ SimpleVector<T>& SimpleVector<T>::operator=(const SimpleVector& other) {
 }
 
 template <typename T>
+SimpleVector<T>::SimpleVector(SimpleVector&& other)
+: size_(other.size_),
+  capacity_(other.capacity_),
+  begin_(other.begin_),
+  end_(other.end_)
+{
+  other.size_ = other.capacity_ = 0;
+  other.begin_ = other.end_ = nullptr;
+}
+
+template <typename T>
+SimpleVector<T>& SimpleVector<T>::operator=(SimpleVector&& other) {
+  delete[] begin_;
+  size_ = other.size_;
+  capacity_ = other.capacity_;
+  begin_ = other.begin_;
+  end_ = other.end_;
+  other.size_ = other.capacity_ = 0;
+  other.begin_ = other.end_ = nullptr;
+}
+
+template <typename T>
 SimpleVector<T>::~SimpleVector() {
-  if(begin_) {
-    delete[] begin_;
-  }
+  delete[] begin_;
 }
 
 template <typename T>
@@ -85,7 +108,11 @@ void SimpleVector<T>::PushBack(const T& value) {
       capacity_ = 1;
     T* data = new T[capacity_];
     if(begin_) {
-      std::copy(begin_, end_, data);
+      auto from = begin_;
+      auto to = data;
+      while(from != end_) {
+        *to++ = *from++;
+      }
       delete[] begin_;
     }
     begin_ = data;
@@ -95,13 +122,33 @@ void SimpleVector<T>::PushBack(const T& value) {
 }
 
 template <typename T>
-void SimpleVector<T>::Allocate(size_t size, size_t capacity) {
-  if(begin_) {
-    delete [] begin_;
-    begin_ = end_ = nullptr;
+void SimpleVector<T>::PushBack(T&& value) {
+  if(size_ == capacity_) {
+    if(capacity_ > 0)
+      capacity_ <<= 1;
+    else
+      capacity_ = 1;
+    T* data = new T[capacity_];
+    if(begin_) {
+      auto from = begin_;
+      auto to = data;
+      while(from != end_) {
+        *to++ = std::move(*from++);
+      }
+      delete[] begin_;
+    }
+    begin_ = data;
   }
+  begin_[size_++] = std::move(value);
+  end_ = begin_ + size_;
+}
+
+template <typename T>
+void SimpleVector<T>::Allocate(size_t size, size_t capacity) {
+  delete [] begin_;
+  begin_ = end_ = nullptr;
   size_= size;
-  capacity_ = capacity;
+  capacity_= capacity;
   if(capacity_) {
     begin_ = new T[capacity_];
     end_ = begin_ + size_;

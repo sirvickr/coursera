@@ -36,8 +36,7 @@ public:
   size_t Capacity() const {
     return capacity_;
   }
-  void PushBack(const T& value);
-  void PushBack(T&& value);
+  void PushBack(T value);
 
 private:
   void Allocate(size_t size, size_t capacity);
@@ -100,7 +99,7 @@ T& SimpleVector<T>::operator[](size_t index) {
 }
 
 template <typename T>
-void SimpleVector<T>::PushBack(const T& value) {
+void SimpleVector<T>::PushBack(T value) {
   if(size_ == capacity_) {
     if(capacity_ > 0)
       capacity_ <<= 1;
@@ -108,33 +107,7 @@ void SimpleVector<T>::PushBack(const T& value) {
       capacity_ = 1;
     T* data = new T[capacity_];
     if(begin_) {
-      auto from = begin_;
-      auto to = data;
-      while(from != end_) {
-        *to++ = *from++;
-      }
-      delete[] begin_;
-    }
-    begin_ = data;
-  }
-  begin_[size_++] = value;
-  end_ = begin_ + size_;
-}
-
-template <typename T>
-void SimpleVector<T>::PushBack(T&& value) {
-  if(size_ == capacity_) {
-    if(capacity_ > 0)
-      capacity_ <<= 1;
-    else
-      capacity_ = 1;
-    T* data = new T[capacity_];
-    if(begin_) {
-      auto from = begin_;
-      auto to = data;
-      while(from != end_) {
-        *to++ = std::move(*from++);
-      }
+      std::move(begin_, end_, data);
       delete[] begin_;
     }
     begin_ = data;

@@ -12,15 +12,25 @@ using namespace std;
 template <typename T>
 class Synchronized {
 public:
-  explicit Synchronized(T initial = T());
+  explicit Synchronized(T initial = T()): value(initial) {
+  }
 
   struct Access {
+    Access(T& value, mutex& m): ref_to_value(value), g(m) {
+    }
+
     T& ref_to_value;
+  
+  private:
+    lock_guard<mutex> g;
   };
 
-  Access GetAccess();
+  Access GetAccess() {
+    return {value, me};
+  }
 private:
   T value;
+  mutex me;
 };
 
 void TestConcurrentUpdate() {

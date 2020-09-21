@@ -7,13 +7,13 @@ int main() {
   int n;
   cin >> n;
   vector<int> temperatures(n);
-  int sum = 0;
+  int64_t sum = 0;
   for (int& temperature : temperatures) {
     cin >> temperature;
     sum += temperature;
   }
 
-  int average = sum / n;
+  int64_t average = sum / n;
   vector<int> result_indices;
   for (int i = 0; i < n; ++i) {
     if (temperatures[i] > average) {

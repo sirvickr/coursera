@@ -93,25 +93,44 @@ private:
   int fail_count = 0;
 };
 
-class Rational {
-public:
-  // Вы можете вставлять сюда различные реализации,
-  // чтобы проверить, что ваши тесты пропускают корректный код
-  // и ловят некорректный
+#include "rational.h" // disable before submission
 
-  Rational();
-  Rational(int numerator, int denominator) {
-  }
+void TestEmpty() {
+  Rational r;
+  AssertEqual(r.Numerator(), 0, "Numerator");
+  AssertEqual(r.Denominator(), 1, "Denominator");
+}
 
-  int Numerator() const {
-  }
+void TestConstruction() {
+  Rational r(2, 3);
+  AssertEqual(r.Numerator(), 2, "Numerator");
+  AssertEqual(r.Denominator(), 3, "Denominator");
+}
 
-  int Denominator() const {
-  }
-};
+void TestContraction() {
+  Rational r(4, 6);
+  AssertEqual(r.Numerator(), 2, "Numerator");
+  AssertEqual(r.Denominator(), 3, "Denominator");
+}
+
+void TestNegative() {
+  Rational r(4, -6);
+  AssertEqual(r.Numerator(), -2, "Numerator");
+  AssertEqual(r.Denominator(), 3, "Denominator");
+}
+
+void TestPositive() {
+  Rational r(-4, -6);
+  AssertEqual(r.Numerator(), 2, "Numerator");
+  AssertEqual(r.Denominator(), 3, "Denominator");
+}
 
 int main() {
   TestRunner runner;
-  // добавьте сюда свои тесты
+  runner.RunTest(TestEmpty, "TestEmpty");
+  runner.RunTest(TestConstruction, "TestConstruction");
+  runner.RunTest(TestContraction, "TestContraction");
+  runner.RunTest(TestNegative, "TestNegative");
+  runner.RunTest(TestPositive, "TestPositive");
   return 0;
 }

@@ -93,14 +93,32 @@ private:
   int fail_count = 0;
 };
 
-bool IsPalindrom(const string& str) {
-  // Вы можете вставлять сюда различные реализации функции,
-  // чтобы проверить, что ваши тесты пропускают корректный код
-  // и ловят некорректный
+#include "ispalindrome.h" // disable before submission
+
+void TestEmpty() {
+  Assert(IsPalindrom(""), "empty");
+}
+
+void TestSingle() {
+  Assert(IsPalindrom("a"), "single");
+}
+
+void TestMultiple() {
+  Assert(IsPalindrom("abba"), "test: abba");
+  Assert(IsPalindrom("madam"), "test: madam");
+  Assert(IsPalindrom("level"), "test: level");
+  Assert(IsPalindrom("wasitacaroracatisaw"), "test: wasitacaroracatisaw");
+  Assert(IsPalindrom("'\"ab ba\"'"), "test: '\"ab ba\"'");
+  Assert(IsPalindrom(" ab-., ,.-ba "), "test: ab-., ,.-ba");
+  Assert(!IsPalindrom("ab-., ,.-ba "), "test: ab-., ,.-ba");
+  Assert(!IsPalindrom("abc"), "test: abc");
+  Assert(!IsPalindrom("ab"), "test: ab");
 }
 
 int main() {
   TestRunner runner;
-  // добавьте сюда свои тесты
+  runner.RunTest(TestEmpty, "TestEmpty");
+  runner.RunTest(TestSingle, "TestSingle");
+  runner.RunTest(TestMultiple, "TestMultiple");
   return 0;
 }

@@ -4,6 +4,50 @@
 		"selected_items":
 		[
 			[
+				"int",
+				"int64_t"
+			],
+			[
+				"in",
+				"include"
+			],
+			[
+				"p",
+				"push_back"
+			],
+			[
+				"Asse",
+				"AssertEqual"
+			],
+			[
+				"std",
+				"std_name"
+			],
+			[
+				"reg",
+				"regions"
+			],
+			[
+				"boo",
+				"book_time"
+			],
+			[
+				"roo",
+				"room_count"
+			],
+			[
+				"hote",
+				"hotels_"
+			],
+			[
+				"MA",
+				"MAX_PAGE_COUNT_"
+			],
+			[
+				"us",
+				"user_id"
+			],
+			[
 				"fi",
 				"first"
 			],
@@ -60,16 +104,24 @@
 	"buffers":
 	[
 		{
-			"file": "C++/YellowBelt/1/average_temperature_2/readme.txt",
+			"file": "C++/RedBelt/profile.h",
 			"settings":
 			{
-				"buffer_size": 1100,
+				"buffer_size": 690,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "C++/RedBelt/test_runner.h",
+			"settings":
+			{
+				"buffer_size": 1736,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		}
 	],
-	"build_system": "",
+	"build_system": "Packages/C++/C++ Single File.sublime-build",
 	"build_system_choices":
 	[
 		[
@@ -96,6 +148,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"",
+				"About"
+			]
 		],
 		"width": 0.0
 	},
@@ -104,6 +160,8 @@
 		"height": 150.0,
 		"history":
 		[
+			"ls",
+			"pwd",
 			"cd",
 			"pwd"
 		]
@@ -119,10 +177,53 @@
 	},
 	"file_history":
 	[
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/paginator/paginator.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/matrix_sum/matrix_sum.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/3/rectangle/rectangle.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/simple_vector_copy_assignment/simple_vector_copy_assignment.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/sqr/sqr.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/tasks/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/decomposition/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/decomposition/correct.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/decomposition/starter.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/decomposition/input.txt",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/ref/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/ref/itemref.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/sqr/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/blocks/blocks.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/average_temperature_2/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/blocks/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/average_temperature_2/temperature.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/synchronized/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/synchronized/Makefile",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/synchronized/synchronized.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/matrix_sum/Makefile",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/matrix_sum/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/simple_vector_2/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/simple_vector_copy_assignment/simple_vector.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/simple_vector_2/simple_vector_2.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/simple_vector_2/simple_vector_2.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/simple_vector_copy_assignment/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/3/simple_vector/simple_vector.h",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/3/simple_vector/simple_vector.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/3/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/3/rectangle.h",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/test_runner.h",
+		"/home/vickr/Work/Projects/coursera/C++/collout.h",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/2/test_equation/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/2/test_equation/solution.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/regions/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/regions/FindMaxRepetitionCount.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/regions/solution.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/1/regions/main.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/booking/booking.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/booking/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/ebook/readme.txt",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/ebook/slow.cpp",
+		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/ebook/draft.cpp",
 		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/express/slow1.cpp",
 		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/learner/learner.cpp",
 		"/home/vickr/Work/Projects/coursera/C++/RedBelt/2/learner/main.cpp",
-		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/paginator/paginator.cpp",
 		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/paginator/readme.txt",
 		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/paginator/Makefile",
 		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/dequeue/main.cpp",
@@ -203,58 +304,15 @@
 		"/home/vickr/Downloads/Distrib/Src/poco-master/README",
 		"/home/vickr/temp.txt",
 		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/log.h",
-		"/home/vickr/Work/QMainSDR/BaseTasks/taskplugin.cpp",
-		"/home/vickr/Work/QMainSDR/Base/StcXmlParsing/test/testxmldatareader.cpp",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/test/main.cpp",
-		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/DroneDetectDemodulator-app.pro",
-		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/CMakeLists.txt",
-		"/home/vickr/Work/Phantom/DroneDetectDemodulator7_app/main.cpp",
-		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/ctimer.h",
-		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/main.h",
-		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/sig_finde2.h",
-		"/home/vickr/Work/Phantom/DroneDetectDemodulator7_app/sig_finde2.h",
-		"/run/user/1000/gvfs/sftp:host=ph,user=at/home/at/sdr/mainconfig.ini",
-		"/home/vickr/Work/Build/SkySensor-Desktop_Qt_5_12_0_GCC_64bit-Release/SkySensor/binaries/mainconfig.ini",
-		"/home/vickr/Work/QMainSDR/pluginmanager/baseplugin.cpp",
-		"/home/vickr/Work/QMainSDR/pluginmanager/logplugin.h",
-		"/home/vickr/Work/QMainSDR/pluginmanager/baseplugin.h",
-		"/home/vickr/Work/QMainSDR/Base/Common/tupleutils.h",
-		"/home/vickr/Work/src/log-refact/2/log.h",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logdestram.cpp",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logdestram.h",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logtypes.h",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/threadingstrategy.cpp",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/asyncstrategy.cpp",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/asyncstrategy.h",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/syncstrategy.cpp",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/syncstrategy.h",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/threadingstrategy.h",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logdeststring.h",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logdeststring.cpp",
-		"/home/vickr/Work/src/log-refact/2/test/LoggerTest.cpp",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/personalloglevel.h",
-		"/home/vickr/Work/QMainSDR/Base/StcXmlParsing/test/testxmldatawriter.cpp",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/test/LoggerTest.h",
-		"/home/vickr/Work/QMainSDR/Base/StcXmlParsing/CMakeLists.txt",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/CMakeLists.txt",
-		"/home/vickr/Work/Phantom/DroneDetectDemodulator6/main.cpp",
-		"/home/vickr/Work/QMainSDR/Base/Common/sfinaehelper.h",
-		"/home/vickr/Work/QMainSDR/pluginmanager/plugin.cpp",
-		"/home/vickr/Work/project/signal/out/main-ts101-cc.dir/4/log.txt",
-		"/home/vickr/Documents/E2L",
-		"/home/vickr/Lang/x/xx.txt",
-		"/home/vickr/Work/dataReceive.bak.cpp",
-		"/home/vickr/Work/Build/SkySensor-box_stc-Release/SkySensor/binaries/mainconfig.ini.3",
-		"/home/vickr/Work/log/trackers",
-		"/home/vickr/Work/xml/configurations.xml"
+		"/home/vickr/Work/QMainSDR/BaseTasks/taskplugin.cpp"
 	],
 	"find":
 	{
-		"height": 26.0
+		"height": 24.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 101.0,
 		"where_history":
 		[
 		]
@@ -264,6 +322,48 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"result_indices",
+			"Expand",
+			"PushBack",
+			"Add",
+			"Expand",
+			"Allocate",
+			"Copy",
+			"Expand",
+			"bool mv",
+			"Expand",
+			"StringNonCopyable",
+			"CheckCapacity",
+			"allocate",
+			"cout",
+			"end_",
+			"size_",
+			"Paginator",
+			"cout",
+			"std",
+			"return",
+			"RunTest",
+			"vector",
+			"{{Lang::DE, \"Moskau\"}, {Lang::FR, \"Moscou\"}, {Lang::IT, \"Mosca\"}}",
+			"{{Lang::DE, \"Russland\"}, {Lang::FR, \"Russie\"}, {Lang::IT, \"Russia\"}}",
+			"ReadingManager",
+			"ReadingManagerBookingManager",
+			"ReadingManager",
+			"prev_page_count",
+			"cerr",
+			"user_page_counts_[user_id]",
+			"user_count_",
+			"user_count",
+			"prev_page_count",
+			"user_count",
+			"pages_",
+			"cerr",
+			"MAX_USER_COUNT_",
+			"cout",
+			"iss",
+			"user_page_counts_",
+			"user_positions_",
+			"sorted_users_",
 			"myset",
 			"ret",
 			"return",
@@ -349,49 +449,7 @@
 			"-rw-r--r-- 1 vickr vickr 17920000 Aug 16 19:35 ",
 			"_fs_22400KHz_fc_2416.500000.pcm",
 			"e2l",
-			"fout",
-			"buff_input",
-			"buff_input_float",
-			"WorkMode",
-			"6FC62E0F-3625-4518-8438-79E2E5DBF062",
-			"F8A41CBD-FC8B-4C75-92E9-24DD737F7FA5",
-			"traceMsg",
-			"project.git",
-			"Inside",
-			"PointInPolygon",
-			"gos",
-			"pint_words",
-			"signalToskysensorproto",
-			"->p",
-			"words",
-			"word_list",
-			"pp",
-			"lines",
-			"input_buffer",
-			"nInteger",
-			"item",
-			"pItem",
-			"nInteger",
-			"pOldCurrent",
-			"nInteger",
-			"pOldCurrent",
-			"temp",
-			"pPrev",
-			"pNext",
-			"pTail",
-			"pHead",
-			"pLeft",
-			"pRight",
-			"pCurrent",
-			"pStart",
-			"QuickSortList",
-			"PrintList",
-			"RemoveAllItems",
-			"AddListItem",
-			"g_pLastItem",
-			"g_pFirstItem",
-			"word_list_t",
-			"g_pFirstItem"
+			"fout"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -404,7 +462,7 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": true,
+		"whole_word": false,
 		"wrap": true
 	},
 	"groups":
@@ -415,24 +473,26 @@
 			[
 				{
 					"buffer": 0,
-					"file": "C++/YellowBelt/1/average_temperature_2/readme.txt",
+					"file": "C++/RedBelt/profile.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1100,
+						"buffer_size": 690,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								358,
+								358
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -440,13 +500,43 @@
 					},
 					"stack_index": 0,
 					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "C++/RedBelt/test_runner.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1736,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1074,
+								1074
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 119.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
 				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 24.0
 	},
 	"input":
 	{
@@ -477,7 +567,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 185.0
+		"height": 193.0
 	},
 	"output.find_results":
 	{
@@ -487,7 +577,7 @@
 	"project": "coursera.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 44.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -507,7 +597,7 @@
 		[
 			[
 				"",
-				"~/default.sublime-project"
+				"~/Work/Phantom/ddd.sublime-workspace"
 			]
 		],
 		"width": 380.0

@@ -3,15 +3,14 @@
 
 using namespace std;
 
-template<typename K, typename V> V& GetRefStrict(map<K, V>& m, const K& key);
+
 
 template<typename K, typename V>
-V& GetRefStrict(map<K, V>& m, const K& key) {
-	auto it = m.find(key);
-	if(it == m.end()) {
-		throw runtime_error("not found");
-	}
-	return it->second;
+V& GetRefStrict(map<K, V>& m, K key) {
+    if (m.count(key) == 0) {
+        throw runtime_error("no such key in dictionary");
+    }
+    return m[key];
 }
 
 #if 1 // 0 to send

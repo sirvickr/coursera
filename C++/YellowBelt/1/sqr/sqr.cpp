@@ -26,7 +26,7 @@ T Sqr(const T& x) {
 
 template<typename K, typename V>
 pair<K, V> Sqr(const pair<K, V>& x) {
-	return {x.first * x.first, x.second * x.second};
+	return {Sqr(x.first), Sqr(x.second)};
 }
 
 template <typename T>
@@ -43,6 +43,7 @@ map<K, V> Sqr(const map<K, V>& x) {
 	return result;
 }
 
+#if 1 // 0 для отправки
 int main() {
 	vector<int> v = {1, 2, 3};
 	cout << "vector:";
@@ -62,3 +63,4 @@ int main() {
 
   return 0;
 }
+#endif

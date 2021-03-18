@@ -14,6 +14,7 @@ V& GetRefStrict(map<K, V>& m, const K& key) {
 	return it->second;
 }
 
+#if 1 // 0 to send
 int main() {
 	map<int, string> m = {{0, "value"}};
 	string& item = GetRefStrict(m, 0);
@@ -21,3 +22,4 @@ int main() {
 	cout << m[0] << endl; // выведет newvalue
   return 0;
 }
+#endif

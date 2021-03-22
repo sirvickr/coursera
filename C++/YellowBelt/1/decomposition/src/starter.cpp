@@ -1,4 +1,5 @@
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <cassert>
 #include <vector>
@@ -64,27 +65,13 @@ ostream& operator << (ostream& os, const BusesForStopResponse& r) {
 }
 
 struct StopsForBusResponse {
-	string bus;
 	vector<string> stops;
 };
 
 ostream& operator << (ostream& os, const StopsForBusResponse& r) {
-    if (r.stops.empty()) {
-      os << "No bus";
-    } else {
-      for (const string& stop : r.stops) {
-        os << "Stop " << stop << ": ";
-        if (r.stops.size() == 1) {
-          os << "no interchange";
-        } else {
-          for (const string& other_bus : r.stops) {
-            if (r.bus != other_bus) {
-              os << other_bus << " ";
-            }
-          }
-        }
-      }
-    }
+  for (const string& stop : r.stops) {
+    os << stop << endl;
+  }
 	return os;
 }
 
@@ -110,10 +97,10 @@ ostream& operator << (ostream& os, const AllBusesResponse& r) {
 class BusManager {
 public:
   void AddBus(const string& bus, const vector<string>& stops) {
-      for (const string& stop : stops) {
-        stops_to_buses[stop].push_back(bus);
-      }
-	  buses_to_stops[bus] = stops;
+    for (const string& stop : stops) {
+      stops_to_buses[stop].push_back(bus);
+    }
+    buses_to_stops[bus] = stops;
   }
 
   BusesForStopResponse GetBusesForStop(const string& stop) const {
@@ -121,15 +108,32 @@ public:
 	  if(entry == stops_to_buses.end()) {
 		  return {};
 	  }
-      return {entry->second};
+    return {entry->second};
   }
 
   StopsForBusResponse GetStopsForBus(const string& bus) const {
+    StopsForBusResponse response;
 	  auto entry = buses_to_stops.find(bus);
 	  if(entry == buses_to_stops.end()) {
-		  return {bus};
+	    response.stops.push_back("No bus");
+	  } else {
+      for (const string& stop : entry->second) {
+        std::ostringstream oss;
+        oss << "Stop " << stop << ": ";
+        auto buses = stops_to_buses.find(stop);
+        if (buses->second.size() == 1) {
+          oss << "no interchange";
+        } else {
+          for (const string& other_bus : buses->second) {
+            if (bus != other_bus) {
+              oss << other_bus << " ";
+            }
+          }
+        }
+        response.stops.push_back(oss.str());
+      }
 	  }
-      return {bus, entry->second};
+    return response;
   }
 
   AllBusesResponse GetAllBuses() const {
@@ -157,10 +161,10 @@ int main() {
       cout << bm.GetBusesForStop(q.stop) << endl;
       break;
     case QueryType::StopsForBus:
-      cout << bm.GetStopsForBus(q.bus) << endl;
+      cout << bm.GetStopsForBus(q.bus);
       break;
     case QueryType::AllBuses:
-      cout << bm.GetAllBuses() << endl;
+      cout << bm.GetAllBuses();
       break;
     }
   }

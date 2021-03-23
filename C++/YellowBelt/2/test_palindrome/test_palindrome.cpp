@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <map>
 #include <set>
@@ -93,32 +94,28 @@ private:
   int fail_count = 0;
 };
 
-#include "ispalindrome.h" // disable before submission
+void TestIsPalindrom() {
+  Assert(IsPalindrom(""), "empty string is a palindrome");
+  Assert(IsPalindrom("a"), "one letter string is a palindrome");
+  Assert(IsPalindrom("abba"), "abba is a palindrome");
+  Assert(IsPalindrom("abXba"), "abXba is a palindrome");
+  Assert(IsPalindrom("a b X b a"), "`a b X b a` is a palindrome");
+  Assert(IsPalindrom("  ABBA  "), "`  ABBA  ` is a palindrome");
 
-void TestEmpty() {
-  Assert(IsPalindrom(""), "empty");
-}
-
-void TestSingle() {
-  Assert(IsPalindrom("a"), "single");
-}
-
-void TestMultiple() {
-  Assert(IsPalindrom("abba"), "test: abba");
-  Assert(IsPalindrom("madam"), "test: madam");
-  Assert(IsPalindrom("level"), "test: level");
-  Assert(IsPalindrom("wasitacaroracatisaw"), "test: wasitacaroracatisaw");
-  Assert(IsPalindrom("'\"ab ba\"'"), "test: '\"ab ba\"'");
-  Assert(IsPalindrom(" ab-., ,.-ba "), "test: ab-., ,.-ba");
-  Assert(!IsPalindrom("ab-., ,.-ba "), "test: ab-., ,.-ba");
-  Assert(!IsPalindrom("abc"), "test: abc");
-  Assert(!IsPalindrom("ab"), "test: ab");
+  Assert(!IsPalindrom("XabbaY"), "XabbaY is not a palindrome");
+  Assert(!IsPalindrom("abXYba"), "abXYba is not a palindrome");
+  Assert(!IsPalindrom("Xabba"), "Xabba is not a palindrome");
+  Assert(!IsPalindrom("abbaX"), "abbaX is not a palindrome");
+  Assert(
+    !IsPalindrom("was it a car or a cat i saw"),
+    "`was it a car or a cat i saw` is not a palindrome because spaces do not match"
+  );
+  Assert(!IsPalindrom("ABBA   "), "`ABBA   ` is not a palindrome");
+  Assert(!IsPalindrom("  ABBA"), "`  ABBA` is not a palindrome");
 }
 
 int main() {
   TestRunner runner;
-  runner.RunTest(TestEmpty, "TestEmpty");
-  runner.RunTest(TestSingle, "TestSingle");
-  runner.RunTest(TestMultiple, "TestMultiple");
+  runner.RunTest(TestIsPalindrom, "TestIsPalindrom");
   return 0;
 }

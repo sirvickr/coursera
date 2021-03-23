@@ -125,6 +125,11 @@ void TestPositive() {
   AssertEqual(r.Denominator(), 3, "Denominator");
 }
 
+void TestZero() {
+  Rational r(0, -6);
+  AssertEqual(r.Denominator(), 1, "Denominator");
+}
+
 int main() {
   TestRunner runner;
   runner.RunTest(TestEmpty, "TestEmpty");
@@ -132,5 +137,6 @@ int main() {
   runner.RunTest(TestContraction, "TestContraction");
   runner.RunTest(TestNegative, "TestNegative");
   runner.RunTest(TestPositive, "TestPositive");
+  runner.RunTest(TestZero, "TestZero");
   return 0;
 }

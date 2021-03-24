@@ -7,26 +7,34 @@
 
 using namespace std;
 
+/*
+Гарантируется, что:
+строка непуста;
+строка состоит лишь из латинских букв и пробелов;
+первый и последний символы строки не являются пробелами;
+строка не содержит двух пробелов подряд.
+*/
+
 vector<string> SplitIntoWords(const string& s) {
   vector<string> result;
   auto from = begin(s);
-  auto to = find(from, end(s), ' ');
-  while(to != end(s)) {
-    result.push_back(string(from, to));
-    from = next(to);
-    to = find(from, end(s), ' ');
-  }
-  if(from != to) {
-    result.push_back(string(from, to));
+  const auto to = end(s);
+  while (true) {
+    auto it = find(from, to, ' ');
+    result.push_back(string(from, it));
+    if (it == to) {
+      break;
+    } else {
+      from = it + 1;
+    }
+
   }
   return result;
 }
 
 void TestAll() {
-  AssertEqual(SplitIntoWords(""), vector<string>{}, "1");
   AssertEqual(SplitIntoWords("C"), vector<string>{"C"}, "2");
   AssertEqual(SplitIntoWords("C"), vector<string>{"C"}, "3");
-  AssertEqual(SplitIntoWords("C "), vector<string>{"C"}, "4");
   AssertEqual(SplitIntoWords("C Cpp Java Python"), vector<string>{"C", "Cpp", "Java", "Python"}, "5");
 }
 

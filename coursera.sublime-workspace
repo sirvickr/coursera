@@ -119,6 +119,15 @@
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "C++/YellowBelt/2/test_equation/readme.txt",
+			"settings":
+			{
+				"buffer_size": 1723,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "Packages/C++/C++ Single File.sublime-build",
@@ -177,6 +186,38 @@
 	},
 	"file_history":
 	[
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_equation/solution.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_equation/test_equation.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_palindrome/ispalindrome.h",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_palindrome/readme.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_palindrome/test_palindrome.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_person/person.h",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_person/readme.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_person/test_person.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_rational/rational.h",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_rational/readme.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_rational/test_rational.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/2/test_rational/solution.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/decomposition/src/correct.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/decomposition/src/input.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/decomposition/src/readme.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/decomposition/src/starter.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/ref/itemref.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/ref/readme.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/sqr/sqr.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/blocks/input.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/sqr/readme.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/blocks/readme.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/blocks/blocks.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/tasks/correct.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/tasks/main.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/tasks/my.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/tasks/readme.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/tasks/tasks.h",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/tasks/team_tasks.cpp",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/average_temperature_2/input.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/average_temperature_2/readme.txt",
+		"/home/pheodor/Private/coursera/C++/YellowBelt/1/average_temperature_2/temperature.cpp",
 		"/home/vickr/Work/Projects/coursera/C++/RedBelt/1/paginator/paginator.cpp",
 		"/home/vickr/Work/Projects/coursera/C++/RedBelt/5/matrix_sum/matrix_sum.cpp",
 		"/home/vickr/Work/Projects/coursera/C++/YellowBelt/3/rectangle/rectangle.h",
@@ -272,43 +313,11 @@
 		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/sdr.debug/mainconfig_dfbankcl.ini",
 		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/mainconfigrd.ini",
 		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/mainconfigwr.ini",
-		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr/mainconfigsky.ini",
-		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/mainconfigsky.ini",
-		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr/mainconfig.ini",
-		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr.dumper/settings/switch.xml",
-		"/home/vickr/Work/QMainSDR/phantom/msgstream.cpp",
-		"/home/vickr/Work/QMainSDR/phantom/msgstream.h",
-		"/home/vickr/Work/QMainSDR/BaseTasks/taskplugin.h",
-		"/run/user/1000/gvfs/sftp:host=farvater4,user=at/home/at/vickr/mainconfigsky.ini",
-		"/run/user/1000/gvfs/ftp:host=farvater4,user=at/home/at/vickr/mainconfigsky.ini",
-		"/run/user/1000/gvfs/ftp:host=farvater4,user=at/home/at/sdr/mainconfigsky.ini",
-		"/home/vickr/Work/QMainSDR/skysensorproto/SkySensor.proto",
-		"/home/vickr/Work/QMainSDR/phantom/test/PhantomTest.cpp",
-		"/home/vickr/Work/QMainSDR/datadumper/test/datadumpertest.cpp",
-		"/home/vickr/Work/QMainSDR/datadumper/CMakeLists.txt",
-		"/home/vickr/Work/QMainSDR/phantom/CMakeLists.txt",
-		"/home/vickr/Work/QMainSDR/datadumper/test/main.cpp",
-		"/home/vickr/Work/QMainSDR/phantom/test/main.cpp",
-		"/run/user/1000/gvfs/ftp:host=ph,user=at/home/at/Test/mainconfigsky.ini",
-		"/home/vickr/Work/QMainSDR/phantom/LogLevels.h",
-		"/home/vickr/Work/QMainSDR/phantom/Targets.h",
-		"/home/vickr/Work/QMainSDR/phantom/Targets.cpp",
-		"/home/vickr/Work/QMainSDR/processLibraries/Level3NativeLibSo/CommonHostLib/cpp11patch.h",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logutils.cpp",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/logutils.h",
-		"/home/vickr/Work/QMainSDR/BaseTasks/taskinterfaces.h",
-		"/run/user/1000/gvfs/sftp:host=ph,user=at/home/at/sdr.vickr/mainconfigsky.ini",
-		"/home/vickr/Work/Build/SkySensor-Desktop_Qt_5_12_5-Release/SkySensor/binaries/mainconfig.ini",
-		"/run/user/1000/gvfs/sftp:host=ph,user=at/home/at/sdr.bak/mainconfigsky.ini",
-		"/run/user/1000/gvfs/sftp:host=ph,user=at/home/at/sdr/mainconfigsky.ini",
-		"/home/vickr/Downloads/Distrib/Src/poco-master/README",
-		"/home/vickr/temp.txt",
-		"/home/vickr/Work/QMainSDR/Base/QBoxLogger/log.h",
-		"/home/vickr/Work/QMainSDR/BaseTasks/taskplugin.cpp"
+		"/run/user/1000/gvfs/ftp:host=f4,user=at/home/at/vickr/mainconfigsky.ini"
 	],
 	"find":
 	{
-		"height": 24.0
+		"height": 39.0
 	},
 	"find_in_files":
 	{
@@ -322,6 +331,16 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"AssertRational",
+			"input_map",
+			"ValueType",
+			"KeyType",
+			"pair",
+			"const",
+			"Sqr",
+			"int64",
+			"int",
+			"int64_t",
 			"result_indices",
 			"Expand",
 			"PushBack",
@@ -439,17 +458,7 @@
 			"ERROR",
 			"FATAL",
 			"TRACE",
-			"INFO",
-			"ASSERT",
-			"dataReader",
-			"XmlReaderTest",
-			"ASSERT",
-			"pluginmanager.cpp",
-			"-rw-r--r-- 1 vickr vickr 17920000 Aug 19  2019 ",
-			"-rw-r--r-- 1 vickr vickr 17920000 Aug 16 19:35 ",
-			"_fs_22400KHz_fc_2416.500000.pcm",
-			"e2l",
-			"fout"
+			"INFO"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -468,7 +477,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -498,7 +507,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -525,10 +534,40 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 119.0,
+						"translation.y": 95.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "C++/YellowBelt/2/test_equation/readme.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1723,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								706,
+								706
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -597,7 +636,7 @@
 		[
 			[
 				"",
-				"~/Work/Phantom/ddd.sublime-workspace"
+				"~/Private/english/english.sublime-project"
 			]
 		],
 		"width": 380.0

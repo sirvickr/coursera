@@ -1,27 +1,22 @@
 #include "phone_number.h"
 
+#include <stdexcept>
+#include <string>
 #include <sstream>
 
-PhoneNumber::PhoneNumber(const string &international_number) {
-  if(international_number.empty())
-    throw invalid_argument("empty");
-  if(international_number.front() != '+')
-    throw invalid_argument("no leading '+'");
-  istringstream iss(international_number);
-  string s;
-  iss.ignore(1);
-  if(!getline(iss, s, '-') || s.empty()) {
-    throw invalid_argument("invalid format (country code)");
+using namespace std;
+
+PhoneNumber::PhoneNumber(const string& international_number) {
+  istringstream is(international_number);
+
+  char sign = is.get();
+  getline(is, country_code_, '-');
+  getline(is, city_code_, '-');
+  getline(is, local_number_);
+
+  if (sign != '+' || country_code_.empty() || city_code_.empty() || local_number_.empty()) {
+    throw invalid_argument("Phone number must begin with '+' symbol and contain 3 parts separated by '-' symbol: " + international_number);
   }
-  country_code_ = s;
-  if(!getline(iss, s, '-') || s.empty()) {
-    throw invalid_argument("invalid format (city code)");
-  }
-  city_code_ = s;
-  if(!getline(iss, s) || s.empty()) {
-    throw invalid_argument("invalid format (local number)");
-  }
-  local_number_ = s;
 }
 
 string PhoneNumber::GetCountryCode() const {

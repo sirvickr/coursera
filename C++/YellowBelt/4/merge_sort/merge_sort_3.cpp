@@ -11,7 +11,6 @@ void MergeSort(RandomIt range_begin, RandomIt range_end) {
 	if(size < 2)
 		return;
 	// 2. Создать вектор, содержащий все элементы текущего диапазона.
-	vector<typename RandomIt::value_type> elements(range_begin, range_end);
 	// 3. Разбить вектор на 3 равные части (в этой задаче гарантируется, что длина передаваемого диапазона является степенью тройки, так что вектор всегда можно разбить на три равные части).
 	size_t segment_size = size / 3;
 	auto delim1 = next(range_begin, segment_size);

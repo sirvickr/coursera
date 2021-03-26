@@ -4,26 +4,30 @@
 using namespace std;
 
 set<int>::const_iterator FindNearestElement(const set<int>& numbers, int border) {
-  auto p = numbers.equal_range(border);
-  // точное совпадение
-  if(p.first != p.second) {
-    return p.first;
+  // Запрашиваем итератор на первый элемент, не меньший border;
+  // если такого элемента нет, то мы получим numbers.end()
+  // set::lower_bound ->
+  // http://ru.cppreference.com/w/cpp/container/set/lower_bound
+  const auto first_not_less = numbers.lower_bound(border);
+
+  // Если множество пусто или до первого элемента не меньше border
+  // нет элементов, то мы уже получили ответ
+  if (first_not_less == numbers.begin()) {
+    return first_not_less;
   }
-  // если непустое - вернуть 1й элемент, иначе end() = begin()
-  if(p.first == begin(numbers)) {
-    return p.first;
+
+  // Если элементов, не меньших border, нет и set не пуст, то достаточно взять
+  // итератор на последний элемент, меньший border
+  // prev -> http://ru.cppreference.com/w/cpp/iterator/prev
+  const auto last_less = prev(first_not_less);
+  if (first_not_less == numbers.end()) {
+    return last_less;
   }
-  // тут уже точно не пустое - если end(), вернуть последний эелемент
-  auto left = prev(p.first);
-  if(p.first == end(numbers)) {
-    return left;
-  }
-  // находимся посреди непустого множества - вернуть
-  // ближайший элемент, либо наименьший из двух ближайших
-  if(border - *left <= *p.first - border) {
-    return left; // это наименьший из двух ближайших
-  }
-  return p.first; // это единственный ближайший элемент
+
+  // Разыменуем оба итератора-кандидата и выберем тот,
+  // чей элемент ближе к искомому
+  const bool is_left = (border - *last_less <= *first_not_less - border);
+  return is_left ? last_less : first_not_less;
 }
 
 #if 0

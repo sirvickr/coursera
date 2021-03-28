@@ -8,11 +8,9 @@ using namespace std;
 string FindNameByYear(const map<int, string>& names, int year) {
   string name;  // изначально имя неизвестно
 
-  if(!names.empty()) {
-    auto it = names.upper_bound(year);
-    if(it != names.begin()) {
-      name = prev(it)->second;
-    }
+  auto it = names.upper_bound(year);
+  if(it != names.begin()) {
+    name = prev(it)->second;
   }
 
   return name;

@@ -8,14 +8,10 @@ using namespace std;
 string FindNameByYear(const map<int, string>& names, int year) {
   string name;  // изначально имя неизвестно
 
-  // перебираем всю историю по возрастанию ключа словаря, то есть в хронологическом порядке
-  for (const auto& item : names) {
-    // если очередной год не больше данного, обновляем имя
-    if (item.first <= year) {
-      name = item.second;
-    } else {
-      // иначе пора остановиться, так как эта запись и все последующие относятся к будущему
-      break;
+  if(!names.empty()) {
+    auto it = names.upper_bound(year);
+    if(it != names.begin()) {
+      name = prev(it)->second;
     }
   }
 

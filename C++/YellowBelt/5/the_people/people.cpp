@@ -4,102 +4,142 @@
 
 using namespace std;
 
+// Во избежание избыточного копирования при передаче параметров в функции, все
+// аргументы типа string и vector были заменены на соответствующие (константные) ссылки.
 
-class Student {
+// Базовый класс, описывающий любого человека
+class Person {
 public:
+  Person(const string& occupation, const string& name)
+  : occupation(occupation), name(name) {
+  }
 
-    Student(string name, string favouriteSong) {
-        Name = name;
-        FavouriteSong = favouriteSong;
+  // Разрешаем читать имя вне класса Person
+  string Name() const {
+    return name;
+  }
+
+  // Разрешаем читать вид деятельности вне иерархии классов Person
+  string Occupation() const {
+    return occupation;
+  }
+
+  // Общее для всех людей действие, но каждый выполняет его по своему
+  // (поэтому метод объявлен как виртуальный)
+  virtual void Walk(const string& destination) const = 0;
+
+  // Витруальный деструктор в базовом классе с виртуальными функциями
+  // необходим для того, чтобы деструкторы корректно вызывались
+  // для всех объектов иерархии наследования
+  virtual ~Person();
+
+protected:
+  // Профессия (вид деятельности)
+  const string occupation;
+  // Имя есть у каждого человека, выносим в базовый класс
+  const string name;
+};
+
+// Для корректной работы прогаммы даже у абстрактныго
+// базового класса должно быть определение деструктора
+Person::~Person() {
+}
+
+// Студент - тоже человек
+class Student : public Person {
+public:
+    // Инициализацию членов класса проводим не в теле конструктора,
+    // а в списке инициализации - наиболее универсальный подход
+    Student(const string& name, const string& favouriteSong)
+    : Person("Student", name), favouriteSong(favouriteSong) {
     }
 
+    // Разрешаем читать приватный член класса извне
+    string FavouriteSong() const {
+      return favouriteSong;
+    }
+
+    // Полиморфная реализация виртуального метода, унаследованного от Person
+    // (поведение с тем же названием, но специфичное для студента)
+    void Walk(const string& destination) const override {
+        cout << occupation << ": " << name << " walks to: " << destination << endl;
+        cout << occupation << ": " << name << " sings a song: " << favouriteSong << endl;
+    }
+
+    // Действия, специфичные для студента
     void Learn() {
-        cout << "Student: " << Name << " learns" << endl;
+        cout << occupation << ": " << name << " learns" << endl;
     }
-
-    void Walk(string destination) {
-        cout << "Student: " << Name << " walks to: " << destination << endl;
-        cout << "Student: " << Name << " sings a song: " << FavouriteSong << endl;
-    }
-
     void SingSong() {
-        cout << "Student: " << Name << " sings a song: " << FavouriteSong << endl;
+        cout << occupation << ": " << name << " sings a song: " << favouriteSong << endl;
     }
 
-public:
-    string Name;
-    string FavouriteSong;
+private: // скрываем члены класса по избежание непреднамеренного изменение их извне
+    string favouriteSong;
 };
 
-
-class Teacher {
+// И учитель - человек
+class Teacher : public Person {
 public:
-
-    Teacher(string name, string subject) {
-        Name = name;
-        Subject = subject;
+    // Инициализацию членов класса проводим не в теле конструктора,
+    // а в списке инициализации - наиболее универсальный подход
+    Teacher(const string& name, const string& subject)
+    : Person("Teacher", name), subject(subject) {
     }
 
+    // Разрешаем читать приватный член класса извне
+    string Subject() const {
+      return subject;
+    }
+
+    // Полиморфная реализация виртуального метода, унаследованного от Person
+    // (поведение с тем же названием, но специфичное для учителя)
+    void Walk(const string& destination) const override {
+        cout << occupation << ": " << name << " walks to: " << destination << endl;
+    }
+
+    // Действия, специфичные для учителя
     void Teach() {
-        cout << "Teacher: " << Name << " teaches: " << Subject << endl;
+        cout << occupation << ": " << name << " teaches: " << subject << endl;
     }
 
-    void Walk(string destination) {
-        cout << "Teacher: " << Name << " walks to: " << destination << endl;
-    }
-
-public:
-    string Name;
-    string Subject;
+private: // скрываем члены класса по избежание непреднамеренного изменение их извне
+    string subject;
 };
 
-
-class Policeman {
+// И полицейский
+class Policeman : public Person {
 public:
-    Policeman(string name) {
-        Name = name;
+    Policeman(const string& name) : Person("Policeman", name) {
     }
 
-    void Check(Teacher t) {
-        cout << "Policeman: " << Name << " checks Teacher. Teacher's name is: " << t.Name << endl;
+    // Вместо нескольких специфичных для каждого человека функций
+    // проверки документов, реализуем одну, универсальную для всех
+    void Check(const Person& person) {
+        cout << occupation << ": " << name << " checks " << person.Occupation() << ". "
+             << person.Occupation() << "'s name is: " << person.Name() << endl;
     }
 
-    void Check(Student s) {
-        cout << "Policeman: " << Name << " checks Student. Student's name is: " << s.Name << endl;
+    // Полиморфная реализация виртуального метода, унаследованного от Person
+    // (поведение с тем же названием, но специфичное для полицейского)
+    void Walk(const string& destination) const override {
+        cout << occupation << ": " << name << " walks to: " << destination << endl;
     }
-
-    void Check(Policeman p) {
-        cout << "Policeman: " << Name << " checks Policeman. Policeman's name is: " << p.Name << endl;
-    }
-
-    void Walk(string destination) {
-        cout << "Policeman: " << Name << " walks to: " << destination << endl;
-    }
-
-public:
-    string Name;
 };
 
-
-void VisitPlaces(Teacher t, vector<string> places) {
+// Вместо нескольких специфичных для каждого человека функций
+// путешествия, реализуем одну, универсальную для всех
+void VisitPlaces(const Person& person, const vector<string>& places) {
     for (auto p : places) {
-        t.Walk(p);
+      person.Walk(p);
     }
 }
 
-void VisitPlaces(Student s, vector<string> places) {
-    for (auto p : places) {
-        s.Walk(p);
-    }
-}
-
-void VisitPlaces(Policeman pol, vector<string> places) {
-    for (auto p : places) {
-        pol.Walk(p);
-    }
-}
-
-
+// Помимо приведённого в задании сценария, проведённый рефакторинг
+// позволит использовать объекты этой иерархии классов гораздо большим
+// количеством спсобов - например, хранить все объекты с помощью
+// shared_ptr<Person> в различных контейнерах, создавать объекты
+// в зависимости поступающих входных данных и т.д.
 int main() {
     Teacher t("Jim", "Math");
     Student s("Ann", "We will rock you");

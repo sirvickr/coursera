@@ -1,39 +1,59 @@
-#include <limits>
 #include <iostream>
+#include <vector>
 #include <string>
 #include <map>
 #include <deque>
 
 using namespace std;
 
+// Определим структуру для удобной организации данных
+struct Operation {
+  // Параметры по умолчанию нужны для конструирования вектора
+  // ненулевого размера, см. (*)
+  char type = 0;
+  int number = 0;
+};
+
+// Функция для проверки выполнения требований постановки скобок
+bool NeedBrackets(char last, char current) {
+  return (last == '+' || last == '-') && (current == '*' || current == '/');
+}
+
 #if 1
 int main() {
-  const map<string, int> operations = { {"+", 1}, {"-", 1}, {"*", 2}, {"/", 2} };
-  int n;
-  string base, operand, operation;//, curr_operation;
-  deque<string> expr;
-  int prio_prev = numeric_limits<int>::max();
-  cin >> base >> n;
+  int initial_number;
+  cin >> initial_number;
 
-  expr.push_back(base);
-
-  for (int i = 0; i < n; ++i) {
-    cin >> operation >> operand;
-    int prio_curr = operations.at(operation);
-    if(prio_curr > prio_prev) {
-      expr.push_front("(");
-      expr.push_back(")");
-    }
-    expr.push_back(" ");
-    expr.push_back(operation);
-    expr.push_back(" ");
-    expr.push_back(operand);
-
-    prio_prev = prio_curr;
+  int number_of_operations;
+  cin >> number_of_operations;
+  vector<Operation> operations(number_of_operations);  // (*)
+  for (int i = 0; i < number_of_operations; ++i) {
+    cin >> operations[i].type;
+    cin >> operations[i].number;
   }
-  for(const auto& s: expr) {
+
+  deque<string> expression;
+  expression.push_back(to_string(initial_number));
+  // первое число никогда не обрамляется скобками
+  char last_type = '*';
+  for (const auto& operation : operations) {
+    // Если условия удовлетворены, обрамляем последовательность скобками
+    if (NeedBrackets(last_type, operation.type)) {
+      expression.push_front("(");
+      expression.push_back(")");
+    }
+    expression.push_back(" ");
+    expression.push_back(string(1, operation.type));
+    expression.push_back(" ");
+    expression.push_back(to_string(operation.number));
+
+    last_type = operation.type;
+  }
+
+  for (const string& s : expression) {
     cout << s;
   }
+
   return 0;
 }
 #endif

@@ -10,89 +10,115 @@
 
 using namespace std;
 
-struct Figure {
-  virtual string Name() const = 0;
-  virtual double Perimeter() const = 0;
-  virtual double Area() const = 0;
-  virtual ~Figure();
-};
+const float pi = 3.14;
 
-class Triangle : public Figure {
+class Figure {
 public:
-  Triangle(double a, double b, double c): a(a), b(b), c(c) {
-  }
-  string Name() const override {
-    return "TRIANGLE";
-  }
-  double Perimeter() const override {
-    return a + b + c;
-  }
-  double Area() const override {
-    double p = Perimeter() / 2;
-    return sqrt(p * (p - a) * (p - b) * (p - c));
-  }
+  Figure(const string& type)
+      : Type(type) {}
 
-private:
-  double a, b, c;
+  virtual string Name() = 0;
+  virtual float Perimeter() = 0;
+  virtual long double Area() = 0;
+
+  // Виртуальный деструктор.
+  // При отсутствии проблем компиляции данного решения строка не является
+  // необходимой и может быть опущена.
+  // А вот что такое виртуальный деструктор - Вы узнаете уже на черном поясе.
+  virtual ~Figure() = default;
+
+  const string Type;
 };
 
 class Rect : public Figure {
 public:
-  Rect(double width, double height): width(width), height(height) {
-  }
-  string Name() const override {
-    return "RECT";
-  }
-  double Perimeter() const override {
-    return (width + height) * 2;
-  }
-  double Area() const override {
-    return width * height;
+  Rect(int& w, int& h)
+      : Figure("RECT")
+      , P(2 * w + 2 * h)
+      , S(w * h) {
   }
 
+  float Perimeter() override {
+    return P;
+  }
+  long double Area() override {
+    return S;
+  }
+  string Name() override {
+    return Type;
+  }
 private:
-  double width, height;
+  int P;
+  double S;
 };
 
 class Circle : public Figure {
 public:
-  const double PI = 3.14;
-  Circle(double radius): radius(radius) {
-  }
-  string Name() const override {
-    return "CIRCLE";
-  }
-  double Perimeter() const override {
-    return 2 * PI * radius;
-  }
-  double Area() const override {
-    return PI * radius * radius;
-  }
+  Circle (int& r)
+      : Figure("CIRCLE")
+      , P(2 * pi * r)
+      , S(pi * r * r) {}
 
+  float Perimeter() override {
+    return P;
+  }
+  long double Area() override {
+    return S;
+  }
+  string Name() override {
+    return Type;
+  }
 private:
-  double radius;
+  float P;
+  double S;
 };
 
-Figure::~Figure() {
-}
-
-shared_ptr<Figure> CreateFigure(istream& is) {
-  string figure;
-  is >> figure;
-  if (figure == "RECT") {
-    double width, height;
-    is >> width >> height;
-    return make_shared<Rect>(width, height);
-  } else if (figure == "TRIANGLE") {
-    double a, b, c;
-    is >> a >> b >> c;
-    return make_shared<Triangle>(a, b, c);
-  } else if (figure == "CIRCLE") {
-    double radius;
-    is >> radius;
-    return make_shared<Circle>(radius);
+class Triangle : public Figure {
+public:
+  Triangle(int& a, int& b, int& c)
+      : Figure("TRIANGLE") {
+    P = a + b + c;
+    S = sqrtl((P/2)*(P/2 - a)*(P/2 - b)*(P/2 - c));
   }
-  return {};
+
+  float Perimeter() override {
+    return P;
+  }
+  long double Area() override {
+    return S;
+  }
+  string Name() override {
+    return Type;
+  }
+private:
+  float P;
+  long double S;
+};
+
+shared_ptr<Figure> CreateFigure(istringstream& is) {
+  shared_ptr<Figure> fig;
+
+  string figure_name;
+  is >> figure_name;
+  if(figure_name == "RECT") {
+    int a, b;
+    is >> a >> b;
+    fig = make_shared<Rect>(a, b);
+    return fig;
+  }
+  if (figure_name == "TRIANGLE") {
+    int a, b, c;
+    is >> a >> b >> c;
+    fig = make_shared<Triangle>(a, b, c);
+    return fig;
+  }
+  if (figure_name == "CIRCLE") {
+    int r;
+    is >> r;
+    fig = make_shared<Circle>(r);
+    return fig;
+  }
+  throw std::invalid_argument("invalid figure name was specified");
 }
 
 int main() {

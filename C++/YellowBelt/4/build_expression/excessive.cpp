@@ -1,22 +1,30 @@
 #include <iostream>
-#include <sstream>
 #include <string>
+#include <deque>
 
 using namespace std;
 
 #if 1
 int main() {
   int n;
-  string base, expr, operand, operation;
+  string base, operand, operation;
+  deque<string> expr;
   cin >> base >> n;
-  expr = base;
+
+  expr.push_back(base);
+
   for (int i = 0; i < n; ++i) {
-    ostringstream oss;
     cin >> operation >> operand;
-    oss << "(" << expr << ") " << operation << ' ' << operand;
-    expr = oss.str();
+    expr.push_front("(");
+    expr.push_back(")");
+    expr.push_back(" ");
+    expr.push_back(operation);
+    expr.push_back(" ");
+    expr.push_back(operand);
   }
-  cout << expr;
+  for(const auto& s: expr) {
+    cout << s;
+  }
   return 0;
 }
 #endif

@@ -24,9 +24,16 @@ public:
     return occupation;
   }
 
-  // Общее для всех людей действие, но каждый выполняет его по своему
-  // (поэтому метод объявлен как виртуальный)
-  virtual void Walk(const string& destination) const = 0;
+  // Стандартное описание основных характеристик человека
+  string Descriprion(const string& delimiter = ": ") const {
+    return occupation + delimiter + name;
+  }
+
+  // Общее для всех людей действие, но каждый может выполнять
+  // его по своему(поэтому метод объявлен как виртуальный)
+  virtual void Walk(const string& destination) const {
+    cout << Descriprion() << " walks to: " << destination << endl;
+  }
 
   // Витруальный деструктор в базовом классе с виртуальными функциями
   // необходим для того, чтобы деструкторы корректно вызывались
@@ -62,16 +69,16 @@ public:
     // Полиморфная реализация виртуального метода, унаследованного от Human
     // (поведение с тем же названием, но специфичное для студента)
     void Walk(const string& destination) const override {
-        cout << Occupation() << ": " << Name() << " walks to: " << destination << endl;
-        cout << Occupation() << ": " << Name() << " sings a song: " << favouriteSong << endl;
+        Human::Walk(destination);
+        SingSong();
     }
 
     // Действия, специфичные для студента
-    void Learn() {
-        cout << Occupation() << ": " << Name() << " learns" << endl;
+    void Learn() const {
+        cout << Descriprion() << " learns" << endl;
     }
-    void SingSong() {
-        cout << Occupation() << ": " << Name() << " sings a song: " << favouriteSong << endl;
+    void SingSong() const {
+        cout << Descriprion() << " sings a song: " << favouriteSong << endl;
     }
 
 private: // скрываем члены класса по избежание непреднамеренного изменение их извне
@@ -92,15 +99,9 @@ public:
       return subject;
     }
 
-    // Полиморфная реализация виртуального метода, унаследованного от Human
-    // (поведение с тем же названием, но специфичное для учителя)
-    void Walk(const string& destination) const override {
-        cout << Occupation() << ": " << Name() << " walks to: " << destination << endl;
-    }
-
     // Действия, специфичные для учителя
     void Teach() {
-        cout << Occupation() << ": " << Name() << " teaches: " << subject << endl;
+        cout << Descriprion() << " teaches: " << subject << endl;
     }
 
 private: // скрываем члены класса по избежание непреднамеренного изменение их извне
@@ -116,14 +117,8 @@ public:
     // Вместо нескольких специфичных для каждого человека функций
     // проверки документов, реализуем одну, универсальную для всех
     void Check(const Human& person) {
-        cout << Occupation() << ": " << Name() << " checks " << person.Occupation() << ". "
-             << person.Occupation() << "'s name is: " << person.Name() << endl;
-    }
-
-    // Полиморфная реализация виртуального метода, унаследованного от Human
-    // (поведение с тем же названием, но специфичное для полицейского)
-    void Walk(const string& destination) const override {
-        cout << Occupation() << ": " << Name() << " walks to: " << destination << endl;
+        cout << Descriprion() << " checks " << person.Occupation() << ". "
+             << person.Descriprion("'s name is: ") << endl;
     }
 };
 

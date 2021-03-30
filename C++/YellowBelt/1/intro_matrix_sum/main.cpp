@@ -18,7 +18,7 @@ public:
     CheckDimentions(m, n);
     this->m = m;
     this->n = n;
-    data.resize(m * n, 0);
+    data.assign(m * n, 0);
   }
 
   int At(int i, int j) const {

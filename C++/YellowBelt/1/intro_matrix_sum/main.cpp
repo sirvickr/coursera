@@ -16,6 +16,8 @@ public:
 
   void Reset(int m, int n) {
     CheckDimentions(m, n);
+    if (m == 0 || n == 0)
+      m = n = 0;
     this->m = m;
     this->n = n;
     data.assign(m * n, 0);

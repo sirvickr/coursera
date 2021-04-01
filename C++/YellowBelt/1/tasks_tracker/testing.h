@@ -11,7 +11,7 @@
 #define TESTING_TEAM_TASKS
 #endif
 
-#if 1
+#if 0
 #include "team_tasks.cxx"
 #else
 #include "solution.cxx"

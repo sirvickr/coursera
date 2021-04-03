@@ -1,0 +1,23 @@
+Задание, оцениваемое сокурсниками: Проверка установки Python
+cat installed.txt, скопировать в скриншот, отправить
+
+ victor@vickr-ThinkPad:/home# source env/bin/activate
+ (env) victor@vickr-ThinkPad:/home# python
+ Python 3.6.9 (default, Jan 26 2021, 15:33:00) 
+ [GCC 8.4.0] on linux
+ Type "help", "copyright", "credits" or "license" for more information.
+ >>> 
+ >>> from datetime import datetime
+ >>> print(datetime.now())
+ 2021-04-03 08:47:44.696637
+ >>> 
+ >>> import requests
+ >>> requests
+ <module 'requests' from '/home/env/lib/python3.6/site-packages/requests/__init__.py'>
+ >>> 
+ >>> exit()
+ (env) victor@vickr-ThinkPad:/home# 
+ (env) victor@vickr-ThinkPad:/home# deactivate 
+ victor@vickr-ThinkPad:/home# 
+
+

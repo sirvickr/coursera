@@ -4,40 +4,46 @@ import json     # https://docs.python.org/3/library/json.html
 import os       # https://docs.python.org/3.3/library/os.html
 
 def read_data(storage_path):
-	if os.path.exists(storage_path):
-		with open(storage_path, "r") as file:
-			raw_data = file.read()
-			data = None
-			if raw_data:
-				data = json.loads(raw_data)
-			return data
+    if not os.path.exists(storage_path):
+        return {}
+
+    with open(storage_path, 'r') as file:
+        raw_data = file.read()
+        if raw_data:
+            return json.loads(raw_data)
+        return {}
 
 def write_data(storage_path, data):
-	with open(storage_path, "w") as file:
-		file.write(json.dumps(data))
+    with open(storage_path, 'w') as f:
+        f.write(json.dumps(data))
 
-dir = tempfile.gettempdir();
-storage_path = os.path.join(dir, 'storage.data')
-db = read_data(storage_path) or dict()
+def parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--key', help='Key')
+    parser.add_argument('--val', help='Value')
+    return parser.parse_args()
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--key")
-parser.add_argument("--val")
+def put(storage_path, key, value):
+    data = read_data(storage_path)
+    data[key] = data.get(key, list())
+    data[key].append(value)
+    write_data(storage_path, data)
 
-args = parser.parse_args()
+def get(storage_path, key):
+    data = read_data(storage_path)
+    return data.get(key, [])
 
-if args.val: # add val to [key]
-	if args.key in db:
-		db[args.key].append(args.val)
-	else:
-		db[args.key] = [args.val]
-	write_data(storage_path, db)
+def main(storage_path):
+    args = parse()
 
-elif args.key: # show [key] values
-	if args.key in db:
-		print(", ".join(db[args.key]))
-	else:
-		print("")
+    if args.key and args.val:
+        put(storage_path, args.key, args.val)
+    elif args.key:
+        print(*get(storage_path, args.key), sep=', ')
+    else:
+        print('The program is called with invalid parameters.')
 
-else:
-	pass
+
+if __name__ == '__main__':
+    storage_path = os.path.join(tempfile.gettempdir(), 'storage.data')
+    main(storage_path)

@@ -63,7 +63,7 @@ public:
    }
 };
 
-#if 1
+#if 0
 
 void VisitPlaces(Human &h, vector<string> places) {
    for (auto p : places) {

@@ -31,3 +31,7 @@ std::vector<std::string> parseSimple(InputIt first, InputIt last) {
 
   return infix;
 }
+
+std::vector<std::string> toPostfixSimple(const std::vector<std::string>& infix);
+
+int simpleCalc(const std::vector<std::string>& postfix);

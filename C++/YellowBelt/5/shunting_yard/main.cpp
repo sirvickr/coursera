@@ -1,5 +1,6 @@
 #include "test_runner.h"
 #include "simple_parser.h"
+#include "expr_parser.h"
 #include "tokens.h"
 
 #include <algorithm>
@@ -140,6 +141,8 @@ void complex(const string& line) {
 
   auto result = calcExpr(postfix);
   cout << "RESULT (complex): " << result << endl;
+  ExpressionParser parser(line);
+  cout << "RESULT (parser):  " << parser.parse() << endl;
 }
 
 int main() {
@@ -211,6 +214,8 @@ void ParserTest() {
 void TestExpression(const string& expr, const string& infix, const string& postfix, int result) {
   //TestSimpleParser(expr, tokenise(infix)); // and, or не реализованы
   TestComplexParser(expr, infix, postfix, result);
+  ExpressionParser parser(expr);
+  AssertEqual(parser.parse(), result, "testing expression calculation result for \"" + expr + "\"");
 }
 
 void Test1() {

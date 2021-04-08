@@ -91,8 +91,8 @@ int simpleCalc(const vector<string>& postfix) {
   int result = 0;
   stack<int> opstack;
   for(const auto& token: postfix) {
-    cout << "'" << token << "':\t";
-    cout.flush();
+    //cout << "'" << token << "':\t";
+    //cout.flush();
     if(is_number(token)) { // константа
       istringstream iss(token);
       int d;
@@ -104,17 +104,17 @@ int simpleCalc(const vector<string>& postfix) {
         throw(runtime_error("stack is empty: a not found"));
       int b = opstack.top();
       opstack.pop();
-      cout << b;
+      //cout << b;
 
-      cout << token;
+      //cout << token;
 
       if(opstack.empty())
         throw(runtime_error("stack is empty: b not found"));
       int a = opstack.top();
       opstack.pop();
-      cout << a;
+      //cout << a;
 
-      cout << "=";
+      //cout << "=";
 
       if(token == "+") {
         result = a + b;
@@ -125,15 +125,15 @@ int simpleCalc(const vector<string>& postfix) {
       } else if(token == "/") {
         result = a / b;
       }
-      cout << result;
+      //cout << result;
       opstack.push(result);
     }
-    cout/* << "\t(" << opstack.size() << ")"*/ << endl;
+    //cout/* << "\t(" << opstack.size() << ")"*/ << endl;
   }
 #if 1
   if(opstack.size() != 1)
     throw runtime_error("tail stack size is " + to_string(opstack.size()));
-  cout << "tail: " << opstack.top() << endl;
+  //cout << "tail: " << opstack.top() << endl;
   result = opstack.top();
   opstack.pop();
 #else

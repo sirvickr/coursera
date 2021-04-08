@@ -3,6 +3,7 @@
 #include "tokens.h"
 
 #include <algorithm>
+#include <iterator>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -22,7 +23,7 @@ ostream& operator<<(ostream& stream, const vector<string>& v) {
   return stream;
 }
 
-class Node {
+/*class Node {
 public:
   virtual ~Node() = 0;
   virtual int eval() const = 0;
@@ -110,170 +111,7 @@ private:
   };
   Operations::const_iterator _op;
   std::shared_ptr<Node> _lhs, _rhs;
-};
-
-template<typename T>
-T from_string(const string& s, const T& default_value = T()) {
-  istringstream iss(s);
-  T value = default_value;
-  iss >> value;
-  return value;
-}
-
-template<typename InputIt>
-Tokens parse(InputIt first, InputIt last) {
-  Tokens infix;
-  string token;
-  shared_ptr<Token> p;
-  auto flush_token = [&](Token::Type type) {
-    if(token.empty()) {
-      throw runtime_error("parse: empty token");
-    }
-    switch(type) {
-    case Token::Type::Op: // None, Par, Op, Id, Num
-      {
-        auto op_it = Op::operations.find(token);
-        if(op_it == Op::operations.end()) {
-          ostringstream oss;
-          oss << "flush_token: operation not found: [" << token << "]: ";
-          throw runtime_error(oss.str());
-        }
-        infix.push_back(make_shared<Op>(op_it->second.type, op_it->second.precedence));
-      }
-      break;
-    case Token::Type::Id: // None, Par, Op, Id, Num
-      {
-        auto op_it = Op::operations.find(token);
-        if(op_it != Op::operations.end())
-          infix.push_back(make_shared<Op>(op_it->second.type, op_it->second.precedence));
-        else
-          infix.push_back(make_shared<Id>(token));
-      }
-      break;
-    case Token::Type::Num:
-      infix.push_back(make_shared<Num>(from_string(token, 0)));
-      break;
-    default:
-      throw runtime_error("parse): unexpected type");
-    }
-    token.clear();
-  };
-  //Token::Type prevState = Token::Type::None;
-  Token::Type currState = Token::Type::None;
-  for(InputIt curr = first; curr != last; ++curr) {
-    ///cout << *curr << "\t";
-    switch(currState) {
-    case Token::Type::None:
-      if(*curr == '(') {
-        infix.push_back(make_shared<Par>(Par::Type::Open));
-      } else if(*curr == ')') {
-        infix.push_back(make_shared<Par>(Par::Type::Close));
-      } else if(*curr == '+') {
-        token += *curr;
-        flush_token(Token::Type::Op);
-      } else if(*curr == '-') {
-        token += *curr;
-        flush_token(Token::Type::Op);
-      } else if(*curr == '*') {
-        token += *curr;
-        flush_token(Token::Type::Op);
-      } else if(*curr == '/') {
-        token += *curr;
-        flush_token(Token::Type::Op);
-      } else if(isdigit(*curr)) {
-        token += *curr;
-        currState = Token::Type::Num;
-      } else if(isalpha(*curr)) {
-        token += *curr;
-        currState = Token::Type::Id; // variable or multi-literal operation
-      } else { // space?
-      }
-      break;
-    case Token::Type::Num:
-      if(*curr == '(') {
-        flush_token(currState);
-        infix.push_back(make_shared<Par>(Par::Type::Open));
-        currState = Token::Type::None;
-      } else if(*curr == ')') {
-        flush_token(currState);
-        infix.push_back(make_shared<Par>(Par::Type::Close));
-        currState = Token::Type::None;
-      } else if(*curr == '+') {
-        flush_token(currState);
-        token += *curr;
-        flush_token(Token::Type::Op);
-        currState = Token::Type::None;
-      } else if(*curr == '-') {
-        flush_token(currState);
-        token += *curr;
-        flush_token(Token::Type::Op);
-        currState = Token::Type::None;
-      } else if(*curr == '*') {
-        flush_token(currState);
-        token += *curr;
-        flush_token(Token::Type::Op);
-        currState = Token::Type::None;
-      } else if(*curr == '/') {
-        flush_token(currState);
-        token += *curr;
-        flush_token(Token::Type::Op);
-        currState = Token::Type::None;
-      } else if(isdigit(*curr)) {
-        token += *curr;
-      } else if(isalpha(*curr)) {
-        throw runtime_error("letter after digit");
-      } else { // space?
-        flush_token(currState);
-        currState = Token::Type::None;
-      }
-      break;
-    case Token::Type::Id:
-      if(*curr == '(') {
-        flush_token(currState);
-        infix.push_back(make_shared<Par>(Par::Type::Open));
-        currState = Token::Type::None;
-      } else if(*curr == ')') {
-        flush_token(currState);
-        infix.push_back(make_shared<Par>(Par::Type::Close));
-        currState = Token::Type::None;
-      } else if(*curr == '+') {
-        flush_token(currState);
-        infix.push_back(make_shared<Op>(Op::Type::Add));
-        currState = Token::Type::None;
-      } else if(*curr == '-') {
-        flush_token(currState);
-        infix.push_back(make_shared<Op>(Op::Type::Sub));
-        currState = Token::Type::None;
-      } else if(*curr == '*') {
-        flush_token(currState);
-        infix.push_back(make_shared<Op>(Op::Type::Mul));
-        currState = Token::Type::None;
-      } else if(*curr == '/') {
-        flush_token(currState);
-        infix.push_back(make_shared<Op>(Op::Type::Div));
-        currState = Token::Type::None;
-      } else if(isdigit(*curr)) {
-        token += *curr;
-      } else if(isalpha(*curr)) {
-        token += *curr;
-      } else { // space?
-        flush_token(currState);
-        currState = Token::Type::None;
-      }
-      break;
-    case Token::Type::Op:
-      throw runtime_error("unexpected state: Op");
-      break;
-    case Token::Type::Par:
-      throw runtime_error("unexpected state: Par");
-      break;
-    }
-    ///cout << endl;
-  }
-  if(!token.empty())
-    flush_token(currState);
-  return infix;
-}
+};*/
 
 void simple(const string line) {
   cout << "\nsimple: " << line << endl;
@@ -291,14 +129,17 @@ void simple(const string line) {
 void complex(const string& line) {
   cout << "\ncomplex: " << line << endl;
 
-  Tokens infix = parse(begin(line), end(line));
+  Tokens pf;
+  //Tokens infix = parser.parse();
+  Tokens infix = parse(begin(line), end(line), pf);
   cout << "infix: " << infix << endl;
 
   auto postfix = toPostfix(infix);
   cout << "postfix:" << postfix << endl;
+  cout << "postfix:" << pf << endl;
 
   auto result = calcExpr(postfix);
-  cout << "RESULT: " << result << endl;
+  cout << "RESULT (complex): " << result << endl;
 }
 
 int main() {
@@ -310,35 +151,113 @@ int main() {
       continue;
     //cout << "parsing line: " << line << endl;
     complex(line);
-    simple(line);
+    //simple(line);
   }
   return 0;
+}
+
+template<typename Sequence>
+void output(std::ostream& out, const Sequence& seq, const std::string& delim = " ", bool flush = false) {
+  std::copy(begin(seq), end(seq), std::ostream_iterator<typename Sequence::value_type>(out, delim.c_str()));
+}
+
+vector<string> tokenise(const string& s) {
+  vector<string> v;
+  istringstream iss(s);
+  string token;
+  while(getline(iss, token, ' '))
+    v.push_back(token);
+  //output(cout, v, " "); cout << endl;
+  return v;
 }
 
 void TestSimpleParser(const string& input, const vector<string>& expected) {
   AssertEqual(parseSimple(begin(input), end(input)), expected, "testing expression \"" + input + "\" (simple)");
 }
 
-void TestParser(const string& input, const string& expected) {
-  ostringstream oss;
-  oss << parse(begin(input), end(input));
-  AssertEqual(oss.str(), expected, "testing expression \"" + input + "\"");
+void TestComplexParser(const string& input, const string& infix, const string& postfix, int result) {
+  Tokens pf;
+  Tokens infix_expr = parse(begin(input), end(input), pf);
+  {
+    ostringstream oss;
+    oss << infix_expr;
+    AssertEqual(oss.str(), infix, "testing infix expression \"" + input + "\"");
+  }
+  auto postfix_expr = toPostfix(infix_expr);
+  AssertEqual(postfix_expr, pf, "comparing postfix expressions for \"" + input + "\"");
+  {
+    ostringstream oss;
+    oss << postfix_expr;
+    AssertEqual(oss.str(), postfix, "testing postfix expression for \"" + input + "\"");
+  }
+  {
+    auto expr_result = calcExpr(postfix_expr);
+    AssertEqual(expr_result, result, "testing result of expression \"" + input + "\"");
+  }
 }
 
-void SimpleParserTest() {
+/*void SimpleParserTest() {
   TestSimpleParser( "( 1 + 2 + 4 ) * 5 + 3 - 8 * 1 * 2", {"(", "1", "+", "2", "+", "4", ")", "*", "5", "+", "3", "-", "8", "*", "1", "*", "2",} );
   TestSimpleParser( "  (1+2+4)*5 + 3 - 8 * 1 * 2 ",      {"(", "1", "+", "2", "+", "4", ")", "*", "5", "+", "3", "-", "8", "*", "1", "*", "2",} );
   TestSimpleParser( "(3+5)*10-17*2",                     {"(", "3", "+", "5", ")", "*", "10", "-", "17", "*", "2",} );
 }
 
 void ParserTest() {
-  TestParser("( 1 + 2 + 4 ) * 5 + 3 - 8 * 1 * 2", "( 1 + 2 + 4 ) * 5 + 3 - 8 * 1 * 2");
-  TestParser("  (1+2+4)*5 + 3 - 8 * 1 * 2 ",      "( 1 + 2 + 4 ) * 5 + 3 - 8 * 1 * 2");
-  TestParser("(3 + 5) * 10 - 17 * 2",             "( 3 + 5 ) * 10 - 17 * 2");
+  TestComplexParser("( 1 + 2 + 4 ) * 5 + 3 - 8 * 1 * 2", "( 1 + 2 + 4 ) * 5 + 3 - 8 * 1 * 2", "1 2 + 4 + 5 * 3 + 8 1 * 2 * -");
+  TestComplexParser("  (1+2+4)*5 + 3 - 8 * 1 * 2 ",      "( 1 + 2 + 4 ) * 5 + 3 - 8 * 1 * 2", "1 2 + 4 + 5 * 3 + 8 1 * 2 * -");
+  TestComplexParser("(3 + 5) * 10 - 17 * 2",             "( 3 + 5 ) * 10 - 17 * 2", "3 5 + 10 * 17 2 * -");
+}*/
+
+void TestExpression(const string& expr, const string& infix, const string& postfix, int result) {
+  //TestSimpleParser(expr, tokenise(infix)); // and, or не реализованы
+  TestComplexParser(expr, infix, postfix, result);
+}
+
+void Test1() {
+  auto distortion = [](const string& infix, const string& postfix, int result) {
+    TestExpression("( 1 + 2 + 4 ) * 5 + 3 - 8 * 1 * 2", infix, postfix, result);
+    TestExpression("  (1+2+4)*5 + 3 - 8 * 1 * 2 ",      infix, postfix, result);
+    TestExpression(" ( 1+2 +4)*5 + 3 - 8 * 1* 2",       infix, postfix, result);
+  };
+  distortion("( 1 + 2 + 4 ) * 5 + 3 - 8 * 1 * 2", "1 2 + 4 + 5 * 3 + 8 1 * 2 * -", 22);
+}
+
+void Test2() {
+  auto distortion = [](const string& infix, const string& postfix, int result) {
+    TestExpression("(3 + 5) * 10 - 17 * 2", infix, postfix, result);
+  };
+  distortion("( 3 + 5 ) * 10 - 17 * 2", "3 5 + 10 * 17 2 * -", 46);
+}
+
+void Test3() {
+  auto distortion = [](const string& infix, const string& postfix, int result) {
+    TestExpression("(0 and 1 or 4) - 20", infix, postfix, result);
+    TestExpression(" ( 0 and 1 or 4 ) - 20 ", infix, postfix, result);
+  };
+  distortion("( 0 and 1 or 4 ) - 20", "0 1 and 4 or 20 -", -19);
+}
+
+void Test4() {
+  auto distortion = [](const string& infix, const string& postfix, int result) {
+    TestExpression("1 + ((2 < 2 or 4 <= 4) and (1 < 4)) - 5", infix, postfix, result);
+  };
+  distortion("1 + ( ( 2 < 2 or 4 <= 4 ) and ( 1 < 4 ) ) - 5", "1 2 2 < 4 4 <= or 1 4 < and + 5 -", -3);
+}
+
+void Test5() {
+  auto distortion = [](const string& infix, const string& postfix, int result) {
+    TestExpression("1 + ( ( 2 < 2 or 4 < 4 ) and ( 1 < 4 ) ) - 5", infix, postfix, result);
+  };
+  distortion("1 + ( ( 2 < 2 or 4 < 4 ) and ( 1 < 4 ) ) - 5", "1 2 2 < 4 4 < or 1 4 < and + 5 -", -4);
 }
 
 void UnitTests() {
   TestRunner tr;
-  tr.RunTest(SimpleParserTest, "SimpleParserTest");
-  tr.RunTest(ParserTest, "ParserTest");
+  //tr.RunTest(SimpleParserTest, "SimpleParserTest");
+  //tr.RunTest(ParserTest, "ParserTest");
+  tr.RunTest(Test1, "Test1");
+  tr.RunTest(Test2, "Test2");
+  tr.RunTest(Test3, "Test3");
+  tr.RunTest(Test4, "Test4");
+  tr.RunTest(Test5, "Test5");
 }

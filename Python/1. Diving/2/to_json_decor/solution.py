@@ -3,8 +3,8 @@ import functools # https://docs.python.org/3/library/functools.html
 
 def to_json(func):
 	@functools.wraps(func)
-	def inner():
-		data = func()
+	def inner(*args, **kwargs):
+		data = func(*args, **kwargs)
 		return json.dumps(data)
 	return inner
 

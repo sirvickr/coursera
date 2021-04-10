@@ -187,12 +187,6 @@ void Task(istream& input) {
 		iss >> id;
 		if(id == "Add") {
 			string event;
-#if 0
-			Date date;
-			iss >> date >> event;
-			//cout << "\"Add " << date << " " << event << "\"" << endl;
-			db.AddEvent(date, event);
-#else			// �������� ��� ��������� Case 9 (������� �� operatot<<(Date), ������ ��� ����, ����� ��������� �������� �������� ������ ��� �������� "�������� ����")
 			int year = 0, month = 0, day = 0;
 			string s;
 			if(iss >> s) {
@@ -225,7 +219,6 @@ void Task(istream& input) {
 				db.AddEvent(date, event);
 			}
 			db.AddEvent(date, event);
-#endif
 		} else if(id == "Del") {
 			Date date;
 			string event;
@@ -257,12 +250,7 @@ void Task(istream& input) {
 
 int main() {
 	try {
-#if 0
-		ifstream input("input.txt");
-		Task(input);
-#else
 		Task(cin);
-#endif
 	} catch(runtime_error& e) {
 		cout << e.what() << endl;
 	}

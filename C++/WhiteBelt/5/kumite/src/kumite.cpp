@@ -49,27 +49,27 @@ private:
     if(stream >> s) {
       istringstream iss(s);
       if(!(iss >> date.year))
-        throw runtime_error("Wrong date format: " + s);
+        throw logic_error("Wrong date format: " + s);
 
       if(iss.peek() != '-')
-        throw runtime_error("Wrong date format: " + s);
+        throw logic_error("Wrong date format: " + s);
       iss.ignore(1);
       if(!(iss >> date.month))
-        throw runtime_error("Wrong date format: " + s);
+        throw logic_error("Wrong date format: " + s);
 
       if(date.month < 1 || date.month > 12)
-        throw runtime_error("Month value is invalid: " + to_string(date.month));
+        throw logic_error("Month value is invalid: " + to_string(date.month));
 
       if(iss.peek() != '-')
-        throw runtime_error("Wrong date format: " + s);
+        throw logic_error("Wrong date format: " + s);
       iss.ignore(1);
       if(!(iss >> date.day))
-        throw runtime_error("Wrong date format: " + s);
+        throw logic_error("Wrong date format: " + s);
 
       if(date.day < 1 || date.day > 31)
-        throw runtime_error("Day value is invalid: " + to_string(date.day));
+        throw logic_error("Day value is invalid: " + to_string(date.day));
     } else {
-      throw runtime_error("Wrong date format: " + s);
+      throw logic_error("Wrong date format: " + s);
     }
     return stream;
   }
@@ -150,27 +150,27 @@ void Task(istream& input) {
         tmp >> year;
 
         if(tmp.peek() != '-')
-          throw runtime_error("Wrong date format: " + s);
+          throw logic_error("Wrong date format: " + s);
         tmp.ignore(1);
         tmp >> month;
 
         if(month < 1 || month > 12)
-          throw runtime_error("Month value is invalid: " + to_string(month));
+          throw logic_error("Month value is invalid: " + to_string(month));
 
         if(tmp.peek() != '-')
-          throw runtime_error("Wrong date format: " + s);
+          throw logic_error("Wrong date format: " + s);
         tmp.ignore(1);
         tmp >> day;
 
         if(day < 1 || day > 31)
-          throw runtime_error("Day value is invalid: " + to_string(day));
+          throw logic_error("Day value is invalid: " + to_string(day));
       } else {
-        throw runtime_error("Wrong date format: " + s);
+        throw logic_error("Wrong date format: " + s);
       }
       Date date(year, month, day);
       ss >> event;
       if(event.empty()) {
-        throw runtime_error("Wrong date format: " + s);
+        throw logic_error("Wrong date format: " + s);
       } else {
         db.AddEvent(date, event);
       }
@@ -206,7 +206,7 @@ void Task(istream& input) {
 
     } else if(!command.empty()) {
 
-      throw runtime_error("Unknown command: " + command);
+      throw logic_error("Unknown command: " + command);
 
     }
     //cout << "id \"" << command << "\" date \"" << date << "\" event \"" << event << "\"" << endl;
@@ -216,7 +216,7 @@ void Task(istream& input) {
 int main() {
   try {
     Task(cin);
-  } catch(runtime_error& e) {
+  } catch(logic_error& e) {
     cout << e.what() << endl;
   }
   return 0;

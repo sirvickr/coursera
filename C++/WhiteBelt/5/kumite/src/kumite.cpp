@@ -45,7 +45,6 @@ private:
 		return stream;
 	}
 	friend istream& operator>>(istream& stream, Date& date) {
-#if 1
 		string s;
 		if(stream >> s) {
 			istringstream iss(s);
@@ -72,13 +71,6 @@ private:
 		} else {
 			throw runtime_error("Wrong date format: " + s);
 		}
-#else
-		stream >> date.year;
-		stream.ignore(1);
-		stream >> date.month;
-		stream.ignore(1);
-		stream >> date.day;
-#endif
 		return stream;
 	}
 };

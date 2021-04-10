@@ -81,19 +81,15 @@ public:
   Database() {
     ifstream file(fileName);
     if(file) {
-      //cout << "Read DB:" << endl;
       string line;
       Date date;
       string event;
       while (getline(file, line)) {
         istringstream iss(line);
         iss >> date;
-        //cout << date << ": ";
         while(iss >> event) {
-          //cout << event << " ";
           storage[date].insert(event);
         }
-        //cout << endl;
       }
     }
   }
@@ -101,7 +97,6 @@ public:
   ~Database() {
     ofstream file(fileName);
     if(file) {
-      //cout << "Write DB" << endl;
       for(const auto& record : storage) {
         file << record.first;
         for(const auto& event : record.second) {
@@ -113,12 +108,10 @@ public:
   }
 
   void AddEvent(const Date& date, const string& event) {
-    //cout << "AddEvent: " << date << " " << event << endl;
     storage[date].insert(event);
   }
 
   bool DeleteEvent(const Date& date, const string& event) {
-    //cout << "DeleteEvent: " << date << " " << event << endl;
     const auto recordIt = storage.find(date);
     if(recordIt == cend(storage)) {
       return false;
@@ -132,7 +125,6 @@ public:
   }
 
   int DeleteDate(const Date& date) {
-    //cout << "DeleteDate: " << date << endl;
     int count = 0;
     auto recordIt = storage.find(date);
     if(recordIt != cend(storage)) {
@@ -143,7 +135,6 @@ public:
   }
 
   Events Find(const Date& date) const {
-    //cout << "Find: " << date << endl;
     auto recordIt = storage.find(date);
     if(recordIt != cend(storage)) {
       return recordIt->second;
@@ -152,13 +143,10 @@ public:
   }
 
   void Print() const {
-    //cout << "Print" << endl;
     for(const auto& record : storage) {
-      ///cout << record.first;
       for(const auto& event : record.second) {
         cout << record.first << " " << event << endl;
       }
-      ///cout << endl;
     }
   }
 private:

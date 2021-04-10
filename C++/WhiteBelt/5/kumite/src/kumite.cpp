@@ -133,16 +133,19 @@ void Task(istream& input) {
   // - �������� ���� ������� �� ���������� ����:  Del ����
   // - ����� ������� �� ���������� ����:          Find ����
   // - ������ ���� ������� �� ��� ����:           Print
-  string command;
-  while (getline(input, command)) {
-    istringstream iss(command);
-    string id;
-    iss >> id;
-    if(id == "Add") {
+  string command_line;
+  while (getline(input, command_line)) {
+    istringstream ss(command_line);
+
+    string command;
+    ss >> command;
+
+    if(command == "Add") {
+
       string event;
       int year = 0, month = 0, day = 0;
       string s;
-      if(iss >> s) {
+      if(ss >> s) {
         istringstream tmp(s);
         tmp >> year;
 
@@ -165,17 +168,19 @@ void Task(istream& input) {
         throw runtime_error("Wrong date format: " + s);
       }
       Date date(year, month, day);
-      iss >> event;
+      ss >> event;
       if(event.empty()) {
         throw runtime_error("Wrong date format: " + s);
       } else {
         db.AddEvent(date, event);
       }
       db.AddEvent(date, event);
-    } else if(id == "Del") {
+
+    } else if(command == "Del") {
+
       Date date;
       string event;
-      iss >> date >> event;
+      ss >> date >> event;
       if(event.empty()) {
         cout << "Deleted " << db.DeleteDate(date) << " events" << endl;
       } else {
@@ -185,19 +190,26 @@ void Task(istream& input) {
           cout << "Event not found" << endl;
         }
       }
-    } else if(id == "Find") {
+
+    } else if(command == "Find") {
+
       Date date;
-      iss >> date;
+      ss >> date;
       const auto events = db.Find(date);
       for(const auto& event : events) {
         cout << event << endl;
       }
-    } else if(id == "Print") {
+
+    } else if(command == "Print") {
+
       db.Print();
-    } else if(!id.empty()) {
-      cout << "Unknown command: " << id << endl;
+
+    } else if(!command.empty()) {
+
+      cout << "Unknown command: " << command << endl;
+
     }
-    //cout << "id \"" << id << "\" date \"" << date << "\" event \"" << event << "\"" << endl;
+    //cout << "id \"" << command << "\" date \"" << date << "\" event \"" << event << "\"" << endl;
   }
 }
 

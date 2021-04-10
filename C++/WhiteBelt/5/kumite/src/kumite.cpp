@@ -78,34 +78,6 @@ private:
 class Database {
 public:
   using Events = set<string>;
-  Database() {
-    ifstream file(fileName);
-    if(file) {
-      string line;
-      Date date;
-      string event;
-      while (getline(file, line)) {
-        istringstream iss(line);
-        iss >> date;
-        while(iss >> event) {
-          storage[date].insert(event);
-        }
-      }
-    }
-  }
-
-  ~Database() {
-    ofstream file(fileName);
-    if(file) {
-      for(const auto& record : storage) {
-        file << record.first;
-        for(const auto& event : record.second) {
-          file << " " << event;
-        }
-        file << endl;
-      }
-    }
-  }
 
   void AddEvent(const Date& date, const string& event) {
     storage[date].insert(event);
@@ -149,8 +121,8 @@ public:
       }
     }
   }
+
 private:
-  const string fileName = "database.txt";
   map<Date, Events> storage;
 };
 

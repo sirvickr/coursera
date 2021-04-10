@@ -137,7 +137,7 @@ public:
     auto recordIt = storage.find(date);
     if(recordIt != cend(storage)) {
       count = recordIt->second.size();
-      recordIt->second.clear();
+      storage.erase(recordIt);
     }
     return count;
   }

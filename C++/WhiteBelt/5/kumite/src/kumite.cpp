@@ -143,9 +143,9 @@ public:
   }
 
   void Print() const {
-    for(const auto& record : storage) {
-      for(const auto& event : record.second) {
-        cout << record.first << " " << event << endl;
+    for(const auto& item : storage) {
+      for(const auto& event : item.second) {
+        cout << item.first << " " << event << endl;
       }
     }
   }

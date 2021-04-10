@@ -131,11 +131,12 @@ public:
     return true;
   }
 
-  int  DeleteDate(const Date& date) {
+  int DeleteDate(const Date& date) {
     //cout << "DeleteDate: " << date << endl;
+    int count = 0;
     auto recordIt = storage.find(date);
-    int count = recordIt->second.size();
     if(recordIt != cend(storage)) {
+      count = recordIt->second.size();
       recordIt->second.clear();
     }
     return count;

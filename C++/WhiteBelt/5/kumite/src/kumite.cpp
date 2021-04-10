@@ -145,10 +145,10 @@ public:
   Events Find(const Date& date) const {
     //cout << "Find: " << date << endl;
     auto recordIt = storage.find(date);
-    if(recordIt == cend(storage)) {
-      return {};
+    if(recordIt != cend(storage)) {
+      return recordIt->second;
     }
-    return recordIt->second;
+    return {};
   }
 
   void Print() const {

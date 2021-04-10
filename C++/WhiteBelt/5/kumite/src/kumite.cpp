@@ -206,7 +206,7 @@ void Task(istream& input) {
 
     } else if(!command.empty()) {
 
-      cout << "Unknown command: " << command << endl;
+      throw runtime_error("Unknown command: " + command);
 
     }
     //cout << "id \"" << command << "\" date \"" << date << "\" event \"" << event << "\"" << endl;

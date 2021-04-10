@@ -91,7 +91,7 @@ public:
 				//cout << date << ": ";
 				while(iss >> event) {
 					//cout << event << " ";
-					table[date].insert(event);
+					storage[date].insert(event);
 				}
 				//cout << endl;
 			}
@@ -102,7 +102,7 @@ public:
 		ofstream file(fileName);
 		if(file) {
 			//cout << "Write DB" << endl;
-			for(const auto& record : table) {
+			for(const auto& record : storage) {
 				file << record.first;
 				for(const auto& event : record.second) {
 					file << " " << event;
@@ -114,13 +114,13 @@ public:
 
 	void AddEvent(const Date& date, const string& event) {
 		//cout << "AddEvent: " << date << " " << event << endl;
-		table[date].insert(event);
+		storage[date].insert(event);
 	}
 
 	bool DeleteEvent(const Date& date, const string& event) {
 		//cout << "DeleteEvent: " << date << " " << event << endl;
-		const auto recordIt = table.find(date);
-		if(recordIt == cend(table)) {
+		const auto recordIt = storage.find(date);
+		if(recordIt == cend(storage)) {
 			return false;
 		}
 		const auto eventIt = find(cbegin(recordIt->second), cend(recordIt->second), event);
@@ -133,9 +133,9 @@ public:
 
 	int  DeleteDate(const Date& date) {
 		//cout << "DeleteDate: " << date << endl;
-		auto recordIt = table.find(date);
+		auto recordIt = storage.find(date);
 		int count = recordIt->second.size();
-		if(recordIt != cend(table)) {
+		if(recordIt != cend(storage)) {
 			recordIt->second.clear();
 		}
 		return count;
@@ -143,8 +143,8 @@ public:
 
 	Events Find(const Date& date) const {
 		//cout << "Find: " << date << endl;
-		auto recordIt = table.find(date);
-		if(recordIt == cend(table)) {
+		auto recordIt = storage.find(date);
+		if(recordIt == cend(storage)) {
 			return {};
 		}
 		return recordIt->second;
@@ -152,7 +152,7 @@ public:
 
 	void Print() const {
 		//cout << "Print" << endl;
-		for(const auto& record : table) {
+		for(const auto& record : storage) {
 			///cout << record.first;
 			for(const auto& event : record.second) {
 				cout << record.first << " " << event << endl;
@@ -162,7 +162,7 @@ public:
 	}
 private:
 	const string fileName = "database.txt";
-	map<Date, Events> table;
+	map<Date, Events> storage;
 };
 
 void Task(istream& input) {

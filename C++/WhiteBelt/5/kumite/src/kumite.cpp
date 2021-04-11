@@ -22,65 +22,81 @@ public:
     month = m;
     day = d;
   }
+
   int GetYear() const {
     return year;
   }
+  void SetYear(int value) {
+    year = value;
+  }
+
   int GetMonth() const {
     return month;
   }
+  void SetMonth(int value) {
+    month = value;
+  }
+
   int GetDay() const {
     return day;
   }
+  void SetDay(int value) {
+    day = value;
+  }
+
 private:
   int year;
   int month;
   int day;
-
-  friend bool operator<(const Date& lhs, const Date& rhs) {
-    return make_tuple(lhs.year, lhs.month, lhs.day) <
-           make_tuple(rhs.year, rhs.month, rhs.day);
-  }
-  friend ostream& operator<<(ostream& stream, const Date& date) {
-    stream << setfill('0') << setw(4) << date.year << '-' << setw(2) << date.month << '-' << setw(2) << date.day;
-    return stream;
-  }
-  friend istream& operator>>(istream& stream, Date& date) {
-    string s;
-    stream >> s;
-    const string wrong_date_format = "Wrong date format: " + s;
-    istringstream date_stream(s);
-
-    int year;
-    if(!(date_stream >> year))
-      throw logic_error(wrong_date_format);
-    if(date_stream.peek() != '-')
-      throw logic_error(wrong_date_format);
-    date_stream.ignore(1);
-
-    int month;
-    if(!(date_stream >> month))
-      throw logic_error(wrong_date_format);
-    if(date_stream.peek() != '-')
-      throw logic_error(wrong_date_format);
-    date_stream.ignore(1);
-
-    int day;
-    if(!(date_stream >> day))
-      throw logic_error(wrong_date_format);
-    if(!date_stream.eof())
-        throw logic_error(wrong_date_format);
-
-    date.year = year;
-    date.month = month;
-    date.day = day;
-
-    if(date.month < 1 || date.month > 12)
-      throw logic_error("Month value is invalid: " + to_string(date.month));
-    if(date.day < 1 || date.day > 31)
-      throw logic_error("Day value is invalid: " + to_string(date.day));
-    return stream;
-  }
 };
+
+bool operator<(const Date& lhs, const Date& rhs) {
+  return make_tuple(lhs.GetYear(), lhs.GetMonth(), lhs.GetDay()) <
+         make_tuple(rhs.GetYear(), rhs.GetMonth(), rhs.GetDay());
+}
+
+ostream& operator<<(ostream& stream, const Date& date) {
+  stream << setfill('0') << setw(4) << date.GetYear() << '-' << setw(2) << date.GetMonth() << '-' << setw(2) << date.GetDay();
+  return stream;
+}
+
+istream& operator>>(istream& stream, Date& date) {
+  string s;
+  stream >> s;
+  const string wrong_date_format = "Wrong date format: " + s;
+  istringstream date_stream(s);
+
+  int year;
+  if(!(date_stream >> year))
+    throw logic_error(wrong_date_format);
+  if(date_stream.peek() != '-')
+    throw logic_error(wrong_date_format);
+  date_stream.ignore(1);
+
+  int month;
+  if(!(date_stream >> month))
+    throw logic_error(wrong_date_format);
+  if(date_stream.peek() != '-')
+    throw logic_error(wrong_date_format);
+  date_stream.ignore(1);
+
+  int day;
+  if(!(date_stream >> day))
+    throw logic_error(wrong_date_format);
+  if(!date_stream.eof())
+      throw logic_error(wrong_date_format);
+
+  if(month < 1 || month > 12)
+    throw logic_error("Month value is invalid: " + to_string(month));
+  if(day < 1 || day > 31)
+    throw logic_error("Day value is invalid: " + to_string(day));
+
+  date.SetYear(year);
+  date.SetMonth(month);
+  date.SetDay(day);
+
+  return stream;
+}
 
 class Database {
 public:

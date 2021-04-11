@@ -147,38 +147,9 @@ void Task(istream& input) {
 
     if(command == "Add") {
 
+      Date date;
       string event;
-      int year = 0, month = 0, day = 0;
-      string s;
-      if(ss >> s) {
-        istringstream tmp(s);
-        tmp >> year;
-
-        if(tmp.peek() != '-')
-          throw logic_error("Wrong date format: " + s);
-        tmp.ignore(1);
-        tmp >> month;
-
-        if(month < 1 || month > 12)
-          throw logic_error("Month value is invalid: " + to_string(month));
-
-        if(tmp.peek() != '-')
-          throw logic_error("Wrong date format: " + s);
-        tmp.ignore(1);
-        tmp >> day;
-
-        if(day < 1 || day > 31)
-          throw logic_error("Day value is invalid: " + to_string(day));
-      } else {
-        throw logic_error("Wrong date format: " + s);
-      }
-      Date date(year, month, day);
-      ss >> event;
-      if(event.empty()) {
-        throw logic_error("Wrong date format: " + s);
-      } else {
-        db.AddEvent(date, event);
-      }
+      ss >> date >> event;
       db.AddEvent(date, event);
 
     } else if(command == "Del") {

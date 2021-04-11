@@ -1,4 +1,6 @@
 class FileReader:
+    """Класс FileReader помогает читать из файла"""
+
     def __init__(self, filename):
         self.filename = filename
 
@@ -6,5 +8,5 @@ class FileReader:
         try:
             with open(self.filename) as f:
                 return f.read()
-        except FileNotFoundError:
+        except IOError:
             return ""

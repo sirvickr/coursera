@@ -67,6 +67,8 @@ private:
     int day;
     if(!(date_stream >> day))
       throw logic_error(wrong_date_format);
+    if(!date_stream.eof())
+        throw logic_error(wrong_date_format);
 
     date.year = year;
     date.month = month;

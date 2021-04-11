@@ -46,31 +46,36 @@ private:
   }
   friend istream& operator>>(istream& stream, Date& date) {
     string s;
-    if(stream >> s) {
-      istringstream iss(s);
-      if(!(iss >> date.year))
-        throw logic_error("Wrong date format: " + s);
+    stream >> s;
+    const string wrong_date_format = "Wrong date format: " + s;
+    istringstream date_stream(s);
 
-      if(iss.peek() != '-')
-        throw logic_error("Wrong date format: " + s);
-      iss.ignore(1);
-      if(!(iss >> date.month))
-        throw logic_error("Wrong date format: " + s);
+    int year;
+    if(!(date_stream >> year))
+      throw logic_error(wrong_date_format);
+    if(date_stream.peek() != '-')
+      throw logic_error(wrong_date_format);
+    date_stream.ignore(1);
 
-      if(date.month < 1 || date.month > 12)
-        throw logic_error("Month value is invalid: " + to_string(date.month));
+    int month;
+    if(!(date_stream >> month))
+      throw logic_error(wrong_date_format);
+    if(date_stream.peek() != '-')
+      throw logic_error(wrong_date_format);
+    date_stream.ignore(1);
 
-      if(iss.peek() != '-')
-        throw logic_error("Wrong date format: " + s);
-      iss.ignore(1);
-      if(!(iss >> date.day))
-        throw logic_error("Wrong date format: " + s);
+    int day;
+    if(!(date_stream >> day))
+      throw logic_error(wrong_date_format);
 
-      if(date.day < 1 || date.day > 31)
-        throw logic_error("Day value is invalid: " + to_string(date.day));
-    } else {
-      throw logic_error("Wrong date format: " + s);
-    }
+    date.year = year;
+    date.month = month;
+    date.day = day;
+
+    if(date.month < 1 || date.month > 12)
+      throw logic_error("Month value is invalid: " + to_string(date.month));
+    if(date.day < 1 || date.day > 31)
+      throw logic_error("Day value is invalid: " + to_string(date.day));
     return stream;
   }
 };

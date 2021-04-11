@@ -155,7 +155,8 @@ void Task(istream& input) {
       string date, event;
       ss >> date >> event;
       if(event.empty()) {
-        cout << "Deleted " << db.DeleteDate(Date::fromString(date)) << " events" << endl;
+        const int count = db.DeleteDate(Date::fromString(date));
+        cout << "Deleted " << count << " events" << endl;
       } else {
         if(db.DeleteEvent(Date::fromString(date), event)) {
           cout << "Deleted successfully" << endl;

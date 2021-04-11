@@ -12,36 +12,55 @@ using namespace std;
 
 class Date {
 public:
-  Date() {
-    year = 1;
-    month = 1;
-    day = 1;
-  }
-  Date(int y, int m, int d) {
-    year = y;
-    month = m;
-    day = d;
+  Date(int y, int m, int d): year(y), month(m), day(d) {
+    if(month < 1 || month > 12)
+      throw logic_error("Month value is invalid: " + to_string(month));
+    if(day < 1 || day > 31)
+      throw logic_error("Day value is invalid: " + to_string(day));
   }
 
   int GetYear() const {
     return year;
   }
-  void SetYear(int value) {
-    year = value;
-  }
 
   int GetMonth() const {
     return month;
-  }
-  void SetMonth(int value) {
-    month = value;
   }
 
   int GetDay() const {
     return day;
   }
-  void SetDay(int value) {
-    day = value;
+
+  static Date fromString(const string& date) {
+    const string wrong_date_format = "Wrong date format: " + date;
+    istringstream date_stream(date);
+
+    int year;
+    if(!(date_stream >> year))
+      throw logic_error(wrong_date_format);
+    if(date_stream.peek() != '-')
+      throw logic_error(wrong_date_format);
+    date_stream.ignore(1);
+
+    int month;
+    if(!(date_stream >> month))
+      throw logic_error(wrong_date_format);
+    if(date_stream.peek() != '-')
+      throw logic_error(wrong_date_format);
+    date_stream.ignore(1);
+
+    int day;
+    if(!(date_stream >> day))
+      throw logic_error(wrong_date_format);
+    if(!date_stream.eof())
+        throw logic_error(wrong_date_format);
+
+    if(month < 1 || month > 12)
+      throw logic_error("Month value is invalid: " + to_string(month));
+    if(day < 1 || day > 31)
+      throw logic_error("Day value is invalid: " + to_string(day));
+
+    return Date(year, month, day);
   }
 
 private:
@@ -57,44 +76,6 @@ bool operator<(const Date& lhs, const Date& rhs) {
 
 ostream& operator<<(ostream& stream, const Date& date) {
   stream << setfill('0') << setw(4) << date.GetYear() << '-' << setw(2) << date.GetMonth() << '-' << setw(2) << date.GetDay();
-  return stream;
-}
-
-istream& operator>>(istream& stream, Date& date) {
-  string s;
-  stream >> s;
-  const string wrong_date_format = "Wrong date format: " + s;
-  istringstream date_stream(s);
-
-  int year;
-  if(!(date_stream >> year))
-    throw logic_error(wrong_date_format);
-  if(date_stream.peek() != '-')
-    throw logic_error(wrong_date_format);
-  date_stream.ignore(1);
-
-  int month;
-  if(!(date_stream >> month))
-    throw logic_error(wrong_date_format);
-  if(date_stream.peek() != '-')
-    throw logic_error(wrong_date_format);
-  date_stream.ignore(1);
-
-  int day;
-  if(!(date_stream >> day))
-    throw logic_error(wrong_date_format);
-  if(!date_stream.eof())
-      throw logic_error(wrong_date_format);
-
-  if(month < 1 || month > 12)
-    throw logic_error("Month value is invalid: " + to_string(month));
-  if(day < 1 || day > 31)
-    throw logic_error("Day value is invalid: " + to_string(day));
-
-  date.SetYear(year);
-  date.SetMonth(month);
-  date.SetDay(day);
-
   return stream;
 }
 
@@ -165,20 +146,18 @@ void Task(istream& input) {
 
     if(command == "Add") {
 
-      Date date;
-      string event;
+      string date, event;
       ss >> date >> event;
-      db.AddEvent(date, event);
+      db.AddEvent(Date::fromString(date), event);
 
     } else if(command == "Del") {
 
-      Date date;
-      string event;
+      string date, event;
       ss >> date >> event;
       if(event.empty()) {
-        cout << "Deleted " << db.DeleteDate(date) << " events" << endl;
+        cout << "Deleted " << db.DeleteDate(Date::fromString(date)) << " events" << endl;
       } else {
-        if(db.DeleteEvent(date, event)) {
+        if(db.DeleteEvent(Date::fromString(date), event)) {
           cout << "Deleted successfully" << endl;
         } else {
           cout << "Event not found" << endl;
@@ -187,9 +166,9 @@ void Task(istream& input) {
 
     } else if(command == "Find") {
 
-      Date date;
+      string date;
       ss >> date;
-      const auto events = db.Find(date);
+      const auto events = db.Find(Date::fromString(date));
       for(const auto& event : events) {
         cout << event << endl;
       }

@@ -1,0 +1,37 @@
+car_type;brand;passenger_seats_count;photo_file_name;body_whl;carrying;extra
+car;Nissan xTtrail;4;f1.jpeg;;2.5;
+truck;Man;;f2.png;8x3x2.5;20;
+truck;Man;;f2.png;;20;
+car;Mazda 6;4;f3.jpeg;;2.5;
+;;;
+spec_machine;Hitachi;;f4;;1.2;Легкая техника для уборки снега
+
+car_type;brand;passenger_seats_count;photo_file_name;body_whl;carrying;extra
+
+spec_machine;Hitachi1;;aaa.jpg;;1;для уборки снега
+
+spec_machine;Hitachi2;;aaa;;2;для уборки снега
+
+spec_machine;;;aaa.jpg;;3;для уборки снега
+
+spec_machine;Hitachi4;;;;4;для уборки снега
+
+spec_machine;Hitachi5;;aaa.jpg;;;для уборки снега
+
+spec_machine;Hitachi6;;aaa.jpg;;6;
+
+spec_machine;Hitachi7;;aaa.jpg;;aa;для уборки снега
+
+spec_machine;Hitachi8;;.jpg;;8;для уборки снега
+
+spec_machin;Hitachi9;;aaa.jpg;;9;для уборки снега
+
+;Hitachi10;;aaa.jpg;;1; для уборки снега
+
+Spec_machine;Hitachi11;;aaa.jpg;;1;для уборки снега
+
+spec_machine;Hitachi12;;aaa.jpg;;1;для уборки снега;unknown
+
+car;Nissan;4;f1.jjpg;;2.5;
+
+spec_machine

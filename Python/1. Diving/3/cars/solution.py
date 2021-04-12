@@ -1,106 +1,112 @@
 import os
 import csv
 
-class CarBase:
-    def __init__(self, car_type, brand, photo_file_name, carrying):
-        self.car_type = car_type
-        self.brand = brand
-        self.photo_file_name = photo_file_name
-        self.carrying = float(carrying)
+class CarBase():
+    """базовый класс для транспортных средств"""
+
+    # атрибут для хранения обязательных параметров класса, описывающего транспортное средство
+    required = []
+
+    def __init__(self, brand, photo_file_name, carrying):
+        self.brand = self.validate_input(brand)
+        self.photo_file_name = self.validate_photo_filename(photo_file_name)
+        self.carrying = float(self.validate_input(carrying))
 
     def __repr__(self):
         return f"{self.car_type} '{self.brand}' {self.photo_file_name}, {self.carrying}т: "
 
+    def validate_input(self, value):
+        """метод валидации данных, возвращает значение, если оно валидно,
+        иначе выбрасывает исключение ValueError"""
+        if value == '':
+            raise ValueError
+        return value
+
+    def validate_photo_filename(self, filename):
+        for ext in ('.jpg', '.jpeg', '.png', '.gif'):
+            if filename.endswith(ext) and len(filename) > len(ext):
+                return filename
+        raise ValueError
+
     def get_photo_file_ext(self):
-        return os.path.splitext(self.photo_file_name)[1]
+        _, ext = os.path.splitext(self.photo_file_name)
+        return ext
+
+    @classmethod
+    def create_from_dict(cls, data):
+        """создает экземпляр класса из словаря с параметрами"""
+        parameters = [data[parameter] for parameter in cls.required]
+        return cls(*parameters)
 
 
 class Car(CarBase):
+    """класс описывающий автомобили для перевозок людей"""
+    car_type = "car"
+    required = ['brand', 'photo_file_name', 'carrying', 'passenger_seats_count']
+
     def __init__(self, brand, photo_file_name, carrying, passenger_seats_count):
-        super().__init__("car", brand, photo_file_name, carrying)
-        self.passenger_seats_count = int(passenger_seats_count)
+        super().__init__(brand, photo_file_name, carrying)
+        self.passenger_seats_count = int(self.validate_input(passenger_seats_count))
 
     def __repr__(self):
         return super().__repr__() + f"{self.passenger_seats_count} seats"
 
 
 class Truck(CarBase):
+    """класс описывающий автомобили для перевозок грузов"""
+    car_type = "truck"
+    required = ['brand', 'photo_file_name', 'carrying', 'body_whl']
+
     def __init__(self, brand, photo_file_name, carrying, body_whl):
-        super().__init__("truck", brand, photo_file_name, carrying)
-        whl_list = body_whl.split('x')
-        if len(whl_list) == 3:
-            try:
-                self.body_length = float(whl_list[0])
-            except Exception:
-                self.body_length = 0.0
-            try:
-                self.body_width = float(whl_list[1])
-            except Exception:
-                self.body_width = 0.0
-            try:
-                self.body_height = float(whl_list[2])
-            except Exception:
-                self.body_height = 0.0
-        else:
-            self.body_length = 0.0
-            self.body_width = 0.0
-            self.body_height = 0.0
+        super().__init__(brand, photo_file_name, carrying)
+        self.body_length, self.body_width, self.body_height = self.parse_whl(body_whl)
 
     def __repr__(self):
         return super().__repr__() + f"vol={self.get_body_volume()}"
 
     def get_body_volume(self):
+        """возвращает объем кузова"""
         return self.body_length * self.body_width * self.body_height
+
+    def parse_whl(self, body_whl):
+        """возвращает реальные размеры кузова length, width, height"""
+        try:
+            length, width, height = (float(c) for c in body_whl.split("x", 2))
+        except Exception:
+            length, width, height = 0.0, 0.0, 0.0
+        return length, width, height
 
 
 class SpecMachine(CarBase):
+    """класс описывающий спецтехнику"""
+
+    car_type = "spec_machine"
+    required = ['brand', 'photo_file_name', 'carrying', 'extra']
+
     def __init__(self, brand, photo_file_name, carrying, extra):
-        super().__init__("spec_machine", brand, photo_file_name, carrying)
-        self.extra = extra
+        super().__init__(brand, photo_file_name, carrying)
+        self.extra = self.validate_input(extra)
 
     def __repr__(self):
         return super().__repr__() + f"{self.extra}"
 
 
-def get_car_list(csv_filename: str) -> list:
+def get_car_list(csv_filename):
+    """возвращает список объектов, сохраненных в файле csv_filename"""
+
+    car_types = {'car': Car, 'spec_machine': SpecMachine, 'truck': Truck}
+    csv.register_dialect('cars', delimiter=';')
     car_list = []
-    with open(csv_filename) as csv_fd:
-        reader = csv.reader(csv_fd, delimiter=';')
-        next(reader)  # пропускаем заголовок
+
+    with open(csv_filename, 'r') as file:
+        reader = csv.DictReader(file, dialect='cars')
         for row in reader:
-            car = None
-            if len(row) > 5:
-                #0         1      2                      3                4         5         6
-                #car_type, brand, passenger_seats_count; photo_file_name; body_whl; carrying; extra
-                try:
-                    extensions = [".jpg", ".jpeg", ".png", ".gif"]
-                    car_type = row[0]
-                    brand = row[1]
-                    if len(brand) == 0:
-                        continue
-                    photo_file_name = row[3]
-                    file_name_ext = os.path.splitext(photo_file_name)
-                    file_name = file_name_ext[0]
-                    extension = file_name_ext[1]
-                    if len(file_name) == 0 or len(extension) == 0 or extension not in extensions:
-                        continue
-                    carrying = float(row[5])
-                    if car_type == "car":
-                        passenger_seats_count = int(row[2])
-                        car = Car(brand, photo_file_name, carrying, passenger_seats_count)
-                    elif car_type == "truck":
-                        body_whl = row[4]
-                        car = Truck(brand, photo_file_name, carrying, body_whl)
-                    elif car_type == "spec_machine":
-                        if len(row) > 6:
-                            extra = row[6]
-                            if len(extra) == 0:
-                                continue
-                            car = SpecMachine(brand, photo_file_name, carrying, extra)
-                except ValueError:
-                    continue
-            if car:
-                car_list.append(car)
+            try:
+                car_class = car_types[row['car_type']]
+                car_list.append(car_class.create_from_dict(row))
+            except Exception:
+                pass
+
     return car_list
 
 

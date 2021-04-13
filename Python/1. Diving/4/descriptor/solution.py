@@ -1,10 +1,10 @@
 class Value:
 
-    def __init__(self, value=None):
-        self.value = value or 0
+    def __init__(self):
+        self.amount = 0
 
-    def __get__(self, instance, owner):
-        return self.value
+    def __get__(self, obj, obj_type):
+        return self.amount
 
-    def __set__(self, instance, value):
-        self.value = value - instance.commission * value
+    def __set__(self, obj, value):
+        self.amount = value - obj.commission * value

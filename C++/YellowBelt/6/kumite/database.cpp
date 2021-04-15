@@ -25,12 +25,10 @@ void Database::Print(ostream& stream) const {
 }
 
 pair<Date, string> Database::Last(const Date& date) const {
-  auto predicate = [date](const Date& date_item, const string& event) {
-    return date_item <= date;
-  };
-  const auto entries = FindIf(predicate);
-  if(entries.empty()) {
-    throw invalid_argument("");
+  auto it = storage.upper_bound(date);
+  if(it == storage.begin()) {
+    throw invalid_argument("No entries");
   }
-  return entries.back();
+  --it;
+  return { it->first, it->second.events.back() };
 }

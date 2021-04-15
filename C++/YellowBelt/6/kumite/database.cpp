@@ -25,15 +25,9 @@ void Database::Print(ostream& stream) const {
 }
 
 pair<Date, string> Database::Last(const Date& date) const {
-  ostringstream os;
-  os << "date <= " << date;
-  istringstream is(os.str());
-
-  auto condition = ParseCondition(is);
-  auto predicate = [condition](const Date& date, const string& event) {
-    return condition->Evaluate(date, event);
+  auto predicate = [date](const Date& date_item, const string& event) {
+    return date_item <= date;
   };
-
   const auto entries = FindIf(predicate);
   if(entries.empty()) {
     throw invalid_argument("");

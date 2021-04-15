@@ -31,43 +31,51 @@ public:
     return day;
   }
 
-  static Date fromString(const string& date) {
-    const string wrong_date_format = "Wrong date format: " + date;
-    istringstream date_stream(date);
-
-    int year;
-    if(!(date_stream >> year))
-      throw logic_error(wrong_date_format);
-    if(date_stream.peek() != '-')
-      throw logic_error(wrong_date_format);
-    date_stream.ignore(1);
-
-    int month;
-    if(!(date_stream >> month))
-      throw logic_error(wrong_date_format);
-    if(date_stream.peek() != '-')
-      throw logic_error(wrong_date_format);
-    date_stream.ignore(1);
-
-    int day;
-    if(!(date_stream >> day))
-      throw logic_error(wrong_date_format);
-    if(!date_stream.eof())
-        throw logic_error(wrong_date_format);
-
-    if(month < 1 || month > 12)
-      throw logic_error("Month value is invalid: " + to_string(month));
-    if(day < 1 || day > 31)
-      throw logic_error("Day value is invalid: " + to_string(day));
-
-    return Date(year, month, day);
-  }
-
 private:
   int year;
   int month;
   int day;
 };
+
+Date ParseDate(istream& is) {
+  string date;
+  is >> date;
+  const string wrong_date_format = "Wrong date format: " + date;
+  istringstream date_stream(date);
+
+  int year;
+  if(!(date_stream >> year))
+    throw logic_error(wrong_date_format);
+  if(date_stream.peek() != '-')
+    throw logic_error(wrong_date_format);
+  date_stream.ignore(1);
+
+  int month;
+  if(!(date_stream >> month))
+    throw logic_error(wrong_date_format);
+  if(date_stream.peek() != '-')
+    throw logic_error(wrong_date_format);
+  date_stream.ignore(1);
+
+  int day;
+  if(!(date_stream >> day))
+    throw logic_error(wrong_date_format);
+  if(!date_stream.eof())
+      throw logic_error(wrong_date_format);
+
+  if(month < 1 || month > 12)
+    throw logic_error("Month value is invalid: " + to_string(month));
+  if(day < 1 || day > 31)
+    throw logic_error("Day value is invalid: " + to_string(day));
+
+  return Date(year, month, day);
+}
+
+string ParseEvent(istream& is) {
+  string str;
+  getline(is >> ws, str);
+  return str;
+}
 
 bool operator<(const Date& lhs, const Date& rhs) {
   return make_tuple(lhs.GetYear(), lhs.GetMonth(), lhs.GetDay()) <
@@ -146,19 +154,19 @@ void Task(istream& input) {
 
     if(command == "Add") {
 
-      string date, event;
-      ss >> date >> event;
-      db.AddEvent(Date::fromString(date), event);
+      const auto date = ParseDate(ss);
+      const auto event = ParseEvent(ss);
+      db.AddEvent(date, event);
 
     } else if(command == "Del") {
 
-      string date, event;
-      ss >> date >> event;
+      const auto date = ParseDate(ss);
+      const auto event = ParseEvent(ss);
       if(event.empty()) {
-        const int count = db.DeleteDate(Date::fromString(date));
+        const int count = db.DeleteDate(date);
         cout << "Deleted " << count << " events" << endl;
       } else {
-        if(db.DeleteEvent(Date::fromString(date), event)) {
+        if(db.DeleteEvent(date, event)) {
           cout << "Deleted successfully" << endl;
         } else {
           cout << "Event not found" << endl;
@@ -167,9 +175,8 @@ void Task(istream& input) {
 
     } else if(command == "Find") {
 
-      string date;
-      ss >> date;
-      const auto events = db.Find(Date::fromString(date));
+      const auto date = ParseDate(ss);
+      const auto events = db.Find(date);
       for(const auto& event : events) {
         cout << event << endl;
       }

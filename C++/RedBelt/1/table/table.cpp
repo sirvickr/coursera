@@ -7,53 +7,35 @@ using namespace std;
 
 template<typename T>
 class Table {
-
-  template<typename InputIt>
-  class RowView {
-  public:
-    RowView(InputIt start, InputIt stop)
-    : start(start), stop(stop) {
-    }
-    const typename iterator_traits<InputIt>::value_type& operator[](size_t j) const {
-      return *next(start, j);
-    }
-    typename iterator_traits<InputIt>::value_type& operator[](size_t j) {
-      return *next(start, j);
-    }
-  private:
-    InputIt start, stop;
-  };
-
 public:
   Table(size_t m = 0, size_t n = 0) {
     Resize(m, n);
   }
 
   void Resize(size_t m, size_t n) {
-    if (m == 0 || n == 0)
-      m = n = 0;
     data.resize(m);
     for(auto& v: data) {
-      v.resize(n, T());
+      v.resize(n);
     }
-    this->m = m;
-    this->n = n;
   }
 
   pair<size_t, size_t> Size() const {
-    return {m, n};
+    if (!data.empty() && !data[0].empty()) {
+      return {data.size(), data[0].size()};
+    }
+
+    return  {0, 0};
   }
 
-  RowView<typename vector<T>::iterator> operator[](size_t i) {
-    return RowView<typename vector<T>::iterator>(begin(data[i]), end(data[i]));
+  vector<T>& operator[](size_t i) {
+    return data[i];
   }
 
-  const RowView<typename vector<T>::const_iterator> operator[](size_t i) const {
-    return RowView<typename vector<T>::iterator>(begin(data[i]), end(data[i]));
+  const vector<T>& operator[](size_t i) const {
+    return data[i];
   }
 
 private:
-  size_t m, n;
   vector<vector<T>> data;
 };
 

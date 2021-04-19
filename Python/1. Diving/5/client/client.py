@@ -1,6 +1,6 @@
 import time
 import socket
-import operator
+import bisect
 
 
 class ClientError(BaseException):
@@ -14,40 +14,56 @@ class Client:
         self.host = host
         self.port = port
         self.timeout = timeout
-        self.connection = socket.create_connection((host, port), timeout)
+        try:
+            self.connection = socket.create_connection((host, port), timeout)
+        except socket.error as err:
+            raise ClientError("Cannot create connection", err)
 
     def put(self, key, value, timestamp = None):
         timestamp = timestamp or int(time.time())
-        message = f"put {key} {value} {timestamp}\n"
-        self.connection.sendall(message.encode())
-        data = self.connection.recv(1024).decode()
-        reply = data.split()
-        # ошибка сервера
-        if len(reply) == 0 or reply[0] != "ok":
-            raise ClientError
+        self._send(f"put {key} {value} {timestamp}\n".encode())
+        raw_data = self._read()
+        if raw_data == 'ok\n\n':
+            return
+        raise ClientError('Server returns an error')
 
     def get(self, key):
-        message = f"get {key}\n"
-        self.connection.sendall(message.encode())
-        data = self.connection.recv(1024).decode()
-        reply = data.split()
-        # ошибка сервера
-        if len(reply) == 0 or reply[0] != "ok":
-            raise ClientError
-        # нет данных
-        if len(reply) == 1:
-            return {}
-        result = {}
+        self._send(f"get {key}\n".encode())
+        raw_data = self._read()
+        data = {}
+        status, payload = raw_data.split("\n", 1)
+        payload = payload.strip()
+        if status != 'ok':
+            raise ClientError('Server returns an error')
+        if payload == '':
+            return data
         try:
-            for index in range(1, len(reply), 3):
-                metric = reply[index]
-                value = float(reply[index + 1])
-                ts = int(reply[index + 2])
-                if metric not in result:
-                    result[metric] = []
-                result[metric].append((ts, value))
-            for metric, pairs in result.items():
-                pairs.sort(key=operator.itemgetter(0))
-        except (IndexError, ValueError):
-            raise ClientError
-        return result
+            for row in payload.splitlines():
+                key, value, timestamp = row.split()
+                if key not in data:
+                    data[key] = []
+                bisect.insort(data[key], ((int(timestamp), float(value))))
+        except Exception as err:
+            raise ClientError('Server returns invalid data', err)
+        return data
+
+    def close(self):
+        try:
+            self.connection.close()
+        except socket.error as err:
+            raise ClientError("Error. Do not close the connection", err)
+
+    def _read(self):
+        data = b""
+        while not data.endswith(b"\n\n"):
+            try:
+                data += self.connection.recv(1024)
+            except socket.error as err:
+                raise ClientError("Error reading data from socket", err)
+        return data.decode('utf-8')
+
+    def _send(self, data):
+        try:
+            self.connection.sendall(data)
+        except socket.error as err:
+            raise ClientError("Error sending data to server", err)

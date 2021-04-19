@@ -112,5 +112,34 @@ def run(host, port):
     print("Похоже, что все верно! Попробуйте отправить решение на проверку.")
 
 
+class Incremented:
+
+    def __init__(self, value = 0):
+        self.value = int(value)
+
+    def __get__(self, obj, obj_type):
+        value = self.value
+        self.value += 1
+        return int(value)
+
+    # def __set__(self, obj, value):
+    #     self.value = value
+
+def my_test(host, port):
+    # ts = Incremented(1000)
+    # print("TS:", ts)
+
+    client = Client(host, port, timeout=5)
+
+    client.put(metric="palm.cpu", value=2)
+    # client.put("palm.cpu", 2.0, 1150864247)
+    # client.put("palm.cpu", 0.5, 1150864248)
+    # client.put("eardrum.cpu", 3.0, 1150864250)
+
+    print("get returned:", ascii(client.get("palm.cpu")))
+    print("get returned:", ascii(client.get("*")))
+
+
 if __name__ == "__main__":
     run("127.0.0.1", 8888)
+    # my_test("127.0.0.1", 8888)

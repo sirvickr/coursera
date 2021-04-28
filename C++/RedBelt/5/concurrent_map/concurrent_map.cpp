@@ -15,14 +15,35 @@ public:
   static_assert(is_integral_v<K>, "ConcurrentMap supports only integer keys");
 
   struct Access {
+    lock_guard<mutex> guard;
     V& ref_to_value;
   };
 
-  explicit ConcurrentMap(size_t bucket_count);
+  explicit ConcurrentMap(size_t bucket_count): buckets(bucket_count) {
+  }
 
-  Access operator[](const K& key);
+  Access operator[](const K& key) {
+    size_t index = key % buckets.size();
+    return { lock_guard(buckets[index].lock), buckets[index].data[key] };
+  }
 
-  map<K, V> BuildOrdinaryMap();
+  map<K, V> BuildOrdinaryMap() {
+    map<K, V> m;
+    for(auto& bucket: buckets) {
+      lock_guard guard(bucket.lock);
+      for(const auto& [key, value]: bucket.data) {
+        m[key] = value;
+      }
+    }
+    return m;
+  }
+
+private:
+  struct bucket {
+    map<K, V> data;
+    mutex lock;
+  };
+  vector<bucket> buckets;
 };
 
 void RunConcurrentUpdates(

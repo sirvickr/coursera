@@ -5,22 +5,20 @@
 #include <list>
 #include <forward_list>
 #include <numeric>
-#include <iterator>
+#include <algorithm>
 
 using namespace std;
 
 template<typename ForwardIterator, typename UnaryPredicate>
 ForwardIterator max_element_if(ForwardIterator first, ForwardIterator last, UnaryPredicate pred) {
-  auto max_it = last;
-  auto it = first;
-  while (it != last) {
-    if(pred(*it) && (max_it == last || *it > *max_it)) {
-      max_it = it;
+  auto maxElemIt = find_if(first, last, pred);
+  for (ForwardIterator cur = maxElemIt; cur != last; ++cur) {
+    // cur != maxElemIt is checked to avoid re-calculation of p(*maxElemIt) at first iteration
+    if (cur != maxElemIt && pred(*cur) && *maxElemIt < *cur) {
+      maxElemIt = cur;
     }
-    it++;
   }
-  return max_it;
-}
+  return maxElemIt;}
 
 void TestUniqueMax() {
   auto IsEven = [](int x) {

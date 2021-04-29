@@ -30,7 +30,7 @@ public:
         // документ содержит 3 слова
 
     istringstream document_input(docs);
-    SearchServer srv(document_input);\
+    SearchServer srv(document_input);
 
 Метод AddQueriesStream(istream& query_input, ostream& search_results_output)
 
@@ -43,7 +43,10 @@ public:
 В реальных поисковых системах метрика релевантности устроена довольно сложно. 
 В рамках нашей задачи в качестве метрики релевантности мы будем использовать суммарное количество вхождений всех слов запроса в документ. 
 Например, допустим, у нас есть поисковая база из трёх документов: 
-"london is the capital of great britain", "moscow is the capital of the russian federation", "paris is the capital of france", и поисковый запрос "the best capital". 
+"london is the capital of great britain", 
+"moscow is the capital of the russian federation", 
+"paris is the capital of france", 
+и поисковый запрос "the best capital". 
 Тогда метрика релевантности у наших документов будет такой:
   - london is the capital of great britain — 2 (слово "the" входит в документ 1 раз, слово "best" — ни разу, слово "capital" — 1 раз)
   - moscow is the capital of the russian federation — 3 (слово "the" входит в документ 2 раза, слово "best" — ни разу, слово "capital" — 1 раз)
@@ -51,8 +54,8 @@ public:
 
 В итоге получается, что документ "moscow is the capital of the russian federation" оказывается наиболее релевантным запросу "the best capital".
 
-Для каждого поискового запроса метод AddQueriesStream должен вывести в поток search_results_output одну строку в формате [текст запроса]: 
-{docid: <значение>, hitcount: <значение>} {docid: <значение>, hitcount: <значение>} ..., 
+Для каждого поискового запроса метод AddQueriesStream должен вывести в поток search_results_output одну строку в формате 
+[текст запроса]: {docid: <значение>, hitcount: <значение>} {docid: <значение>, hitcount: <значение>} ..., 
 где docid — идентификатор документа (см. ниже), а hitcount — значение метрики релевантности для данного документа 
 (то есть суммарное количество вхождений всех слов запроса в данный документ).
 
@@ -92,10 +95,13 @@ the capital: {docid: 0, hitcount: 3} {docid: 1, hitcount: 2}
 В первой части вам дана корректная реализация класса SearchServer, которая работает недостаточно быстро. 
 Вам нужно найти и устранить узкие места в её реализации. 
 В тестирующую систему нужно сдать cpp-файл или архив из нескольких исходных файлов, содержащий вашу ускоренную реализацию. 
-Ваша реализация будет тестироваться вот такой функцией (объект класса SearchServer будет создан один раз, и у него один раз будет вызван метод AddQueriesStream):
 
-void TestSearchServer(istream& document_input, istream& query_input,
-                      ostream& search_results_output) {
+Тестирование реализации будет проводиться на производительность и на целостность.
+
+При тестировании на производительность, Ваша реализация будет тестироваться вот такой функцией (объект 
+класса SearchServer будет создан один раз, и у него один раз будет вызван метод AddQueriesStream):
+
+void TestSearchServer(istream& document_input, istream& query_input, ostream& search_results_output) {
   SearchServer srv(document_input);
   srv.AddQueriesStream(query_input, search_results_output);
 }
@@ -103,13 +109,18 @@ void TestSearchServer(istream& document_input, istream& query_input,
 При этом:
   - document_input содержит не более 50000 документов
   - каждый документ содержит не более 1000 слов
-  - общее число различных слов во всех документах не превосходит 10000
+  - общее число различных слов во всех документах не превосходит 15000
   - максимальная длина одного слова — 100 символов, слова состоят из строчных латинских букв и разделены одним или несколькими пробелами
   - query_input содержит не более 500 000 запросов, каждый запрос содержит от 1 до 10 слов.
+
+В отличие от тестирования на производительность, при тестировании на целостность и корректность работы исходного функционала сервера 
+допускается вызов UpdateDocumentBase в том числе и у уже созданного и проинициализированного объекта класса SearchServer.
 
 Смотрите юнит-тесты в заготовке решения для более подробного ознакомления с тем, как должен работать класс SearchServer
 
 course_project_first_part.zip: папка starter_files (main.cpp, search_server.cpp, search_server.h, parse.cpp, parse.h, iterator_range.h)
+
+-------------------------------------------------------------------------------
 
 Вторая часть задачи
 

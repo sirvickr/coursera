@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "iterator": "cpp",
+        "forward_list": "cpp"
+    }
+}

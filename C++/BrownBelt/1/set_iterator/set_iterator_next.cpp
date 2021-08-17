@@ -42,14 +42,12 @@ private:
   deque<Node> nodes;
 };
 
-Node* Least(Node* me) {
+Node* GetLeftest(Node* me) {
   assert(me);
-  Node* result = nullptr;
-  while(me) {
-    result = me;
+  while (me->left) {
     me = me->left;
   }
-  return result;
+  return me;
 }
 
 // "ascending" means that we are here for the first time 
@@ -57,25 +55,18 @@ Node* Least(Node* me) {
 Node* Next(Node* me, bool asc = true) {
   assert(me);
 
-  if(me->right && asc) {
-    return Least(me->right);
+  if (me->right) {
+    return GetLeftest(me->right);
   }
 
-  const auto parent = me->parent;
-
-  if(!parent) { // root node
-    return nullptr;
+  if (me->parent && me->parent->left == me) {
+    return me->parent;
   }
 
-  if(parent->left == me) {
-    return parent;
+  while (me->parent && me == me->parent->right) {
+    me = me->parent;
   }
-
-  if(parent->right == me) {
-    return Next(parent, false);
-  }
-
-  return parent;
+  return me->parent;
 }
 
 void Test1() {

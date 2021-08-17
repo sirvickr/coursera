@@ -19,8 +19,10 @@ struct Point3D {
 
 struct Hasher {
   size_t operator() (const Point3D& point) const {
-      // simple number
-      const size_t x = 37;
+      // выбираем в качестве коэффициента довольно большое простое число;
+      // свободный член можем положить равным нулю, т.к. он не влияет
+      // на коллизии, а лишь циклически смещает бакеты
+      const size_t x = 2'946'901;
       hash<CoordType> axisHash;
       return axisHash(point.x) * x * x + axisHash(point.y) * x + axisHash(point.z);
   }

@@ -13,12 +13,17 @@ struct Point3D {
   CoordType z;
 
   bool operator==(const Point3D& other) const {
-    // реализуйте оператор
+    return x == other.x && y == other.y && z == other.z;
   }
 };
 
 struct Hasher {
-  // реализуйте структуру
+  size_t operator() (const Point3D& point) const {
+      // simple number
+      const size_t x = 37;
+      hash<CoordType> axisHash;
+      return axisHash(point.x) * x * x + axisHash(point.y) * x + axisHash(point.z);
+  }
 };
 
 void TestSmoke() {

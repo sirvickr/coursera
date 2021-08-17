@@ -50,8 +50,6 @@ Node* GetLeftest(Node* me) {
   return me;
 }
 
-// "ascending" means that we are here for the first time 
-// or recursively from the left child
 Node* Next(Node* me, bool asc = true) {
   assert(me);
 

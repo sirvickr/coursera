@@ -10,7 +10,7 @@ struct Address {
   int building;
 
   bool operator==(const Address& other) const {
-    // реализуйте оператор
+    return city == other.city && street == other.street && building == other.building;
   }
 };
 
@@ -21,16 +21,28 @@ struct Person {
   Address address;
 
   bool operator==(const Person& other) const {
-    // реализуйте оператор
+    return name == other.name && height == other.height && weight == other.weight && address == other.address;
   }
 };
 
 struct AddressHasher {
-  // реализуйте структуру
+  size_t operator() (const Address& address) const {
+      const size_t x = 2'946'901;
+      return str_hasher(address.city) * x * x + str_hasher(address.street) * x + int_hasher(address.building);
+  }
+  hash<string> str_hasher;
+  hash<int> int_hasher;
 };
 
 struct PersonHasher {
-  // реализуйте структуру
+  size_t operator() (const Person& person) const {
+      const size_t x = 2'946'901;
+      return str_hasher(person.name) * x * x * x + int_hasher(person.height) * x * x + dbl_hasher(person.weight) * x + addr_hasher(person.address);
+  }
+  hash<string> str_hasher;
+  hash<int> int_hasher;
+  hash<double> dbl_hasher;
+  AddressHasher addr_hasher;
 };
 
 // сгенерированы командой:

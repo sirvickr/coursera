@@ -5,8 +5,10 @@
             "label": "C/C++: g++-9 build active file",
             "command": "/usr/bin/g++-9",
             "args": [
+                "-std=c++17",
+                "-I${workspaceFolder}/../..",
                 "-g",
-                "${file}",
+                "${workspaceFolder}/*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],

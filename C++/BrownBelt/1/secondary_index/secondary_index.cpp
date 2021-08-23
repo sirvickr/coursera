@@ -16,27 +16,19 @@ struct Record {
 };
 
 class Database {
-  template<typename Type>
-  using Index = multimap<Type, Record*>;
-
-  struct Data {
-    Record record;
-    Index<int>::iterator ts_it;
-    Index<int>::iterator kar_it;
-    Index<string>::iterator user_it;
-  };
-
 public:
   bool Put(const Record& record) {
     auto [it, inserted] = storage.insert({record.id, {record, {}, {}, {}}});
+
     if(!inserted) {
       return false;
     }
+
     auto& data = it->second;
     Record* ptr = &data.record;
-    data.ts_it = timestamps.insert({record.timestamp, ptr});
-    data.kar_it = karmas.insert({record.karma, ptr});
-    data.user_it = users.insert({record.user, ptr});
+    data.timestamp_iter = timestamp_index.insert({record.timestamp, ptr});
+    data.karma_iter = karma_index.insert({record.karma, ptr});
+    data.user_iter = user_index.insert({record.user, ptr});
     return true;
   }
 
@@ -49,9 +41,9 @@ public:
 
   bool Erase(const string& id) {
     if(auto it = storage.find(id); it != storage.end()) {
-      timestamps.erase(it->second.ts_it);
-      karmas.erase(it->second.kar_it);
-      users.erase(it->second.user_it);
+      timestamp_index.erase(it->second.timestamp_iter);
+      karma_index.erase(it->second.karma_iter);
+      user_index.erase(it->second.user_iter);
       storage.erase(it);
       return true;
     }
@@ -60,17 +52,17 @@ public:
 
   template <typename Callback>
   void RangeByTimestamp(int low, int high, Callback callback) const {
-    Range(timestamps, low, high, callback);
+    Range(timestamp_index, low, high, callback);
   }
 
   template <typename Callback>
   void RangeByKarma(int low, int high, Callback callback) const {
-    Range(karmas, low, high, callback);
+    Range(karma_index, low, high, callback);
   }
 
   template <typename Callback>
   void AllByUser(const string& user, Callback callback) const {
-    Range(users, user, user, callback);
+    Range(user_index, user, user, callback);
   }
 
   template <typename Map, typename Callback>
@@ -84,10 +76,21 @@ public:
   }
 
 private:
+  template<typename Type>
+  using Index = multimap<Type, Record*>;
+
+  struct Data {
+    Record record;
+    Index<int>::iterator timestamp_iter;
+    Index<int>::iterator karma_iter;
+    Index<string>::iterator user_iter;
+  };
+
+private:
   unordered_map<string, Data> storage;
-  Index<int> timestamps;
-  Index<int> karmas;
-  Index<string> users;
+  Index<int> timestamp_index;
+  Index<int> karma_index;
+  Index<string> user_index;
 };
 
 void TestRangeBoundaries() {

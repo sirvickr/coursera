@@ -20,7 +20,7 @@ class Database {
   using Index = multimap<Type, Record*>;
 
   struct Data {
-    Record* record = nullptr;
+    Record record;
     Index<int>::iterator ts_it;
     Index<int>::iterator kar_it;
     Index<string>::iterator user_it;
@@ -28,33 +28,30 @@ class Database {
 
 public:
   bool Put(const Record& record) {
-    if(auto it = storage.find(record.id); it == storage.end()) {
-      auto ptr = new Record{record};
-      Data item{ 
-        ptr, 
-        timestamps.insert({record.timestamp, ptr}),
-        karmas.insert({record.karma, ptr}), 
-        users.insert({record.user, ptr}) 
-      };
-      storage.insert({record.id, item});
-      return true;
+    auto [it, inserted] = storage.insert({record.id, {record, {}, {}, {}}});
+    if(!inserted) {
+      return false;
     }
-    return false;
+    auto& data = it->second;
+    Record* ptr = &data.record;
+    data.ts_it = timestamps.insert({record.timestamp, ptr});
+    data.kar_it = karmas.insert({record.karma, ptr});
+    data.user_it = users.insert({record.user, ptr});
+    return true;
   }
 
   const Record* GetById(const string& id) const {
     if(auto it = storage.find(id); it != storage.end()) {
-      return it->second.record;
+      return &it->second.record;
     }
     return nullptr;
   }
 
   bool Erase(const string& id) {
     if(auto it = storage.find(id); it != storage.end()) {
-      karmas.erase(it->second.kar_it);
       timestamps.erase(it->second.ts_it);
+      karmas.erase(it->second.kar_it);
       users.erase(it->second.user_it);
-      delete it->second.record;
       storage.erase(it);
       return true;
     }

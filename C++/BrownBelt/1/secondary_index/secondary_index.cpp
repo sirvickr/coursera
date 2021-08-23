@@ -15,28 +15,91 @@ struct Record {
   int karma;
 };
 
-// Реализуйте этот класс
 class Database {
+  template<typename Type>
+  using Index = multimap<Type, Record*>;
+
+  struct Data {
+    Record* record = nullptr;
+    Index<int>::iterator ts_it;
+    Index<int>::iterator kar_it;
+    Index<string>::iterator user_it;
+  };
+
 public:
-  bool Put(const Record& record);
-  const Record* GetById(const string& id) const;
-  bool Erase(const string& id);
+  bool Put(const Record& record) {
+    if(auto it = storage.find(record.id); it == storage.end()) {
+      auto ptr = new Record{record};
+      Data item{ 
+        ptr, 
+        timestamps.insert({record.timestamp, ptr}),
+        karmas.insert({record.karma, ptr}), 
+        users.insert({record.user, ptr}) 
+      };
+      storage.insert({record.id, item});
+      return true;
+    }
+    return false;
+  }
+
+  const Record* GetById(const string& id) const {
+    if(auto it = storage.find(id); it != storage.end()) {
+      return it->second.record;
+    }
+    return nullptr;
+  }
+
+  bool Erase(const string& id) {
+    if(auto it = storage.find(id); it != storage.end()) {
+      karmas.erase(it->second.kar_it);
+      timestamps.erase(it->second.ts_it);
+      users.erase(it->second.user_it);
+      delete it->second.record;
+      storage.erase(it);
+      return true;
+    }
+    return false;
+  }
 
   template <typename Callback>
-  void RangeByTimestamp(int low, int high, Callback callback) const;
+  void RangeByTimestamp(int low, int high, Callback callback) const {
+    Range(timestamps, low, high, callback);
+  }
 
   template <typename Callback>
-  void RangeByKarma(int low, int high, Callback callback) const;
+  void RangeByKarma(int low, int high, Callback callback) const {
+    Range(karmas, low, high, callback);
+  }
 
   template <typename Callback>
-  void AllByUser(const string& user, Callback callback) const;
+  void AllByUser(const string& user, Callback callback) const {
+    Range(users, user, user, callback);
+  }
+
+  template <typename Map, typename Callback>
+  void Range(const Map& m, typename Map::key_type low, typename Map::key_type high, Callback callback) const {
+    auto last = m.upper_bound(high);
+    for(auto it = m.lower_bound(low); it != last; ++it) {
+      if(!callback(*it->second)) {
+        break;
+      }
+    }
+  }
+
+private:
+  unordered_map<string, Data> storage;
+  Index<int> timestamps;
+  Index<int> karmas;
+  Index<string> users;
 };
 
 void TestRangeBoundaries() {
+  Database db;
+
+  // karma
   const int good_karma = 1000;
   const int bad_karma = -10;
 
-  Database db;
   db.Put({"id1", "Hello there", "master", 1536107260, good_karma});
   db.Put({"id2", "O>>-<", "general2", 1536107260, bad_karma});
 
@@ -47,6 +110,20 @@ void TestRangeBoundaries() {
   });
 
   ASSERT_EQUAL(2, count);
+
+  // timestamps
+  count = 0;
+
+  db.Put({"id3", "Rec#3", "anon", 1536107263, good_karma});
+  db.Put({"id4", "Rec#4", "anon", 1536107266, good_karma});
+
+  count = 0;
+  db.RangeByTimestamp(1536107260, 1536107264, [&count](const Record&) {
+    ++count;
+    return true;
+  });
+
+  ASSERT_EQUAL(3, count);
 }
 
 void TestSameUser() {
@@ -67,9 +144,16 @@ void TestReplacement() {
   const string final_body = "Feeling sad";
 
   Database db;
-  db.Put({"id", "Have a hand", "not-master", 1536107260, 10});
-  db.Erase("id");
-  db.Put({"id", final_body, "not-master", 1536107260, -10});
+  bool result = db.Put({"id", "Have a hand", "not-master", 1536107260, 10});
+  ASSERT(result);
+  result = db.Put({"id", "Have a hand", "not-master", 1536107260, 10});
+  ASSERT(!result);
+  result = db.Erase("id");
+  ASSERT(result);
+  result = db.Erase("id");
+  ASSERT(!result);
+  result = db.Put({"id", final_body, "not-master", 1536107260, -10});
+  ASSERT(result);
 
   auto record = db.GetById("id");
   ASSERT(record != nullptr);

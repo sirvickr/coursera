@@ -42,10 +42,9 @@ string MostExpensiveCategory(
 }
 
 vector<Spending> LoadFromJson(istream& input) {
+  Document doc = Load(input);
   vector<Spending> result;
-  Node root = Load(input).GetRoot();
-  result.reserve(root.AsArray().size());
-  for(const Node& node: root.AsArray()) {
+  for (const Node& node : doc.GetRoot().AsArray()) {
     result.push_back({
       node.AsMap().at("category").AsString(),
       node.AsMap().at("amount").AsInt()

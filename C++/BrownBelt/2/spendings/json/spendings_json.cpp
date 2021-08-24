@@ -42,7 +42,16 @@ string MostExpensiveCategory(
 }
 
 vector<Spending> LoadFromJson(istream& input) {
-  // Реализуйте эту функцию с помощью библиотеки json.h
+  vector<Spending> result;
+  Node root = Load(input).GetRoot();
+  result.reserve(root.AsArray().size());
+  for(const Node& node: root.AsArray()) {
+    result.push_back({
+      node.AsMap().at("category").AsString(),
+      node.AsMap().at("amount").AsInt()
+    });
+  }
+  return result;
 }
 
 void TestLoadFromJson() {

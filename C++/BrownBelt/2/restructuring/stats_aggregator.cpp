@@ -2,6 +2,8 @@
 
 using namespace std;
 
+namespace StatsAggregators {
+
 template <typename T>
 ostream& operator << (ostream& os, const optional<T>& v) {
   if (v) {
@@ -11,8 +13,6 @@ ostream& operator << (ostream& os, const optional<T>& v) {
   }
   return os;
 }
-
-namespace StatsAggregators {
 
 void Composite::Process(int value) {
   for (auto& aggr : aggregators) {

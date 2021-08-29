@@ -6,7 +6,9 @@
             "command": "/usr/bin/g++-9",
             "args": [
                 "-g",
-                "${file}",
+                "-std=c++17",
+                "-I${workspaceFolder}/../..",
+                "${workspaceFolder}/*.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],

@@ -22,6 +22,23 @@ enum class HttpCode {
   Found = 302,
 };
 
+ostream& operator<<(ostream& output, HttpCode code) {
+  switch (code) {
+    case HttpCode::Ok:
+      output << "200 OK";
+      break;
+    case HttpCode::Found:
+      output << "302 Found";
+      break;
+    case HttpCode::NotFound:
+      output << "404 Not found";
+      break;
+    default:
+      throw invalid_argument("Unknown http code");
+  }
+  return output;
+}
+
 struct HttpHeader {
   string name, value;
 };
@@ -36,47 +53,39 @@ bool operator==(const HttpHeader& lhs, const HttpHeader& rhs) {
 
 class HttpResponse {
 public:
-  explicit HttpResponse(HttpCode code): code_(code) {
+  explicit HttpResponse(HttpCode code) : code(code) {
   }
 
   HttpResponse& AddHeader(string name, string value) {
-      headers_.push_back({name, value});
-      return *this;
+    headers.push_back(HttpHeader{std::move(name), std::move(value)});
+    return *this;
   }
+
   HttpResponse& SetContent(string a_content) {
-      content_ = a_content;
-      return *this;
+    content = std::move(a_content);
+    return *this;
   }
+
   HttpResponse& SetCode(HttpCode a_code) {
-      code_ = a_code;
-      return *this;
+    code = a_code;
+    return *this;
   }
 
   friend ostream& operator << (ostream& output, const HttpResponse& resp) {
-    output << "HTTP/1.1";
-    output << ' ' << to_string(static_cast<int>(resp.code_));
-    output << ' ' << resp.comment_.at(resp.code_) << '\n';
-    for(const auto& [name, value]: resp.headers_) {
-        output << name << ": " << value << '\n';
+    output << "HTTP/1.1 " << resp.code << '\n';
+    for (const auto& header : resp.headers) {
+      output << header << '\n';
     }
-    if(!resp.content_.empty()) {
-        output << "Content-Length: " << resp.content_.size() << '\n';
-        output << '\n' << resp.content_;
-    } else {
-        output << '\n';
+    if (!resp.content.empty()) {
+      output << "Content-Length: " << resp.content.size() << '\n';
     }
-    return output;
+    return output << '\n' << resp.content;
   }
 
 private:
-  const unordered_map<HttpCode, string> comment_ = { 
-    { HttpCode::Ok, "OK" }, 
-    { HttpCode::NotFound, "Not found" }, 
-    { HttpCode::Found, "Found" }, 
-  };
-  HttpCode code_; 
-  string content_;
-  vector<pair<string, string>> headers_;
+  HttpCode code;
+  vector<HttpHeader> headers;
+  string content;
 };
 
 pair<string, string> SplitBy(const string& what, const string& by) {
@@ -115,53 +124,77 @@ public:
   HttpResponse ServeRequest(const HttpRequest& req) {
     if (req.method == "POST") {
       if (req.path == "/add_user") {
-        comments_.emplace_back();
-        auto response = to_string(comments_.size() - 1);
-        return HttpResponse{HttpCode::Ok}.SetContent(response);
+        return ServeAddUser(req);
       } else if (req.path == "/add_comment") {
-        auto [user_id, comment] = ParseIdAndContent(req.body);
-
-        if (!last_comment || last_comment->user_id != user_id) {
-          last_comment = LastCommentInfo {user_id, 1};
-        } else if (++last_comment->consecutive_count > 3) {
-          banned_users.insert(user_id);
-        }
-
-        if (banned_users.count(user_id) == 0) {
-          comments_[user_id].push_back(string(comment));
-          return HttpResponse{HttpCode::Ok};
-        } else {
-          return HttpResponse{HttpCode::Found}.AddHeader("Location", "/captcha");
-        }
+        return ServeAddComment(req);
       } else if (req.path == "/checkcaptcha") {
-        if (auto [id, response] = ParseIdAndContent(req.body); response == "42") {
-          banned_users.erase(id);
-          if (last_comment && last_comment->user_id == id) {
-            last_comment.reset();
-          }
-          return HttpResponse{HttpCode::Ok};
-        } else {
-          return HttpResponse{HttpCode::Found}.AddHeader("Location", "/captcha");
-        }
+        return ServeCheckCaptcha(req);
       } else {
-        return HttpResponse{HttpCode::NotFound};
-     }
+        return HttpResponse(HttpCode::NotFound);
+      }
     } else if (req.method == "GET") {
       if (req.path == "/user_comments") {
-        auto user_id = FromString<size_t>(req.get_params.at("user_id"));
-        string response;
-        for (const string& c : comments_[user_id]) {
-          response += c + '\n';
-        }
-        return HttpResponse{HttpCode::Ok}.SetContent(response);
+        return ServeUserComments(req);
       } else if (req.path == "/captcha") {
-        string response = "What's the answer for The Ultimate Question of Life, the Universe, and Everything?";
-        return HttpResponse{HttpCode::Ok}.SetContent(response);
+        return ServeCaptcha(req);
       } else {
-        return HttpResponse{HttpCode::NotFound};
+        return HttpResponse(HttpCode::NotFound);
       }
+    } else {
+      return HttpResponse(HttpCode::NotFound);
     }
-    return HttpResponse{HttpCode::NotFound};
+  }
+
+private:
+  HttpResponse ServeAddUser(const HttpRequest& request) {
+    comments_.emplace_back();
+    return HttpResponse(HttpCode::Ok).SetContent(to_string(comments_.size() - 1));
+  }
+
+  HttpResponse ServeAddComment(const HttpRequest& request) {
+    auto [user_id, comment] = ParseIdAndContent(request.body);
+
+    if (!last_comment || last_comment->user_id != user_id) {
+      last_comment = LastCommentInfo {user_id, 1};
+    } else if (++last_comment->consecutive_count > 3) {
+      banned_users.insert(user_id);
+    }
+
+    if (banned_users.count(user_id) == 0) {
+      comments_[user_id].push_back(comment);
+      return HttpResponse(HttpCode::Ok);
+    } else {
+      return HttpResponse(HttpCode::Found).AddHeader("Location", "/captcha");
+    }
+  }
+
+  HttpResponse ServeCheckCaptcha(const HttpRequest& request) {
+    if (auto [id, response] = ParseIdAndContent(request.body); response == "42") {
+      banned_users.erase(id);
+      if (last_comment && last_comment->user_id == id) {
+        last_comment.reset();
+      }
+      return HttpResponse(HttpCode::Ok);
+    } else {
+      return HttpResponse(HttpCode::Found).AddHeader("Location", "/captcha");
+    }
+  }
+
+  HttpResponse ServeUserComments(const HttpRequest& request) {
+    auto user_id = FromString<size_t>(request.get_params.at("user_id"));
+    string response;
+    for (const string& c : comments_[user_id]) {
+      response += c + '\n';
+    }
+
+    return HttpResponse(HttpCode::Ok).SetContent(std::move(response));
+  }
+
+  HttpResponse ServeCaptcha(const HttpRequest&) {
+    return HttpResponse(HttpCode::Ok)
+      .SetContent(
+        "What's the answer for The Ultimate Question of Life, the Universe, and Everything?"
+       );
   }
 };
 

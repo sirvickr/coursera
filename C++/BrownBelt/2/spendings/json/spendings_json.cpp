@@ -106,4 +106,8 @@ int main() {
   TestRunner tr;
   RUN_TEST(tr, TestJsonLibrary);
   RUN_TEST(tr, TestLoadFromJson);
+  int8_t a = 200;
+  uint8_t b = 100;
+  cout << (a > b) << " a = " << int(a) << endl;
+  printf("%f", float(1/2));
 }

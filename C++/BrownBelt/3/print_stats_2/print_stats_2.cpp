@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <optional>
 #include <numeric>
 
 using namespace std;
@@ -50,12 +51,14 @@ private:
   }
 
   void ProcessPopularName(char gender) {
-    if(gender != 'M' && gender != 'W') {
-      cout << "No people of gender " << gender << '\n';
-      return;
-    }
-    cout << "Most popular name among people of gender " << gender << " is "
-          << (gender == 'M' ? most_popular_male_name : most_popular_female_name) << '\n';
+      const auto& most_popular_name = gender == 'M' ? most_popular_male_name
+                                                    : most_popular_female_name;
+      if (most_popular_name) {
+        cout << "Most popular name among people of gender " << gender << " is "
+             << *most_popular_name << '\n';
+      } else {
+        cout << "No people of gender " << gender << '\n';
+      }
   }
 
   void ProcessCommands() {
@@ -116,35 +119,35 @@ private:
 
 private:
   template <typename Iter>
-  string FindMostPopularName(Iter from, Iter to) {
+  optional<string> FindMostPopularName(Iter from, Iter to) {
     sort(from, to, [](const Person* lhs, const Person* rhs) {
       return lhs->name < rhs->name;
     });
-    string result;
-    if (from != to) {
-      const string* most_popular_name = &(*from)->name;
-      int count = 1;
-      for (auto i = from; i != to; ) {
-        auto same_name_end = find_if_not(i, to, [i](const Person* p) {
-          return p->name == (*i)->name;
-        });
-        auto cur_name_count = std::distance(i, same_name_end);
-        if (cur_name_count > count) {
-          count = cur_name_count;
-          most_popular_name = &(*i)->name;
-        }
-        i = same_name_end;
+
+    if (from == to)
+      return nullopt;
+
+    const string* most_popular_name = &(*from)->name;
+    int count = 1;
+    for (auto i = from; i != to; ) {
+      auto same_name_end = find_if_not(i, to, [i](const Person* p) {
+        return p->name == (*i)->name;
+      });
+      auto cur_name_count = std::distance(i, same_name_end);
+      if (cur_name_count > count) {
+        count = cur_name_count;
+        most_popular_name = &(*i)->name;
       }
-      result = *most_popular_name;
+      i = same_name_end;
     }
-    return result;
+    return *most_popular_name;
   }
 
 private:
   istream& input;
   People people;
   vector<int64_t> cumulative_wealth;
-  string most_popular_male_name, most_popular_female_name;
+  optional<string> most_popular_male_name, most_popular_female_name;
 };
 
 int main() {

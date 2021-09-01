@@ -12,28 +12,22 @@ template <typename T>
 class Synchronized {
 public:
   explicit Synchronized(T initial = T())
-  : value(move(initial)) {
+    : value(move(initial))
+  {
   }
-  
-  template <typename U>
-  class Access {
-  public:
-    Access(U& value, mutex& m)
-    : ref_to_value(value), lg(m) {
-    }
 
+  template <typename U>
+  struct Access {
     U& ref_to_value;
-  
-  private:
-    lock_guard<mutex> lg;
+    lock_guard<mutex> guard;
   };
 
   Access<T> GetAccess() {
-      return {value, m};
+    return {value, lock_guard(m)};
   }
 
   Access<const T> GetAccess() const {
-      return {value, m};
+    return {value, lock_guard(m)};
   }
 
 private:

@@ -25,14 +25,28 @@ private:
   vector<Bucket> buckets;
 
 public:
-  struct WriteAccess {
-    lock_guard<mutex> guard;
+  // Выполняем наследование от lock_guard<mutex>, чтобы гарантировать, что мьютекс
+  // будет захвачен до модификации bucket'а. Вместо наследования можно было бы
+  // просто объявить поле типа lock_guard<mutex>, но такой подход полагается
+  // на порядок инициализации полей и не гарантирует, что в будущем он случайно не поменяется
+  struct WriteAccess : lock_guard<mutex> {
     V& ref_to_value;
+
+    WriteAccess(const K& key, Bucket& bucket)
+      : lock_guard(bucket.m)
+      , ref_to_value(bucket.data[key])
+    {
+    }
   };
 
-  struct ReadAccess {
-    lock_guard<mutex> guard;
+  struct ReadAccess : lock_guard<mutex> {
     const V& ref_to_value;
+
+    ReadAccess(const K& key, const Bucket& bucket)
+      : lock_guard(bucket.m)
+      , ref_to_value(bucket.data.at(key))
+    {
+    }
   };
 
   explicit ConcurrentMap(size_t bucket_count)
@@ -41,28 +55,24 @@ public:
   }
 
   WriteAccess operator[](const K& key) {
-    auto& bucket = buckets[GetIndex(key)];
-    return { lock_guard(bucket.m), bucket.data[key] };
+    return {key, buckets[GetIndex(key)]};
   }
 
   ReadAccess At(const K& key) const {
-    auto& bucket = buckets[GetIndex(key)];
-    return { lock_guard(bucket.m), bucket.data.at(key) };
+    return {key, buckets[GetIndex(key)]};
   }
 
   bool Has(const K& key) const {
     auto& bucket = buckets[GetIndex(key)];
-    lock_guard guard(bucket.m);
-    return bucket.data.count(key);
+    lock_guard g(bucket.m);
+    return bucket.data.count(key) > 0;
   }
 
   MapType BuildOrdinaryMap() const {
     MapType result;
-    for(auto& bucket: buckets) {
-      lock_guard g(bucket.m);
-      for(const auto& [key, value]: bucket.data) {
-        result[key] = value;
-      }
+    for (auto& [data, mtx] : buckets) {
+      lock_guard g(mtx);
+      result.insert(begin(data), end(data));
     }
     return result;
   }

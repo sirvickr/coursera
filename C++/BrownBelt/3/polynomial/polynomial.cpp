@@ -31,6 +31,37 @@ void PrintCoeff(std::ostream& out, int i, const T& coef, bool printed) {
 
 template<typename T>
 class Polynomial {
+
+  class IndexProxy {
+  public:
+    IndexProxy(Polynomial& poly, size_t degree)
+      : poly_(poly)
+      , degree_(degree) {
+    }
+    IndexProxy& operator=(const T& value) {
+      auto& coeffs = poly_.coeffs_;
+
+      if(degree_ >= coeffs.size()) {
+        if(value) {
+          coeffs.resize(degree_ + 1);
+          coeffs[degree_] = value;
+        }
+      } else {
+        coeffs[degree_] = value;
+        if(!value) {
+          poly_.Shrink();
+        }
+      }
+      return *this;
+    }
+    operator T() const {
+      return degree_ < poly_.coeffs_.size() ? poly_.coeffs_[degree_] : 0;
+    }
+  private:
+    Polynomial& poly_;
+    size_t degree_;
+  };
+
 private:
   std::vector<T> coeffs_ = {0};
 
@@ -89,7 +120,9 @@ public:
     return degree < coeffs_.size() ? coeffs_[degree] : 0;
   }
 
-  // Реализуйте неконстантную версию operator[]
+  IndexProxy operator [](size_t degree) {
+    return {*this, degree};
+  }
 
   T operator ()(const T& x) const {
     T res = 0;
@@ -263,6 +296,13 @@ void TestNonconstAccess() {
   }
 }
 
+void TestDegreeReduction() {
+  Polynomial<int> poly(std::initializer_list<int> {1, 1, 1, 1, 1});
+  ASSERT_EQUAL(poly.Degree(), 4);
+  poly[4] = 0;
+  ASSERT_EQUAL(poly.Degree(), 3);
+}
+
 int main() {
   TestRunner tr;
   RUN_TEST(tr, TestCreation);
@@ -272,5 +312,6 @@ int main() {
   RUN_TEST(tr, TestEvaluation);
   RUN_TEST(tr, TestConstAccess);
   RUN_TEST(tr, TestNonconstAccess);
+  RUN_TEST(tr, TestDegreeReduction);
   return 0;
 }

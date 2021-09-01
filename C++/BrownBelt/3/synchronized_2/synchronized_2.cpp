@@ -15,35 +15,24 @@ public:
   : value(move(initial)) {
   }
   
-  class Access1 {
+  template <typename U>
+  class Access {
   public:
-    Access1(T& value, mutex& m)
+    Access(U& value, mutex& m)
     : ref_to_value(value), lg(m) {
     }
 
-    T& ref_to_value;
-  
-  private:
-    lock_guard<mutex> lg;
-  };
-  
-  class Access2 {
-  public:
-    Access2(const T& value, mutex& m)
-    : ref_to_value(value), lg(m) {
-    }
-
-    const T& ref_to_value;
+    U& ref_to_value;
   
   private:
     lock_guard<mutex> lg;
   };
 
-  Access1 GetAccess() {
+  Access<T> GetAccess() {
       return {value, m};
   }
 
-  Access2 GetAccess() const {
+  Access<const T> GetAccess() const {
       return {value, m};
   }
 

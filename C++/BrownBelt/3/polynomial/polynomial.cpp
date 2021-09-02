@@ -31,14 +31,24 @@ void PrintCoeff(std::ostream& out, int i, const T& coef, bool printed) {
 
 template<typename T>
 class Polynomial {
+private:
+  std::vector<T> coeffs_ = {0};
+
+  void Shrink() {
+    while (coeffs_.size() > 1 && coeffs_.back() == 0) {
+      coeffs_.pop_back();
+    }
+  }
 
   class IndexProxy {
   public:
     IndexProxy(Polynomial& poly, size_t degree)
       : poly_(poly)
-      , degree_(degree) {
+      , degree_(degree)
+    {
     }
-    IndexProxy& operator=(const T& value) {
+
+    IndexProxy& operator = (const T& value) {
       auto& coeffs = poly_.coeffs_;
 
       if(degree_ >= coeffs.size()) {
@@ -54,22 +64,15 @@ class Polynomial {
       }
       return *this;
     }
+
     operator T() const {
       return degree_ < poly_.coeffs_.size() ? poly_.coeffs_[degree_] : 0;
     }
+
   private:
     Polynomial& poly_;
     size_t degree_;
   };
-
-private:
-  std::vector<T> coeffs_ = {0};
-
-  void Shrink() {
-    while (coeffs_.size() > 1 && coeffs_.back() == 0) {
-      coeffs_.pop_back();
-    }
-  }
 
 public:
   Polynomial() = default;
@@ -121,7 +124,7 @@ public:
   }
 
   IndexProxy operator [](size_t degree) {
-    return {*this, degree};
+    return IndexProxy{*this, degree};
   }
 
   T operator ()(const T& x) const {

@@ -48,25 +48,22 @@ private:
     {
     }
 
-    IndexProxy& operator = (const T& value) {
+    IndexProxy& operator = (T value) {
       auto& coeffs = poly_.coeffs_;
 
-      if(degree_ >= coeffs.size()) {
-        if(value) {
-          coeffs.resize(degree_ + 1);
-          coeffs[degree_] = value;
-        }
-      } else {
-        coeffs[degree_] = value;
-        if(!value) {
-          poly_.Shrink();
-        }
+      if (degree_ >= coeffs.size()) {
+        if (value == 0) {
+          return *this;
+        }  
+        coeffs.resize(degree_ + 1);
       }
+      coeffs[degree_] = value;
+      poly_.Shrink();
       return *this;
     }
 
     operator T() const {
-      return degree_ < poly_.coeffs_.size() ? poly_.coeffs_[degree_] : 0;
+      return std::as_const(poly_)[degree_];
     }
 
   private:

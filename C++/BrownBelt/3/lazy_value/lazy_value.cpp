@@ -8,23 +8,23 @@ using namespace std;
 template <typename T>
 class LazyValue {
 public:
-  explicit LazyValue(std::function<T()> init): init_(init) {
+  explicit LazyValue(std::function<T()> init) : init_(std::move(init)) {
   }
 
   bool HasValue() const {
-      return value_.has_value();
+    return value_.has_value();
   }
 
   const T& Get() const {
-      if(!HasValue()) {
-          value_.emplace(init_());
-      }
-      return *value_;
+    if (!value_) {
+      value_ = init_();
+    }
+    return *value_;
   }
 
 private:
   std::function<T()> init_;
-  mutable optional<T> value_;
+  mutable std::optional<T> value_;
 };
 
 void UseExample() {

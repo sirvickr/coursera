@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "functional": "cpp",
+        "string_view": "cpp"
+    }
+}

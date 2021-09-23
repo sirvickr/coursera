@@ -8,28 +8,67 @@ using namespace std;
 template <typename T>
 class UniquePtr {
 private:
-  // ???
+  T* ptr_ = nullptr;
+
 public:
-  UniquePtr();
-  UniquePtr(T * ptr);
-  UniquePtr(const UniquePtr&);
-  UniquePtr(UniquePtr&& other);
-  UniquePtr& operator = (const UniquePtr&);
-  UniquePtr& operator = (nullptr_t);
-  UniquePtr& operator = (UniquePtr&& other);
-  ~UniquePtr();
+  UniquePtr() = default;
+  UniquePtr(T * ptr)
+    : ptr_(ptr)
+  {}
+  UniquePtr(const UniquePtr& other) = delete;
+  UniquePtr(UniquePtr&& other) {
+      ptr_ = other.ptr_;
+      other.ptr_ = nullptr;
+  }
+  UniquePtr& operator = (const UniquePtr&) = delete;
+  UniquePtr& operator = (nullptr_t) {
+      Clear();
+      return *this;
+  }
+  UniquePtr& operator = (UniquePtr&& other) {
+      Clear();
+      ptr_ = other.ptr_;
+      other.ptr_ = nullptr;
+      return *this;
+  }
+  ~UniquePtr() {
+    Clear();
+  }
 
-  T& operator * () const;
+  T& operator * () const {
+      return *ptr_;
+  }
 
-  T * operator -> () const;
+  T * operator -> () const {
+      return ptr_;
+  }
 
-  T * Release();
+  T * Release() {
+      T* result = ptr_;
+      ptr_ = nullptr;
+      return result;
+  }
 
-  void Reset(T * ptr);
+  void Reset(T * ptr) {
+      Clear();
+      ptr_ = ptr;
+  }
 
-  void Swap(UniquePtr& other);
+  void Swap(UniquePtr& other) {
+      swap(ptr_, other.ptr_);
+  }
 
-  T * Get() const;
+  T * Get() const {
+      return ptr_;
+  }
+
+private:
+  void Clear() {
+      if(ptr_) {
+          delete ptr_;
+          ptr_ = nullptr;
+      }
+  }
 };
 
 

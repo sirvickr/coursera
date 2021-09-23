@@ -21,71 +21,58 @@ public:
   BookPtr GetBook(const string& book_name) override {
     lock_guard guard(mutex_);
 
-    BookPtr book;
-
     auto it = books_.find(book_name);
 
-    if(it == books_.end()) {
-    
-      book = books_unpacker_->UnpackBook(book_name);
+    if (it == books_.end()) {
+      Entry entry;
+      entry.book = books_unpacker_->UnpackBook(book_name);
 
-      size_t size = book->GetContent().size();
-      bool too_big = false;
-      while(cache_size_ + size > settings_.max_memory) {
-        if(ranks_.empty()) {
-          too_big = true;
-          break;
-        }
+      auto book_size = entry.book->GetContent().size();
+
+      while (!books_.empty() && cache_size_ + book_size > settings_.max_memory) {
         RemoveLruEntry();
       }
+      assert(!books_.empty() || cache_size_ == 0);
 
-      if(!too_big) {
-        it = books_.insert({book_name, {book, {}}}).first;
-        cache_size_ += size;
-        AddLruEntry(size, it);
+      if (book_size > settings_.max_memory) {
+        return move(entry.book);
       }
-    
-    } else {
-    
-      book = it->second.book_ptr;
-      
-      ranks_.erase(it->second.rank_it);
-      AddLruEntry(book->GetContent().size(), it);
-    
+
+      it = AddEntry(book_name, move(entry));
     }
-    
-    return book;
+
+    it->second.rank = current_rank_++;
+
+    return it->second.book;
   }
 
 private:
-  struct RankItem;
-  struct Entry;
-
-  using Rank = list<RankItem>;
-
   struct Entry {
-    BookPtr book_ptr;
-    Rank::iterator rank_it;
+    BookPtr book;
+    int rank = 0;
   };
-  
+
   using Entries = unordered_map<string, Entry>;
-  
-  struct RankItem {
-    size_t size;
-    Entries::iterator books_it;
-  };
 
 private:
   void RemoveLruEntry() {
-    const RankItem& item = ranks_.back();
-    cache_size_ -= item.size;
-    books_.erase(item.books_it);
-    ranks_.pop_back();
+    assert(!books_.empty());
+
+    auto it = min_element(
+        books_.begin(), books_.end(),
+        [](const Entries::value_type& lhs, const Entries::value_type& rhs) {
+          return lhs.second.rank < rhs.second.rank;
+        }
+    );
+
+    cache_size_ -= it->second.book->GetContent().size();
+    books_.erase(it);
   }
 
-  void AddLruEntry(size_t size, Entries::iterator it) {
-      ranks_.push_front({size, it});
-      it->second.rank_it = ranks_.begin();
+  Entries::iterator AddEntry(const string& book_name, Entry entry) {
+    assert(0 == books_.count(book_name));
+    cache_size_ += entry.book->GetContent().size();
+    return books_.insert({book_name, move(entry)}).first;
   }
 
 private:
@@ -94,7 +81,7 @@ private:
 
   mutex mutex_;
   Entries books_;
-  Rank ranks_;
+  int current_rank_ = 0;
   size_t cache_size_ = 0;
 };
 

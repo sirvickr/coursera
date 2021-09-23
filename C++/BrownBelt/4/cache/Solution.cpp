@@ -3,69 +3,54 @@
 #include <list>
 #include <unordered_map>
 #include <mutex>
+#include <cassert>
+#include <algorithm>
 
 using namespace std;
 
 class LruCache : public ICache {
-  struct RankItem;
-  struct StorageItem;
-
-  using Rank = list<RankItem>;
-
-  struct StorageItem {
-    BookPtr book_ptr;
-    Rank::iterator rank_it;
-  };
-  
-  using Storage = unordered_map<string, StorageItem>;
-  
-  struct RankItem {
-    size_t size;
-    Storage::iterator storage_it;
-  };
-
 public:
   LruCache(
       shared_ptr<IBooksUnpacker> books_unpacker,
       const Settings& settings
-  ): books_unpacker_(move(books_unpacker)), settings_(settings) {}
+  )
+    : books_unpacker_(move(books_unpacker))
+    , settings_(settings)
+  {}
 
   BookPtr GetBook(const string& book_name) override {
+    lock_guard guard(mutex_);
+
     BookPtr book;
-    lock_guard lg(m_);
-    auto it = storage_.find(book_name);
-    if(it == storage_.end()) {
+
+    auto it = books_.find(book_name);
+
+    if(it == books_.end()) {
     
       book = books_unpacker_->UnpackBook(book_name);
-      size_t size = book->GetContent().size();
 
+      size_t size = book->GetContent().size();
       bool too_big = false;
-      while(total_size_ + size > settings_.max_memory) {
-        if(rank_.empty()) {
+      while(cache_size_ + size > settings_.max_memory) {
+        if(ranks_.empty()) {
           too_big = true;
           break;
         }
-        const RankItem& item = rank_.back();
-        total_size_ -= item.size;
-        storage_.erase(item.storage_it);
-        rank_.pop_back();
+        RemoveLruEntry();
       }
 
       if(!too_big) {
-        it = storage_.insert({book_name, {book, {}}}).first;
-        rank_.push_front({size, it});
-        it->second.rank_it = rank_.begin();
-        total_size_ += size;
+        it = books_.insert({book_name, {book, {}}}).first;
+        cache_size_ += size;
+        AddLruEntry(size, it);
       }
     
     } else {
     
       book = it->second.book_ptr;
-      size_t size = book->GetContent().size();
       
-      rank_.erase(it->second.rank_it);
-      rank_.push_front({size, it});
-      it->second.rank_it = rank_.begin();
+      ranks_.erase(it->second.rank_it);
+      AddLruEntry(book->GetContent().size(), it);
     
     }
     
@@ -73,12 +58,44 @@ public:
   }
 
 private:
-  mutex m_;
+  struct RankItem;
+  struct Entry;
+
+  using Rank = list<RankItem>;
+
+  struct Entry {
+    BookPtr book_ptr;
+    Rank::iterator rank_it;
+  };
+  
+  using Entries = unordered_map<string, Entry>;
+  
+  struct RankItem {
+    size_t size;
+    Entries::iterator books_it;
+  };
+
+private:
+  void RemoveLruEntry() {
+    const RankItem& item = ranks_.back();
+    cache_size_ -= item.size;
+    books_.erase(item.books_it);
+    ranks_.pop_back();
+  }
+
+  void AddLruEntry(size_t size, Entries::iterator it) {
+      ranks_.push_front({size, it});
+      it->second.rank_it = ranks_.begin();
+  }
+
+private:
   shared_ptr<IBooksUnpacker> books_unpacker_;
-  Settings settings_;
-  Storage storage_;
-  Rank rank_;
-  size_t total_size_ = 0;
+  const Settings settings_;
+
+  mutex mutex_;
+  Entries books_;
+  Rank ranks_;
+  size_t cache_size_ = 0;
 };
 
 

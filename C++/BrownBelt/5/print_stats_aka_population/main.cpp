@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std; 
 
-#if 1 // должно быть отключено перед оправкой
+#if 0 // должно быть отключено перед оправкой
 
 enum class Gender {
   FEMALE,
@@ -53,5 +54,20 @@ int main() {
 #endif
 
 void PrintStats(vector<Person> persons) {
-  ;
+  cout << "Median age = " << ComputeMedianAge(cbegin(persons), cend(persons)) << '\n';
+  
+  auto genderBound = partition(begin(persons), end(persons), [](const Person& person){ return person.gender == Gender::FEMALE; });
+  
+  cout << "Median age for females = " << ComputeMedianAge(begin(persons), genderBound) << '\n';
+  cout << "Median age for males = " << ComputeMedianAge(genderBound, end(persons)) << '\n';
+  
+  auto femaleEmplBound = partition(begin(persons), genderBound, [](const Person& person){ return person.is_employed; });
+
+  cout << "Median age for employed females = " << ComputeMedianAge(begin(persons), femaleEmplBound) << '\n';
+  cout << "Median age for unemployed females = " << ComputeMedianAge(femaleEmplBound, genderBound) << '\n';
+  
+  auto maleEmplBound = partition(genderBound, end(persons), [](const Person& person){ return person.is_employed; });
+
+  cout << "Median age for employed males = " << ComputeMedianAge(genderBound, maleEmplBound) << '\n';
+  cout << "Median age for unemployed males = " << ComputeMedianAge(maleEmplBound, end(persons)) << '\n';
 }
